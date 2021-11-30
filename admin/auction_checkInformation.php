@@ -61,9 +61,9 @@ if (isset($_REQUEST['checkTrue'])) {
                 </div>
 
 
-                <hr>
 
-                <div class="col-md-4">
+
+                <!-- <div class="col-md-4">
                     <h4>สำเนาบัตรประชาชน</h4>
                     <h1><img src="../copy/<?php echo $result['idCardImage'] ?>" width="100%" height="auto" alt=""></h1>
                 </div>
@@ -74,17 +74,21 @@ if (isset($_REQUEST['checkTrue'])) {
                 <div class="col-md-4">
                     <h4>สำเนาใบทะเบียนพาณิชย์</h4>
                     <h1><img src="../copy/<?php echo $result['commercialRegistrationImage'] ?>" width="100%" height="auto" alt=""></h1>
-                </div>
-
-                <h5 style="text-align: center;"> <a href=""> <i class="far fa-file-pdf" style="color: red;"></i> ดาวโหลดสำเนา</a></h5>
+                </div> -->
+                <h5 style="text-align: center;"> <a onClick="PrintDiv();" class="btn btn-primary"> <i class="far fa-file-pdf" style="color: white;"></i> ดาวโหลดสำเนา</a></h5>
                 <br>
                 <a href="javascript:history.back()" style="text-align: center;"><i class="fas fa-arrow-left mt-5"></i> ย้อนกลับ</a>
             </div>
-
-
         </div>
+    </div>
+    <div class="container" id="container" hidden>
+        <div class="row">
+            <div class="col-md-12">
+                <img src="../copy/<?php echo $result['idCardImage'] ?>" width="100%" height="auto" alt="">
+                <img src="../copy/<?php echo $result['houseRegistrationImage'] ?>" width="100%" height="auto" alt="">
+                <img src="../copy/<?php echo $result['commercialRegistrationImage'] ?>" width="100%" height="auto" alt="">
 
-
-
+            </div>
+        </div>
     </div>
 </div>

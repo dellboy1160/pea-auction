@@ -7,10 +7,14 @@ if (!isset($_SESSION['username'])) {
 
 if (isset($_REQUEST['detailID'])) {
     $detailID = $_REQUEST['detailID'];
+    if (isset($_REQUEST['auctionID'])) {
+        $auctionID = $_REQUEST['auctionID'];
+    }
+
     $today = date("Y-m-d H:i:s");
     if (isset($_REQUEST['btn_submit'])) {
         $detailID = $_REQUEST['detailID'];
-
+        $auctionID = $_REQUEST['txt_auctionID'];
         // $bidPrice = $_REQUEST['txt_bid'];
 
 
@@ -196,8 +200,31 @@ if (isset($_REQUEST['detailID'])) {
                 <br>
 
             </div>
+
+
+            <div class="col-md-6">
+                <?php
+                $sql_bank = "SELECT * FROM bank";
+                $query_bank = mysqli_query($conn, $sql_bank);
+                ?>
+                <div class="card shadow-sm p-3 mb-5 bg-body rounded mt-4" style="width:100%;">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">ช่องทางการชำระ</h3>
+                        <?php while ($result_bank = mysqli_fetch_array($query_bank)) { ?>
+                            <h6 class="card-text mb-2 ">
+                                ธนาคาร : <?php echo $result_bank['bankName'] ?>,
+                                <?php echo $result_bank['bankHolder'] ?>,
+                                เลขบ/ช : <?php echo $result_bank['bankNumber'] ?></h6>
+
+                        <?php } ?>
+
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <form action="" method="POST" class="row needs-validation" enctype="multipart/form-data" novalidate>
+
+                    <input type="text" hidden name="txt_auctionID" value="<?php echo $_REQUEST['auctionID'] ?>">
                     <div class="col-md-12">
                         <label for="validationCustom03" class="form-label">รูปใบเสนอราคา ส่วนที่ 1
                             <!-- <a href="">ตัวอย่าง</a> -->
@@ -259,27 +286,6 @@ if (isset($_REQUEST['detailID'])) {
                     </div>
 
                 </form>
-            </div>
-
-            <div class="col-md-6">
-                <?php
-                $sql_bank = "SELECT * FROM bank";
-                $query_bank = mysqli_query($conn, $sql_bank);
-                ?>
-                <div class="card shadow-sm p-3 mb-5 bg-body rounded mt-4" style="width:100%;">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">ช่องทางการชำระ</h3>
-                        <?php while ($result_bank = mysqli_fetch_array($query_bank)) { ?>
-                            <h6 class="card-text mb-2 ">
-                                ธนาคาร : <?php echo $result_bank['bankName'] ?>,
-                                <?php echo $result_bank['bankHolder'] ?>,
-                                เลขบ/ช : <?php echo $result_bank['bankNumber'] ?></h6>
-
-                        <?php } ?>
-
-                    </div>
-                </div>
-
             </div>
             <hr>
             <a href="profile.php?act=auction_list" style="text-align: center;"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>

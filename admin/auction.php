@@ -36,8 +36,9 @@ if (isset($_REQUEST['delete_id'])) {
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-    
+
     <link href="../css/table_responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/print.css">
     <link href="../css/font.css" rel="stylesheet" />
 
 
@@ -77,9 +78,15 @@ if (isset($_REQUEST['delete_id'])) {
 
                             include('auction_edit.php');
                         } elseif ($_REQUEST['act'] == 'search') {
+
                             include('auction_detail.php');
                         } elseif ($_REQUEST['act'] == 'check') {
+
                             include('auction_checkInformation.php');
+                        } elseif ($_REQUEST['act'] == 'offer') {
+                            include('auction_OfferPrice.php');
+                        } elseif ($_REQUEST['act'] == 'checkOffer') {
+                            include('auction_checkOfferPrice.php');
                         }
                     } else {
                         include('auction_show.php');
@@ -105,6 +112,7 @@ if (isset($_REQUEST['delete_id'])) {
     <script src="js/datatables-simple-demo.js"></script>
     <script src="js/dataTable.js"></script>
     <script src="../js/validation.js"></script>
+    <script src="../js/print.js"></script>
 </body>
 
 </html>

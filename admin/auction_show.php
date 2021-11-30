@@ -12,6 +12,8 @@ if (isset($_REQUEST['unActive'])) {
         <i class="fas fa-table me-1"></i>
         ตารางรายการประมูล
         <a href="?act=insert" style="float: right;" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> เพิ่มรายการ</a>
+
+        
     </div>
     <div class="card-body ">
         <style>
@@ -34,7 +36,7 @@ if (isset($_REQUEST['unActive'])) {
                     <th>รหัสประมูล</th>
                     <th width="30%">หัวข้อ</th>
                     <th>รายละเอียด</th>
-                    <th></th>
+                    <!-- <th></th> -->
                     <th></th>
                     <th width="10%"></th>
                 </tr>
@@ -60,7 +62,7 @@ if (isset($_REQUEST['unActive'])) {
                         <td data-label="รายละเอียด">
                             <?php echo $result_auction['auctionDetail'] ?>
                         </td>
-                        <td data-label="">
+                        <!-- <td data-label="">
                             <?php
                             $today = date("Y-m-d H:i:s");
                             $startDate = $result_auction['auctionStartDate'];
@@ -71,14 +73,11 @@ if (isset($_REQUEST['unActive'])) {
                             } elseif ($today > $startDate && $today < $endDate) {
                                 echo 'อยู่ในขั้นตอนการประมูล';
                             } else { ?>
-                                <a href="?unActive=<?php echo $result_auction['auctionID'] ?>">สิ้นสุดการประมูล</a>
+                                <a href="?done=<?php echo $result_auction['auctionID'] ?>">จบการประมูล</a>
                             <?php } ?>
-
-                        </td>
-                        <td style="text-align: center;">
-                            <a href="?act=search&detail_id=<?php echo $result_auction['auctionID'] ?>"><i class="fas fa-pen-alt"></i> รายชื่อคนลงประมูล</a>
-                            <hr>
-                            <a href=""><i class="far fa-envelope"></i> รายชื่อผู้ยื่นซอง</a>
+                        </td> -->
+                        <td style="text-align: left;">
+                            <a style="width: 100%;" href="?act=search&detail_id=<?php echo $result_auction['auctionID'] ?>" class="btn btn-primary btn-sm mt-2"><i class="fas fa-pen-alt"></i> รายชื่อคนลงประมูล</a>
                         </td>
                         <td style="text-align: center;">
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">

@@ -110,7 +110,7 @@ $query_list = mysqli_query($conn, $sql_list)
             <th>รหัสประมูล</th>
             <th>หัวข้อ</th>
 
-            <th>วัน/เวลา ที่ลงชื่อ</th>
+            <th>ลงชื่อวันที่</th>
             <th></th>
             <th style="width: 35%;">สถานะ</th>
         </tr>
@@ -131,7 +131,7 @@ $query_list = mysqli_query($conn, $sql_list)
 
                 </td>
                 <td style="text-align: center;">
-                    <a href="?detailID" class="btn btn-primary btn-sm">รายละเอียด</a>
+                    <a href="?detailID" class="btn btn-primary btn-sm" style="width: 100%;">รายละเอียด</a>
                 </td>
                 <td data-label="สถานะ">
                     <?php
@@ -168,9 +168,9 @@ $query_list = mysqli_query($conn, $sql_list)
 
                                 <br>
                                 <?php if ($today < $startDate) { ?>
-                                    <button disabled class="btn btn-secondary btn-sm mt-2" style="width: 100%;">ยังไม่ถึงเวลาประมูล</button>
+                                    <button disabled class="btn btn-secondary btn-sm mt-2" style="width: 100%;">ยังไม่ถึงเวลาเสนอราคา</button>
                                 <?php } elseif ($today > $startDate && $today < $endDate) { ?>
-                                    <a href="offer_price.php?detailID=<?php echo $result_list['detailID'] ?>" style="width: 100%;" class="btn btn-primary btn-sm mt-2">เสนอราคา</a>
+                                    <a href="offer_price.php?auctionID=<?php echo $result_list['auctionID'] ?>&detailID=<?php echo $result_list['detailID'] ?>" style="width: 100%;" class="btn btn-primary btn-sm mt-2">เสนอราคา</a>
                                 <?php } elseif ($today > $endDate) { ?>
                                     <button disabled class="btn btn-secondary btn-sm mt-2" style="width: 100%;">หมดเวลาเสนอราคา</button>
                                 <?php } ?>

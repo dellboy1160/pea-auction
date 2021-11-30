@@ -49,7 +49,8 @@ if (isset($_SESSION['username'])) {
                         <div class="list-group" style="text-align: left;">
 
                             <a href="profile.php" class="list-group-item list-group-item-action"><i class="far fa-user"></i> ข้อมูลส่วนตัว</a>
-                            <a href="?act=auction_list" class="list-group-item list-group-item-action"><i class="fas fa-history"></i> ประวัติการประมูล</a>
+                            <a href="?act=auction_list" class="list-group-item list-group-item-action"><i class="far fa-bell"></i> รายการประมูล</a>
+                            <a href="?act=auction_record" class="list-group-item list-group-item-action"><i class="far fa-clock"></i> ประวัติการประมูล</a>
                         </div>
                     </div>
                     <div class="col-md-9">
@@ -63,6 +64,8 @@ if (isset($_SESSION['username'])) {
                                 include('edit_profile.php');
                             } elseif ($_REQUEST['act'] == 'auction_list') {
                                 include('auction_list.php');
+                            } elseif ($_REQUEST['act'] == 'auction_record') {
+                                include('auction_record.php');
                             }
                         } else {
                             include('profile_detail.php');
