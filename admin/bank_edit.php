@@ -1,26 +1,35 @@
 <?php
 if (isset($_REQUEST['update_id'])) {
+    try {
 
-    $update_id = $_REQUEST['update_id'];
-    $sql_bank = "SELECT * FROM bank WHERE bankID = $update_id";
-    $query_bank = mysqli_query($conn, $sql_bank);
-    $result_bank = mysqli_fetch_array($query_bank);
+        $update_id = $_REQUEST['update_id'];
+        $sql_bank = "SELECT * FROM bank WHERE bankID = $update_id";
+        $query_bank = mysqli_query($conn, $sql_bank);
+        $result_bank = mysqli_fetch_array($query_bank);
 
-    if (isset($_REQUEST['btn_submit'])) {
-        $bankName = $_REQUEST['txt_bankName'];
-        $bankHolder = $_REQUEST['txt_bankHolder'];
-        $bankNumber = $_REQUEST['txt_bankNumber'];
+        $num_bank = mysqli_num_rows($query_bank);
+        if ($num_bank == 0) {
+            $error = "ไม่มีข้อมูลนี้อยู่";
+        }
 
-        $sql = "UPDATE bank SET
+        if (isset($_REQUEST['btn_submit'])) {
+            $bankName = $_REQUEST['txt_bankName'];
+            $bankHolder = $_REQUEST['txt_bankHolder'];
+            $bankNumber = $_REQUEST['txt_bankNumber'];
+
+            $sql = "UPDATE bank SET
         bankName='$bankName',
         bankHolder='$bankHolder',
         bankNumber='$bankNumber'
         WHERE bankID = $update_id
         ";
-        $query = mysqli_query($conn, $sql);
-        if ($query) {
-            $successMsg = '';
+            $query = mysqli_query($conn, $sql);
+            if ($query) {
+                $successMsg = '';
+            }
         }
+    } catch (Error  $e) {
+        $error = "ไม่มีข้อมูลนี้อยู่";
     }
 }
 ?>
@@ -35,6 +44,21 @@ if (isset($_REQUEST['update_id'])) {
         });
     </script>
 <?php } ?>
+<?php
+if (isset($error)) {
+?>
+    <script type="text/javascript">
+        var error = '<?php echo $error; ?>';
+        Swal.fire(
+            error,
+            '',
+            'error'
+        ).then(function() {
+            window.location = "main_page.php";
+        });
+    </script>
+<?php exit();
+} ?>
 <div class="card mb-4 mt-5">
     <div class="card-header">
         <i class="far fa-edit"></i>

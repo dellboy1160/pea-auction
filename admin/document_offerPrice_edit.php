@@ -1,51 +1,58 @@
 <?php
 if (isset($_REQUEST['update_id'])) {
-    $update_id = $_REQUEST['update_id'];
-    $sql_doc = "SELECT * FROM document_offerprice WHERE documentID = $update_id";
 
-    $query_doc = mysqli_query($conn, $sql_doc);
-    $result_doc = mysqli_fetch_array($query_doc);
+    try {
+        $update_id = $_REQUEST['update_id'];
+        $sql_doc = "SELECT * FROM document_offerprice WHERE documentID = $update_id";
 
-    if (isset($_REQUEST['btn_submit'])) {
-        $title = $_REQUEST['txt_title'];
-        $startDate = $_REQUEST['txt_startDate'];
-        $endDate = $_REQUEST['txt_endDate'];
+        $query_doc = mysqli_query($conn, $sql_doc);
+        $result_doc = mysqli_fetch_array($query_doc);
 
-
-        $file_name = $_FILES['txt_file']['name'];
-        $type = $_FILES['txt_file']['type'];
-        $size = $_FILES['txt_file']['size'];
-        $temp = $_FILES['txt_file']['tmp_name'];
-
-        $path = "document/" . $file_name;
-        $directory = "document/";
-
-        $explode = explode('.', $_FILES['txt_file']['name']);
-        $new_name = round(microtime(true)) . '.' . end($explode);
-
-        // echo $new_name, '<br>';
-        // echo $type;
-        if (!empty($file_name)) {
-
-            if ($type == 'application/pdf') {
-                if (!file_exists($path)) {
-                    if ($size < 2000000) {
-                        unlink($directory . $result_doc['documentFile']);
-                        move_uploaded_file($temp, 'document/' . $new_name);
-                    } else {
-                        $errorMsg = 'ไฟล์รูปภาพใหญ่เกิน 2MB';
-                    }
-                }
-            } else {
-                $errorMsg =  'กรุณาใช้นามสกุลไฟล์เป็น PDF';
-            }
-        } else {
-            $new_name = $result_doc['documentFile'];
+        $num_doc = mysqli_num_rows($query_doc);
+        if ($num_doc == 0) {
+            $error = "ไม่มีข้อมูลนี้อยู่";
         }
 
+        if (isset($_REQUEST['btn_submit'])) {
+            $title = $_REQUEST['txt_title'];
+            $startDate = $_REQUEST['txt_startDate'];
+            $endDate = $_REQUEST['txt_endDate'];
 
-        if (!isset($errorMsg)) {
-            $sql = "UPDATE document_offerprice SET 
+
+            $file_name = $_FILES['txt_file']['name'];
+            $type = $_FILES['txt_file']['type'];
+            $size = $_FILES['txt_file']['size'];
+            $temp = $_FILES['txt_file']['tmp_name'];
+
+            $path = "document/" . $file_name;
+            $directory = "document/";
+
+            $explode = explode('.', $_FILES['txt_file']['name']);
+            $new_name = round(microtime(true)) . '.' . end($explode);
+
+            // echo $new_name, '<br>';
+            // echo $type;
+            if (!empty($file_name)) {
+
+                if ($type == 'application/pdf') {
+                    if (!file_exists($path)) {
+                        if ($size < 2000000) {
+                            unlink($directory . $result_doc['documentFile']);
+                            move_uploaded_file($temp, 'document/' . $new_name);
+                        } else {
+                            $errorMsg = 'ไฟล์รูปภาพใหญ่เกิน 2MB';
+                        }
+                    }
+                } else {
+                    $errorMsg =  'กรุณาใช้นามสกุลไฟล์เป็น PDF';
+                }
+            } else {
+                $new_name = $result_doc['documentFile'];
+            }
+
+
+            if (!isset($errorMsg)) {
+                $sql = "UPDATE document_offerprice SET 
             documentTitle = '$title', 
             documentFile = '$new_name',
             startDate = '$startDate',
@@ -53,12 +60,15 @@ if (isset($_REQUEST['update_id'])) {
             
             WHERE documentID = $update_id
             ";
-            $query = mysqli_query($conn, $sql);
+                $query = mysqli_query($conn, $sql);
 
-            if ($query) {
-                $successMsg = "บันทึกข้อมูลเรียบร้อย";
+                if ($query) {
+                    $successMsg = "บันทึกข้อมูลเรียบร้อย";
+                }
             }
         }
+    } catch (Error  $e) {
+        $error = "ไม่มีข้อมูลนี้อยู่";
     }
 }
 ?>
@@ -89,6 +99,21 @@ if (isset($errorMsg)) {
         )
     </script>
 <?php } ?>
+<?php
+if (isset($error)) {
+?>
+    <script type="text/javascript">
+        var error = '<?php echo $error; ?>';
+        Swal.fire(
+            error,
+            '',
+            'error'
+        ).then(function() {
+            window.location = "main_page.php";
+        });
+    </script>
+<?php exit();
+} ?>
 <div class="card mb-4 mt-5">
     <div class="card-header">
         <i class="far fa-edit"></i>

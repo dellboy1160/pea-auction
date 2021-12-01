@@ -30,7 +30,7 @@ if (isset($_REQUEST['btn_submit'])) {
 
     if (empty($new_name)) {
         $errorMsg = "กรุณาเลือกรูปภาพ";
-    } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png" ) {
+    } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png") {
         if (!file_exists($path)) {
             if ($size < 2000000) {
                 move_uploaded_file($temp, '../copy/' . $new_name);
@@ -56,7 +56,7 @@ if (isset($_REQUEST['btn_submit'])) {
 
     if (empty($new_name2)) {
         $errorMsg = "กรุณาเลือกรูปภาพ";
-    } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png" ) {
+    } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
         if (!file_exists($path2)) {
             if ($size2 < 2000000) {
                 move_uploaded_file($temp2, '../copy/' . $new_name2);
@@ -80,18 +80,20 @@ if (isset($_REQUEST['btn_submit'])) {
     $new_name3 = round(microtime(true)) . '3.' . end($explode3);
 
 
-    if (empty($new_name3)) {
-        $errorMsg = "กรุณาเลือกรูปภาพ";
-    } else if ($type3 == "image/jpg" || $type3 == 'image/jpeg' || $type3 == "image/png" ) {
-        if (!file_exists($path3)) {
-            if ($size3 < 2000000) {
-                move_uploaded_file($temp3, '../copy/' . $new_name3);
-            } else {
-                $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
-            }
-        }
+    if (empty($_FILES['txt_file3']['name'])) {
+        echo $new_name3 = "";
     } else {
-        $errorMsg = "กรุณาใช้นามสกุลไฟล์เป็น JPG, JPEG, PNG เท่านั้น";
+        if ($type3 == "image/jpg" || $type3 == 'image/jpeg' || $type3 == "image/png") {
+            if (!file_exists($path3)) {
+                if ($size3 < 2000000) {
+                    move_uploaded_file($temp3, '../copy/' . $new_name3);
+                } else {
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                }
+            }
+        } else {
+            $errorMsg = "กรุณาใช้นามสกุลไฟล์เป็น JPG, JPEG, PNG เท่านั้น";
+        }
     }
     // End of สำเนาใบทะเบียนพาณิชย์
 
@@ -162,6 +164,40 @@ if (isset($_REQUEST['btn_submit'])) {
             )
         </script>
     <?php } ?>
+
+    <?php
+    try {
+        $sql = "SELECT * FROM auction WHERE auctionID = $auctionID";
+        $query = mysqli_query($conn, $sql);
+        $num = mysqli_num_rows($query);
+        $result = mysqli_fetch_array($query);
+        if ($num == 0) {
+            $error = "ไม่มีข้อมูลนี้อยู่";
+        }
+    } catch (Error  $e) {
+        $error = "ไม่มีข้อมูลนี้อยู่";
+    }
+    ?>
+
+
+    <?php
+    if (isset($error)) {
+    ?>
+        <script type="text/javascript">
+            var error = '<?php echo $error; ?>';
+            Swal.fire(
+                error,
+                '',
+                'error'
+            ).then(function() {
+                window.location = "main_page.php";
+            });
+        </script>
+    <?php exit();
+    } ?>
+
+
+
     <?php include('../web-structure/user_navbar.php') ?>
     <!-- Page content-->
     <div class="container">
@@ -171,11 +207,7 @@ if (isset($_REQUEST['btn_submit'])) {
         </div>
         <div class="row">
 
-            <?php
-            $sql = "SELECT * FROM auction WHERE auctionID = $auctionID";
-            $query = mysqli_query($conn, $sql);
-            $result = mysqli_fetch_array($query);
-            ?>
+
 
             <div class="col-md-6">
                 <div class="card shadow-sm p-3 mb-5 bg-body rounded" style="width: auto;">

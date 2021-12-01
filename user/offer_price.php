@@ -124,8 +124,8 @@ if (isset($_REQUEST['detailID'])) {
 
         if (!isset($errorMsg)) {
             $today = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO offer_price (detailID,offerPriceDocImage,offerPriceDocImage2,offerPriceDocImage3,paymentImage,offerDate,paymentStatus)
-            VALUES ('$detailID','$new_name','$new_name2','$new_name3','$new_name4','$today','unCheck')";
+            $sql = "INSERT INTO offer_price (detailID,auctionID,offerPriceDocImage,offerPriceDocImage2,offerPriceDocImage3,paymentImage,offerDate,paymentStatus)
+            VALUES ('$detailID','$auctionID','$new_name','$new_name2','$new_name3','$new_name4','$today','unCheck')";
             $query = mysqli_query($conn, $sql);
             if ($query) {
                 $successMsg = "";

@@ -1,19 +1,25 @@
 <?php
 if (isset($_REQUEST['update_id'])) {
+    try {
+        $update_id = $_REQUEST['update_id'];
+        $sql_auction = "SELECT * FROM auction WHERE auctionID = $update_id";
+        $query_auction = mysqli_query($conn, $sql_auction);
+        $result_auction = mysqli_fetch_array($query_auction);
 
-    $update_id = $_REQUEST['update_id'];
-    $sql_auction = "SELECT * FROM auction WHERE auctionID = $update_id";
-    $query_auction = mysqli_query($conn, $sql_auction);
-    $result_auction = mysqli_fetch_array($query_auction);
+        $num_auction = mysqli_num_rows($query_auction);
+        if ($num_auction == 0) {
+            $error = "ไม่มีข้อมูลนี้อยู่";
+        }
 
-    if (isset($_REQUEST['btn_submit'])) {
-        $title = $_REQUEST['txt_title'];
-        $startPrice = $_REQUEST['txt_startPrice'];
-        $startDate = $_REQUEST['txt_startDate'];
-        $endDate = $_REQUEST['txt_endDate'];
-        $detail = $_REQUEST['txt_detail'];
 
-        $sql = "UPDATE auction SET
+        if (isset($_REQUEST['btn_submit'])) {
+            $title = $_REQUEST['txt_title'];
+            $startPrice = $_REQUEST['txt_startPrice'];
+            $startDate = $_REQUEST['txt_startDate'];
+            $endDate = $_REQUEST['txt_endDate'];
+            $detail = $_REQUEST['txt_detail'];
+
+            $sql = "UPDATE auction SET
         auctionTitle ='$title',
         auctionStartDate='$startDate',
         auctionEndDate='$endDate',
@@ -21,13 +27,18 @@ if (isset($_REQUEST['update_id'])) {
         auctionDetail='$detail'
         WHERE auctionID = $update_id
         ";
-        $query = mysqli_query($conn, $sql);
+            $query = mysqli_query($conn, $sql);
 
-        if ($query) {
-            $successMsg = "";
+            if ($query) {
+                $successMsg = "";
+            }
         }
+    } catch (Error  $e) {
+        $error = "ไม่มีข้อมูลนี้อยู่";
     }
 }
+
+
 ?>
 <?php if (isset($successMsg)) { ?>
     <script>
@@ -40,6 +51,21 @@ if (isset($_REQUEST['update_id'])) {
         });
     </script>
 <?php } ?>
+<?php
+if (isset($error)) {
+?>
+    <script type="text/javascript">
+        var error = '<?php echo $error; ?>';
+        Swal.fire(
+            error,
+            '',
+            'error'
+        ).then(function() {
+            window.location = "main_page.php";
+        });
+    </script>
+<?php exit();
+} ?>
 <div class="card mb-4 mt-5">
     <div class="card-header">
         <i class="far fa-edit"></i>

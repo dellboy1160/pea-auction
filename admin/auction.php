@@ -64,6 +64,19 @@ if (isset($_REQUEST['delete_id'])) {
                 });
             </script>
         <?php } ?>
+
+        <?php
+        if (isset($errorMsg)) {
+        ?>
+            <script type="text/javascript">
+                var errorMsg = '<?php echo $errorMsg; ?>';
+                Swal.fire(
+                    errorMsg,
+                    '',
+                    'error'
+                )
+            </script>
+        <?php } ?>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">

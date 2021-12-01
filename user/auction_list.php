@@ -108,9 +108,9 @@ $query_list = mysqli_query($conn, $sql_list)
     <thead>
         <tr>
             <th>รหัสประมูล</th>
-            <th>หัวข้อ</th>
+            <th width="15%">หัวข้อ</th>
 
-            <th>ลงชื่อวันที่</th>
+            <th width="15%">ลงชื่อวันที่</th>
             <th></th>
             <th style="width: 35%;">สถานะ</th>
         </tr>
@@ -137,7 +137,11 @@ $query_list = mysqli_query($conn, $sql_list)
                     <?php
                     if ($result_list['auctionDetailStatus'] == 'unCheck') { ?>
                         <p class="text-danger"> <strong>รอตรวจสอบ</strong> </p>
+                    <?php } elseif ($result_list['auctionDetailStatus'] == 'checkFail') { ?>
+
+                        ข้อมูลไม่ถูกต้อง <br><a href="auction_resend.php?detailID=<?php echo $result_list['detailID'] ?>">ยื่นเอกสารอีกครั้ง</a>
                     <?php } else { ?>
+
                         <?php
                         $detailID = $result_list['detailID'];
                         $sql = "SELECT * FROM offer_price WHERE detailID = $detailID";
@@ -147,6 +151,8 @@ $query_list = mysqli_query($conn, $sql_list)
                         ?>
                         <?php if ($result['paymentStatus'] == 'unCheck') { ?>
                             รอตรวจสอบใบเสนอราคา
+                        <?php } elseif ($result['paymentStatus'] == 'checkFail') { ?>
+                            ข้อมูลเสนอราคาไม่ถูกต้อง <br><a href="auction_resendOffer.php?offerID=<?php echo $result['offerID'] ?>">ยื่นเอกสารอีกครั้ง</a>
                         <?php } elseif ($result['paymentStatus'] == 'check') { ?>
                             ตรวจสอบใบเสนอราคาแล้ว
                         <?php } else { ?>

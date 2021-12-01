@@ -3,6 +3,17 @@
 
 if (isset($_REQUEST['check_id'])) {
     $check_id = $_REQUEST['check_id'];
+    try {
+        $sql = "SELECT * FROM offer_price WHERE offerID = $check_id";
+        $query = mysqli_query($conn, $sql);
+        $result = mysqli_fetch_array($query);
+        $num = mysqli_num_rows($query);
+        if ($num == 0) {
+            $error = "ไม่มีข้อมูลนี้อยู่";
+        }
+    } catch (Error  $e) {
+        $error = "ไม่มีข้อมูลนี้อยู่";
+    }
 }
 
 if (isset($_REQUEST['auctionID'])) {
@@ -11,6 +22,17 @@ if (isset($_REQUEST['auctionID'])) {
 
 if (isset($_REQUEST['detailID'])) {
     $detailID = $_REQUEST['detailID'];
+    try {
+        $sql = "SELECT * FROM auction_detail WHERE detailID = $detailID";
+        $query = mysqli_query($conn, $sql);
+        $result = mysqli_fetch_array($query);
+        $num = mysqli_num_rows($query);
+        if ($num == 0) {
+            $error = "ไม่มีข้อมูลนี้อยู่";
+        }
+    } catch (Error  $e) {
+        $error = "ไม่มีข้อมูลนี้อยู่";
+    }
 }
 
 if (isset($_REQUEST['checkTrue'])) {
@@ -21,10 +43,24 @@ if (isset($_REQUEST['checkTrue'])) {
         $successMsg = "";
     }
 } elseif (isset($_REQUEST['checkFalse'])) {
-    echo 'ข้อมูลไม่ถูกต้อง';
+    $check_id = $_REQUEST['check_id'];
+    $sql = "UPDATE offer_price SET paymentStatus = 'checkFail' WHERE offerID=$check_id";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $successMsg = "";
+    }
 }
 
 ?>
+
+
+
+
+
+
+
+
+
 <?php if (isset($successMsg)) { ?>
     <script>
         Swal.fire(
@@ -39,17 +75,10 @@ if (isset($_REQUEST['checkTrue'])) {
     </script>
 <?php exit();
 } ?>
-<div class="card mb-4 mt-5 ">
-    <div class="card-header">
-        <i class="far fa-check-square"></i>
-        ตรวจสอบข้อมูลยื่นซอง
-        <div class="btn-group" style="float: right;">
 
-            <a href="auction.php?act=checkOffer&auction_id=<?php echo $auctionID ?>&check_id=<?php echo $check_id ?>&checkTrue=1" class="btn btn-primary btn-sm "><i class="far fa-check-circle"></i> ข้อมูลถูกต้อง</a>
-            <a href="auction.php?act=checkOffer&auction_id=<?php echo $auctionID ?>&check_id=<?php echo $check_id ?>&checkFalse=1" class="btn btn-danger btn-sm "><i class="far fa-times-circle"></i> ข้อมูลไม่ถูกต้อง</a>
-        </div>
-    </div>
-    <?php
+
+<?php
+try {
     $sql = "SELECT * FROM offer_price AS o
 
     INNER JOIN auction_detail AS d
@@ -64,7 +93,42 @@ if (isset($_REQUEST['checkTrue'])) {
     WHERE d.auctionID = $auctionID";
     $query = mysqli_query($conn, $sql);
     $result = mysqli_fetch_array($query);
-    ?>
+    $num = mysqli_num_rows($query);
+    if ($num == 0) {
+        $error = "ไม่มีข้อมูลนี้อยู่";
+    }
+} catch (Error  $e) {
+    $error = "ไม่มีข้อมูลนี้อยู่";
+}
+
+?>
+
+<?php
+if (isset($error)) {
+?>
+    <script type="text/javascript">
+        var error = '<?php echo $error; ?>';
+        Swal.fire(
+            error,
+            '',
+            'error'
+        ).then(function() {
+            window.location = "main_page.php";
+        });
+    </script>
+<?php exit();
+} ?>
+<div class="card mb-4 mt-5 ">
+    <div class="card-header">
+        <i class="far fa-check-square"></i>
+        ตรวจสอบข้อมูลยื่นซอง
+        <div class="btn-group" style="float: right;">
+
+            <a href="auction.php?act=checkOffer&auction_id=<?php echo $auctionID ?>&check_id=<?php echo $check_id ?>&checkTrue=1" class="btn btn-primary btn-sm "><i class="far fa-check-circle"></i> ข้อมูลถูกต้อง</a>
+            <a href="auction.php?act=checkOffer&auction_id=<?php echo $auctionID ?>&check_id=<?php echo $check_id ?>&checkFalse=1" class="btn btn-danger btn-sm "><i class="far fa-times-circle"></i> ข้อมูลไม่ถูกต้อง</a>
+        </div>
+    </div>
+
 
 
 
@@ -94,9 +158,9 @@ if (isset($_REQUEST['checkTrue'])) {
                     <h4>รูปใบเสร็จชำระเงิน</h4>
                     <h1><img src="../offer_price_img/<?php echo $result['paymentImage'] ?>" width="100%" height="auto" alt=""></h1>
                 </div> -->
-                <h5 style="text-align: center;"> <a onClick="PrintDiv();" class="btn btn-primary" style="width: 100%;"> <i class="far fa-file-pdf" style="color: white;"></i> ดาวโหลดเอกสารยื่นซอง</a></h5>
+                <h5 style="text-align: center;"> <a onClick="PrintDiv();" class="btn btn-primary" style="width: 100%;"> <i class="far fa-file-pdf" style="color: white;"></i> ดาวโหลดเอกสาร</a></h5>
                 <br>
-                <a href="javascript:history.back()" style="text-align: center;"><i class="fas fa-arrow-left mt-5"></i> ย้อนกลับ</a>
+                <a href="?act=search&detail_id=<?php echo $_REQUEST['auctionID'] ?>" style="text-align: center;"><i class="fas fa-arrow-left mt-5"></i> ย้อนกลับ</a>
             </div>
 
 
