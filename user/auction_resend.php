@@ -231,7 +231,7 @@ if (isset($_REQUEST['detailID'])) {
             <div class="col-md-6"><button type="submit" name="btn_submit" class="btn btn-primary" style="width: 100%;">บันทึก</button></div>
             <div class="col-md-3"></div>
             <hr>
-            <a href="javascript:history.back()" style="text-align: center;"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
+            <a href="profile.php?act=auction_list" style="text-align: center;"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
         </form>
     </div>
     </div>
