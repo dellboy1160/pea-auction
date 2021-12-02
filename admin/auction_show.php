@@ -1,4 +1,6 @@
 <?php
+
+
 if (isset($_REQUEST['unActive'])) {
     $auctionID = $_REQUEST['unActive'];
 
@@ -13,7 +15,7 @@ if (isset($_REQUEST['unActive'])) {
         ตารางรายการประมูล
         <a href="?act=insert" style="float: right;" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> เพิ่มรายการ</a>
 
-        
+
     </div>
     <div class="card-body ">
         <style>
@@ -76,14 +78,19 @@ if (isset($_REQUEST['unActive'])) {
                                 <a href="?done=<?php echo $result_auction['auctionID'] ?>">จบการประมูล</a>
                             <?php } ?>
                         </td> -->
+
+                        <?php
+                        $data = $result_auction['auctionID'];
+                        $encrypt = encrypt_decrypt($data, 'encrypt');
+                        ?>
                         <td style="text-align: left;">
-                            <a style="width: 100%;" href="?act=search&detail_id=<?php echo $result_auction['auctionID'] ?>" class="btn btn-primary btn-sm mt-2"><i class="fas fa-pen-alt"></i> รายชื่อคนลงประมูล</a>
+                            <a style="width: 100%;" href="?act=search&detail_id=<?php echo  $encrypt ?>" class="btn btn-primary btn-sm mt-2"><i class="fas fa-pen-alt"></i> รายชื่อคนลงประมูล</a>
                         </td>
                         <td style="text-align: center;">
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
 
-                                <a href="?act=edit&update_id=<?php echo $result_auction['auctionID'] ?>" type="button" class="btn btn-warning">แก้ไข</a>
-                                <a href="?delete_id=<?php echo $result_auction['auctionID'] ?>" onclick="return confirm('ยืนยันการลบ');" type="button" class="btn btn-danger">ลบ</a>
+                                <a href="?act=edit&update_id=<?php echo  $encrypt ?>" type="button" class="btn btn-warning">แก้ไข</a>
+                                <a href="?delete_id=<?php echo  $encrypt ?>" onclick="return confirm('ยืนยันการลบ');" type="button" class="btn btn-danger">ลบ</a>
                             </div>
                         </td>
                     </tr>

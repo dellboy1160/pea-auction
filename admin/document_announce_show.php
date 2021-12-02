@@ -31,8 +31,12 @@
 
                         <td style="text-align: center;">
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                <a href="?act=edit&update_id=<?php echo $result_document['documentID'] ?>" type="button" class="btn btn-warning">แก้ไข</a>
-                                <a href="?delete_id=<?php echo $result_document['documentID'] ?>" onclick="return confirm('ยืนยันการลบ');" type="button" class="btn btn-danger">ลบ</a>
+                                <?php
+                                $documentID = $result_document['documentID'];
+                                $encrypt = encrypt_decrypt($documentID, 'encrypt');
+                                ?>
+                                <a href="?act=edit&update_id=<?php echo $encrypt  ?>" type="button" class="btn btn-warning">แก้ไข</a>
+                                <a href="?delete_id=<?php echo $encrypt  ?>" onclick="return confirm('ยืนยันการลบ');" type="button" class="btn btn-danger">ลบ</a>
                             </div>
                         </td>
                     </tr>

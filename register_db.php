@@ -7,7 +7,7 @@ if (isset($_REQUEST['btn_submit'])) {
     $confirm_password = $_REQUEST['txt_confirm_password'];
     $Fname = $_REQUEST['txt_Fname'];
     $Lname = $_REQUEST['txt_Lname'];
-    $line = $_REQUEST['txt_email'];
+    $line = $_REQUEST['txt_line'];
     $phone = $_REQUEST['txt_phone'];
 
 

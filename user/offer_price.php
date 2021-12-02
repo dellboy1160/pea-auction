@@ -1,20 +1,47 @@
 <?php
 include('../server.php');
-
+include('../encrypt_decrypt_function.php');
 if (!isset($_SESSION['username'])) {
     header('location: ../index.php');
 }
 
 if (isset($_REQUEST['detailID'])) {
-    $detailID = $_REQUEST['detailID'];
-    if (isset($_REQUEST['auctionID'])) {
-        $auctionID = $_REQUEST['auctionID'];
+    $encrypt = $_REQUEST['detailID'];
+    $detailID = encrypt_decrypt($encrypt, 'decrypt');
+
+    try {
+        $sql_detail = "SELECT * FROM auction_detail WHERE detailID = $detailID";
+        $query_detail = mysqli_query($conn, $sql_detail);
+        $num_detail = mysqli_num_rows($query_detail);
+        $result_detail = mysqli_fetch_array($query_detail);
+
+        if ($num_detail == 0) {
+            $error = "ไม่มีข้อมูลนี้อยู่";
+        }
+
+        if (isset($_REQUEST['auctionID'])) {
+            $encrypt = $_REQUEST['auctionID'];
+            $auctionID = encrypt_decrypt($encrypt, 'decrypt');
+            $sql_auction = "SELECT * FROM auction WHERE auctionID = $auctionID";
+            $query_auction = mysqli_query($conn, $sql_auction);
+            $num_auction = mysqli_num_rows($query_auction);
+            $result_auction = mysqli_fetch_array($query_auction);
+
+            if ($num_auction == 0) {
+                $error = "ไม่มีข้อมูลนี้อยู่";
+            }
+        }
+    } catch (Error  $e) {
+        $error = "ไม่มีข้อมูลนี้อยู่";
     }
 
     $today = date("Y-m-d H:i:s");
     if (isset($_REQUEST['btn_submit'])) {
-        $detailID = $_REQUEST['detailID'];
-        $auctionID = $_REQUEST['txt_auctionID'];
+        $encrypt1 = $_REQUEST['detailID'];
+        $encrypt2 = $_REQUEST['txt_auctionID'];
+
+        $detailID =   encrypt_decrypt($encrypt1, 'decrypt');
+        $auctionID =  encrypt_decrypt($encrypt2, 'decrypt');
         // $bidPrice = $_REQUEST['txt_bid'];
 
 
@@ -28,13 +55,11 @@ if (isset($_REQUEST['detailID'])) {
         $explode = explode('.', $_FILES['txt_file']['name']);
         $new_name = round(microtime(true)) . '1.' . end($explode);
 
-
         if (empty($new_name)) {
             $errorMsg = "กรุณาเลือกรูปภาพ";
         } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png") {
             if (!file_exists($path)) {
                 if ($size < 2000000) {
-                    move_uploaded_file($temp, '../offer_price_img/' . $new_name);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -60,7 +85,6 @@ if (isset($_REQUEST['detailID'])) {
         } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
             if (!file_exists($path2)) {
                 if ($size2 < 2000000) {
-                    move_uploaded_file($temp2, '../offer_price_img/' . $new_name2);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -86,7 +110,6 @@ if (isset($_REQUEST['detailID'])) {
         } else if ($type3 == "image/jpg" || $type3 == 'image/jpeg' || $type3 == "image/png") {
             if (!file_exists($path3)) {
                 if ($size3 < 2000000) {
-                    move_uploaded_file($temp3, '../offer_price_img/' . $new_name3);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -112,7 +135,6 @@ if (isset($_REQUEST['detailID'])) {
         } else if ($type4 == "image/jpg" || $type4 == 'image/jpeg' || $type4 == "image/png") {
             if (!file_exists($path4)) {
                 if ($size4 < 2000000) {
-                    move_uploaded_file($temp4, '../offer_price_img/' . $new_name4);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -123,6 +145,11 @@ if (isset($_REQUEST['detailID'])) {
         // End of รูปใบเสนอราคา ส่วนที่ 4
 
         if (!isset($errorMsg)) {
+            move_uploaded_file($temp, '../offer_price_img/' . $new_name);
+            move_uploaded_file($temp2, '../offer_price_img/' . $new_name2);
+            move_uploaded_file($temp3, '../offer_price_img/' . $new_name3);
+            move_uploaded_file($temp4, '../offer_price_img/' . $new_name4);
+
             $today = date("Y-m-d H:i:s");
             $sql = "INSERT INTO offer_price (detailID,auctionID,offerPriceDocImage,offerPriceDocImage2,offerPriceDocImage3,paymentImage,offerDate,paymentStatus)
             VALUES ('$detailID','$auctionID','$new_name','$new_name2','$new_name3','$new_name4','$today','unCheck')";
@@ -180,6 +207,21 @@ if (isset($_REQUEST['detailID'])) {
             )
         </script>
     <?php } ?>
+    <?php
+    if (isset($error)) {
+    ?>
+        <script type="text/javascript">
+            var error = '<?php echo $error; ?>';
+            Swal.fire(
+                error,
+                '',
+                'error'
+            ).then(function() {
+                window.location = "main_page.php";
+            });
+        </script>
+    <?php exit();
+    } ?>
     <?php include('../web-structure/user_navbar.php') ?>
     <!-- Page content-->
     <div class="container">

@@ -138,8 +138,11 @@ $query_list = mysqli_query($conn, $sql_list)
                     if ($result_list['auctionDetailStatus'] == 'unCheck') { ?>
                         <p class="text-danger"> <strong>รอตรวจสอบ</strong> </p>
                     <?php } elseif ($result_list['auctionDetailStatus'] == 'checkFail') { ?>
-
-                        ข้อมูลไม่ถูกต้อง <br><a href="auction_resend.php?detailID=<?php echo $result_list['detailID'] ?>">ยื่นเอกสารอีกครั้ง</a>
+                        <?php
+                        $detailID = $result_list['detailID'];
+                        $encrypt = encrypt_decrypt($detailID, 'encrypt');
+                        ?>
+                        ข้อมูลไม่ถูกต้อง <br><a href="auction_resend.php?detailID=<?php echo $encrypt  ?>">ยื่นเอกสารอีกครั้ง</a>
                     <?php } else { ?>
 
                         <?php
@@ -152,9 +155,20 @@ $query_list = mysqli_query($conn, $sql_list)
                         <?php if ($result['paymentStatus'] == 'unCheck') { ?>
                             รอตรวจสอบใบเสนอราคา
                         <?php } elseif ($result['paymentStatus'] == 'checkFail') { ?>
-                            ข้อมูลเสนอราคาไม่ถูกต้อง <br><a href="auction_resendOffer.php?offerID=<?php echo $result['offerID'] ?>">ยื่นเอกสารอีกครั้ง</a>
+                            <?php
+                            $offerID = $result['offerID'];
+                            $encrypt_offerID = encrypt_decrypt($offerID, 'encrypt');
+
+                            ?>
+                            ข้อมูลเสนอราคาไม่ถูกต้อง <br><a href="auction_resendOffer.php?offerID=<?php echo  $encrypt_offerID ?>">ยื่นเอกสารอีกครั้ง</a>
                         <?php } elseif ($result['paymentStatus'] == 'check') { ?>
-                            ตรวจสอบใบเสนอราคาแล้ว
+                            <?php if ($result['auctionStatus'] == '' || $result['auctionStatus'] == null || empty($result['auctionStatus'])) { ?>
+                                ตรวจสอบใบเสนอราคาแล้ว
+                            <?php } elseif ($result['auctionStatus'] == 'won') { ?>
+                                ชนะการประมูล
+                            <?php } elseif ($result['auctionStatus'] == 'lose') { ?>
+                                แพ้การประมูล
+                            <?php } ?>
                         <?php } else { ?>
                             <p class="text-success"> <strong>ตรวจสอบแล้ว</strong> </p>
 
@@ -176,7 +190,13 @@ $query_list = mysqli_query($conn, $sql_list)
                                 <?php if ($today < $startDate) { ?>
                                     <button disabled class="btn btn-secondary btn-sm mt-2" style="width: 100%;">ยังไม่ถึงเวลาเสนอราคา</button>
                                 <?php } elseif ($today > $startDate && $today < $endDate) { ?>
-                                    <a href="offer_price.php?auctionID=<?php echo $result_list['auctionID'] ?>&detailID=<?php echo $result_list['detailID'] ?>" style="width: 100%;" class="btn btn-primary btn-sm mt-2">เสนอราคา</a>
+                                    <?php
+                                    $auctionID = $result_list['auctionID'];
+                                    $detailID = $result_list['detailID'];
+                                    $encrypt_auctionID = encrypt_decrypt($auctionID, 'encrypt');
+                                    $encrypt_detailID = encrypt_decrypt($detailID, 'encrypt');
+                                    ?>
+                                    <a href="offer_price.php?auctionID=<?php echo $encrypt_auctionID ?>&detailID=<?php echo $encrypt_detailID ?>" style="width: 100%;" class="btn btn-primary btn-sm mt-2">เสนอราคา</a>
                                 <?php } elseif ($today > $endDate) { ?>
                                     <button disabled class="btn btn-secondary btn-sm mt-2" style="width: 100%;">หมดเวลาเสนอราคา</button>
                                 <?php } ?>

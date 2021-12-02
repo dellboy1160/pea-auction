@@ -2,7 +2,9 @@
 if (isset($_REQUEST['update_id'])) {
     try {
 
-        $update_id = $_REQUEST['update_id'];
+        $encrypt = $_REQUEST['update_id'];
+        $update_id = encrypt_decrypt($encrypt, 'decrypt');
+
         $sql_bank = "SELECT * FROM bank WHERE bankID = $update_id";
         $query_bank = mysqli_query($conn, $sql_bank);
         $result_bank = mysqli_fetch_array($query_bank);

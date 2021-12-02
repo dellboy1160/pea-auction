@@ -14,7 +14,7 @@
                             <li>
                                 <hr class="dropdown-divider" />
                             </li>
-                            <li><a class="dropdown-item" href="../logout.php" onclick="return confirm('ออกจากระบบ');"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a></li>
+                            <li><a class="dropdown-item" href="../logout_user.php" onclick="return confirm('ออกจากระบบ');"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a></li>
                         </ul>
                     </li>
                 </ul>

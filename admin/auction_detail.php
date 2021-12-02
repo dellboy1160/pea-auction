@@ -1,7 +1,8 @@
 <?php
 
 if (isset($_REQUEST['detail_id'])) {
-    $auctionID = $_REQUEST['detail_id'];
+    $encrypt = $_REQUEST['detail_id'];
+    $auctionID = encrypt_decrypt($encrypt, 'decrypt');
 }
 ?>
 
@@ -43,7 +44,7 @@ if (isset($error)) {
 <div class="card mb-4 mt-5">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        ตารางรายรายชื่อคนลงประมูล รหัส <?php echo $_REQUEST['detail_id'] ?>
+        ตารางรายรายชื่อคนลงประมูล รหัส <?php echo $auctionID ?>
 
         <div class="btn-group" style="float: right;">
 
@@ -108,7 +109,15 @@ if (isset($error)) {
 
                         <td>
                             <?php if ($result_auction['auctionDetailStatus'] == 'unCheck') { ?>
-                                <a href="?act=check&detail_id=<?php echo $auctionID ?>&check_id=<?php echo $result_auction['detailID'] ?>" class="btn btn-primary">ตรวจสอบข้อมูล</a>
+
+                                <?php
+                                $detailID = $auctionID;
+                                $checkId = $result_auction['detailID'];
+
+                                $encrypt_detailID = encrypt_decrypt($detailID, 'encrypt');
+                                $encrypt_checkID = encrypt_decrypt($checkId, 'encrypt');
+                                ?>
+                                <a href="?act=check&detail_id=<?php echo $encrypt_detailID ?>&check_id=<?php echo  $encrypt_checkID  ?>">ตรวจสอบข้อมูล</a>
                             <?php } elseif ($result_auction['auctionDetailStatus'] == 'checkFail') { ?>
                                 ข้อมูลไม่ถูกต้อง
                             <?php } elseif ($result_auction['auctionDetailStatus'] == 'check' && $result_offer['paymentStatus'] == null) { ?>
@@ -116,11 +125,26 @@ if (isset($error)) {
                             <?php } elseif ($result_offer['paymentStatus'] == 'checkFail') { ?>
                                 ข้อมูลยื่นซองไม่ถูกต้อง
                             <?php } elseif ($result_offer['paymentStatus'] == 'unCheck') { ?>
-                                ยื่นซองแล้ว <a href="?act=checkOffer&auctionID=<?php echo $auctionID ?>&check_id=<?php echo $result_offer['offerID'] ?>&detailID=<?php echo $result_auction['detailID'] ?>" class="">ตรวจสอบ</a>
-                            <?php } elseif ($result_offer['paymentStatus'] == 'check') { ?>
-                                ตรวจสอบการยื่นซองแล้ว
-                            <?php } ?>
+                                <?php
+                                $auctionID = $auctionID;
+                                $checkId = $result_offer['offerID'];
+                                $detailID =  $result_auction['detailID'];
 
+                                $encrypt_auctionID = encrypt_decrypt($auctionID, 'encrypt');
+                                $encrypt_checkID = encrypt_decrypt($checkId, 'encrypt');
+                                $encypt_detailID = encrypt_decrypt($detailID, 'encrypt')
+                                ?>
+
+                                ยื่นซองแล้ว <a href="?act=checkOffer&auctionID=<?php echo $encrypt_auctionID ?>&check_id=<?php echo $encrypt_checkID ?>&detailID=<?php echo $encypt_detailID ?>" class="">ตรวจสอบ</a>
+                            <?php } elseif ($result_offer['paymentStatus'] == 'check' && empty($result_offer['auctionStatus'])) { ?>
+                                <!-- ตรวจสอบการยื่นซองแล้ว -->
+                                <a href="auction_won.php?auctionStatus=won&userID=<?php echo $result_auction['user_id'] ?>&auctionID=<?php echo $auctionID ?>&offerID=<?php echo $result_offer['offerID'] ?>&detailID=<?php echo $result_auction['detailID'] ?>">ชนะ</a>
+                            <?php } elseif ($result_offer['paymentStatus'] == 'check' && $result_offer['auctionStatus'] == 'won') { ?>
+                                ผู้ชนะ<br>
+                                กำหนดรับสินค้า ภายในวันที่ :
+                            <?php } elseif ($result_offer['paymentStatus'] == 'check' && $result_offer['auctionStatus'] == 'lose') { ?>
+                                ผู้แพ้
+                            <?php } ?>
                         </td>
                     </tr>
                 <?php } ?>

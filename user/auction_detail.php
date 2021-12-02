@@ -1,12 +1,14 @@
 <?php
 include('../server.php');
 include('../ThaiDateFunction.php');
+include('../encrypt_decrypt_function.php');
 if (!isset($_SESSION['username'])) {
     header('location: ../index.php');
 }
 
 if (isset($_REQUEST['auctionID'])) {
-    $auctionID = $_REQUEST['auctionID'];
+    $encrypt = $_REQUEST['auctionID'];
+    $auctionID = encrypt_decrypt($encrypt, 'decrypt');
     $today = date("Y-m-d H:i:s");
 }
 
@@ -33,7 +35,6 @@ if (isset($_REQUEST['btn_submit'])) {
     } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png") {
         if (!file_exists($path)) {
             if ($size < 2000000) {
-                move_uploaded_file($temp, '../copy/' . $new_name);
             } else {
                 $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
             }
@@ -59,7 +60,6 @@ if (isset($_REQUEST['btn_submit'])) {
     } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
         if (!file_exists($path2)) {
             if ($size2 < 2000000) {
-                move_uploaded_file($temp2, '../copy/' . $new_name2);
             } else {
                 $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
             }
@@ -86,7 +86,6 @@ if (isset($_REQUEST['btn_submit'])) {
         if ($type3 == "image/jpg" || $type3 == 'image/jpeg' || $type3 == "image/png") {
             if (!file_exists($path3)) {
                 if ($size3 < 2000000) {
-                    move_uploaded_file($temp3, '../copy/' . $new_name3);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -98,9 +97,12 @@ if (isset($_REQUEST['btn_submit'])) {
     // End of สำเนาใบทะเบียนพาณิชย์
 
     if (!isset($errorMsg)) {
+        move_uploaded_file($temp, '../copy/' . $new_name);
+        move_uploaded_file($temp2, '../copy/' . $new_name2);
+        move_uploaded_file($temp3, '../copy/' . $new_name3);
         $today = date("Y-m-d H:i:s");
         $sql = "INSERT INTO auction_detail (auctionID,user_id,signDate,idCardImage,houseRegistrationImage,commercialRegistrationImage,auctionDetailStatus)
-    VALUES ('$auctionID','$userID','$today','$new_name','$new_name2','$new_name3','unCheck')";
+        VALUES ('$auctionID','$userID','$today','$new_name','$new_name2','$new_name3','unCheck')";
         $query = mysqli_query($conn, $sql);
         if ($query) {
             $successMsg = "";

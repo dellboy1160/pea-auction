@@ -1,16 +1,25 @@
 <?php
 include('../server.php');
-
+include('../encrypt_decrypt_function.php');
 if (!isset($_SESSION['username'])) {
     header('location: ../index.php');
 }
 
 if (isset($_REQUEST['offerID'])) {
-    $offerID = $_REQUEST['offerID'];
+    $encrypt = $_REQUEST['offerID'];
+    $offerID = encrypt_decrypt($encrypt, 'decrypt');
+    try {
+        $sql = "SELECT * FROM offer_price WHERE offerID = $offerID";
+        $query = mysqli_query($conn, $sql);
+        $num = mysqli_num_rows($query);
+        $result = mysqli_fetch_array($query);
 
-    $sql = "SELECT * FROM offer_price WHERE offerID = $offerID";
-    $query = mysqli_query($conn, $sql);
-    $result = mysqli_fetch_array($query);
+        if ($num == 0) {
+            $error = "ไม่มีข้อมูลนี้อยู่";
+        }
+    } catch (Error  $e) {
+        $error = "ไม่มีข้อมูลนี้อยู่";
+    }
 
     if (isset($_REQUEST['btn_submit'])) {
         // รูปใบเสนอราคา ส่วนที่ 1
@@ -30,8 +39,6 @@ if (isset($_REQUEST['offerID'])) {
         } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png") {
             if (!file_exists($path)) {
                 if ($size < 2000000) {
-                    unlink('../offer_price_img/' . $result['offerPriceDocImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
-                    move_uploaded_file($temp, '../offer_price_img/' . $new_name);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -59,8 +66,6 @@ if (isset($_REQUEST['offerID'])) {
         } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
             if (!file_exists($path2)) {
                 if ($size2 < 2000000) {
-                    unlink('../offer_price_img/' . $result['offerPriceDocImage2']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
-                    move_uploaded_file($temp2, '../offer_price_img/' . $new_name2);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -87,8 +92,6 @@ if (isset($_REQUEST['offerID'])) {
         } else if ($type4 == "image/jpg" || $type4 == 'image/jpeg' || $type4 == "image/png") {
             if (!file_exists($path4)) {
                 if ($size4 < 2000000) {
-                    unlink('../offer_price_img/' . $result['offerPriceDocImage3']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
-                    move_uploaded_file($temp4, '../offer_price_img/' . $new_name4);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -116,8 +119,6 @@ if (isset($_REQUEST['offerID'])) {
         } else if ($type3 == "image/jpg" || $type3 == 'image/jpeg' || $type3 == "image/png") {
             if (!file_exists($path3)) {
                 if ($size3 < 2000000) {
-                    unlink('../offer_price_img/' . $result['paymentImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
-                    move_uploaded_file($temp3, '../offer_price_img/' . $new_name3);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -128,6 +129,15 @@ if (isset($_REQUEST['offerID'])) {
         // End of รูปใบเสนอราคา 
 
         if (!isset($errorMsg)) {
+            unlink('../offer_price_img/' . $result['offerPriceDocImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
+            move_uploaded_file($temp, '../offer_price_img/' . $new_name);
+            unlink('../offer_price_img/' . $result['offerPriceDocImage2']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
+            move_uploaded_file($temp2, '../offer_price_img/' . $new_name2);
+            unlink('../offer_price_img/' . $result['offerPriceDocImage3']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
+            move_uploaded_file($temp4, '../offer_price_img/' . $new_name4);
+            unlink('../offer_price_img/' . $result['paymentImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
+            move_uploaded_file($temp3, '../offer_price_img/' . $new_name3);
+
             $sql = "UPDATE offer_price SET offerPriceDocImage = '$new_name',
             offerPriceDocImage2 = '$new_name2',
             offerPriceDocImage3 = '$new_name3',
@@ -189,6 +199,21 @@ if (isset($_REQUEST['offerID'])) {
             )
         </script>
     <?php } ?>
+    <?php
+    if (isset($error)) {
+    ?>
+        <script type="text/javascript">
+            var error = '<?php echo $error; ?>';
+            Swal.fire(
+                error,
+                '',
+                'error'
+            ).then(function() {
+                window.location = "main_page.php";
+            });
+        </script>
+    <?php exit();
+    } ?>
     <?php include('../web-structure/user_navbar.php') ?>
     <!-- Page content-->
     <div class="container">

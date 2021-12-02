@@ -1,12 +1,13 @@
 <?php
 include('../server.php');
-
+include('../encrypt_decrypt_function.php');
 if (!isset($_SESSION['username'])) {
     header('location: ../index.php');
 }
 
 if (isset($_REQUEST['detailID'])) {
-    $detailID = $_REQUEST['detailID'];
+    $encrypt = $_REQUEST['detailID'];
+    $detailID = encrypt_decrypt($encrypt, 'decrypt');
     try {
         $sql = "SELECT * FROM auction_detail WHERE detailID = $detailID";
         $query = mysqli_query($conn, $sql);
@@ -37,8 +38,6 @@ if (isset($_REQUEST['detailID'])) {
         } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png") {
             if (!file_exists($path)) {
                 if ($size < 2000000) {
-                    unlink('../copy/' . $result['idCardImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
-                    move_uploaded_file($temp, '../copy/' . $new_name);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -66,8 +65,6 @@ if (isset($_REQUEST['detailID'])) {
         } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
             if (!file_exists($path2)) {
                 if ($size2 < 2000000) {
-                    unlink('../copy/' . $result['houseRegistrationImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
-                    move_uploaded_file($temp2, '../copy/' . $new_name2);
                 } else {
                     $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                 }
@@ -95,8 +92,6 @@ if (isset($_REQUEST['detailID'])) {
             if ($type3 == "image/jpg" || $type3 == 'image/jpeg' || $type3 == "image/png") {
                 if (!file_exists($path3)) {
                     if ($size3 < 2000000) {
-                        unlink('../copy/' . $result['commercialRegistrationImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
-                        move_uploaded_file($temp3, '../copy/' . $new_name3);
                     } else {
                         $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
                     }
@@ -108,6 +103,13 @@ if (isset($_REQUEST['detailID'])) {
         // End of สำเนาใบทะเบียนพาณิชย์
 
         if (!isset($errorMsg)) {
+            unlink('../copy/' . $result['idCardImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
+            move_uploaded_file($temp, '../copy/' . $new_name);
+            unlink('../copy/' . $result['houseRegistrationImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
+            move_uploaded_file($temp2, '../copy/' . $new_name2);
+            unlink('../copy/' . $result['commercialRegistrationImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
+            move_uploaded_file($temp3, '../copy/' . $new_name3);
+
             $sql = "UPDATE auction_detail SET idCardImage = '$new_name',
             houseRegistrationImage = '$new_name2',
             commercialRegistrationImage = '$new_name3',

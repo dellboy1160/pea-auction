@@ -2,8 +2,13 @@
 
 
 if (isset($_REQUEST['check_id'])) {
-    $check_id = $_REQUEST['check_id'];
-    $auctionID = $_REQUEST['detail_id'];
+
+
+    $encrypt_checkID = $_REQUEST['check_id'];
+    $encrypt_auctionID = $_REQUEST['detail_id'];
+
+    $check_id = encrypt_decrypt($encrypt_checkID, 'decrypt');
+    $auctionID = encrypt_decrypt($encrypt_auctionID, 'decrypt');
     try {
         $sql = "SELECT * FROM auction WHERE auctionID = $auctionID";
         $query = mysqli_query($conn, $sql);
@@ -18,14 +23,17 @@ if (isset($_REQUEST['check_id'])) {
 }
 
 if (isset($_REQUEST['checkTrue'])) {
-    $check_id = $_REQUEST['check_id'];
+
+    $encrypt = $_REQUEST['check_id'];
+    $check_id = encrypt_decrypt($encrypt, 'decrypt');
     $sql = "UPDATE auction_detail SET auctionDetailStatus = 'check' WHERE detailID=$check_id";
     $query = mysqli_query($conn, $sql);
     if ($query) {
         $successMsg = "";
     }
 } elseif (isset($_REQUEST['checkFalse'])) {
-    $check_id = $_REQUEST['check_id'];
+    $encrypt = $_REQUEST['check_id'];
+    $check_id = encrypt_decrypt($encrypt, 'decrypt');
     $sql = "UPDATE auction_detail SET auctionDetailStatus = 'checkFail' WHERE detailID=$check_id";
     $query = mysqli_query($conn, $sql);
     if ($query) {
@@ -65,7 +73,7 @@ try {
 
 
         ).then(function() {
-            window.location = "?act=search&detail_id=<?php echo $auctionID ?>";
+            window.location = "?act=search&detail_id=<?php echo encrypt_decrypt($auctionID, 'encrypt'); ?>";
         });
     </script>
 <?php } ?>
@@ -89,10 +97,16 @@ if (isset($error)) {
     <div class="card-header">
         <i class="far fa-check-square"></i>
         ตรวจสอบข้อมูล
+        <?php
+        $encrypt_detailID = $auctionID;
+        $encrypt_check_id = $check_id;
 
+        $detailID = encrypt_decrypt($encrypt_detailID, 'encrypt');
+        $checkID = encrypt_decrypt($encrypt_check_id, 'encrypt');
+        ?>
         <div class="btn-group" style="float: right;">
-            <a href="auction.php?act=check&detail_id=<?php echo $auctionID ?>&check_id=<?php echo $check_id ?>&checkTrue=1" class="btn btn-primary btn-sm "><i class="far fa-check-circle"></i> ข้อมูลถูกต้อง</a>
-            <a href="auction.php?act=check&detail_id=<?php echo $auctionID ?>&check_id=<?php echo $check_id ?>&checkFalse=1" class="btn btn-danger btn-sm "><i class="far fa-times-circle"></i> ข้อมูลไม่ถูกต้อง</a>
+            <a href="auction.php?act=check&detail_id=<?php echo $detailID ?>&check_id=<?php echo $checkID ?>&checkTrue=1" class="btn btn-primary btn-sm "><i class="far fa-check-circle"></i> ข้อมูลถูกต้อง</a>
+            <a href="auction.php?act=check&detail_id=<?php echo $detailID ?>&check_id=<?php echo $checkID ?>&checkFalse=1" class="btn btn-danger btn-sm "><i class="far fa-times-circle"></i> ข้อมูลไม่ถูกต้อง</a>
         </div>
     </div>
 
@@ -125,7 +139,7 @@ if (isset($error)) {
                 </div> -->
                 <h5 style="text-align: center;"> <a onClick="PrintDiv();" class="btn btn-primary"> <i class="far fa-file-pdf" style="color: white;"></i> ดาวโหลดเอกสาร</a></h5>
                 <br>
-                <a href="javascript:history.back()" style="text-align: center;"><i class="fas fa-arrow-left mt-5"></i> ย้อนกลับ</a>
+                <a href="?act=search&detail_id=<?php echo $_REQUEST['detail_id'] ?>" style="text-align: center;"><i class="fas fa-arrow-left mt-5"></i> ย้อนกลับ</a>
             </div>
         </div>
     </div>
@@ -134,7 +148,12 @@ if (isset($error)) {
             <div class="col-md-12">
                 <img src="../copy/<?php echo $result['idCardImage'] ?>" width="100%" height="auto" alt="">
                 <img src="../copy/<?php echo $result['houseRegistrationImage'] ?>" width="100%" height="auto" alt="">
-                <img src="../copy/<?php echo $result['commercialRegistrationImage'] ?>" width="100%" height="auto" alt="">
+
+                <?php if ($result['commercialRegistrationImage'] == "" || $result['commercialRegistrationImage'] == null || empty($result['commercialRegistrationImage'])) { ?>
+
+                <?php } else { ?>
+                    <img src="../copy/<?php echo $result['commercialRegistrationImage'] ?>" width="100%" height="auto" alt="">
+                <?php } ?>
 
             </div>
         </div>

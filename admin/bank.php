@@ -1,13 +1,14 @@
 <?php
 include('../server.php');
+include('../encrypt_decrypt_function.php');
 if (!isset($_SESSION['adminUsername'])) {
     header('location: ../index.php');
 }
 
 
 if (isset($_REQUEST['delete_id'])) {
-    $delete_id = $_REQUEST['delete_id'];
-
+    $encrypt = $_REQUEST['delete_id'];
+    $delete_id = encrypt_decrypt($encrypt, 'decrypt');
     $sql = "DELETE  FROM bank WHERE bankID = $delete_id";
     $query = mysqli_query($conn, $sql);
 
@@ -87,8 +88,7 @@ if (isset($_REQUEST['delete_id'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>

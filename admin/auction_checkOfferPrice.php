@@ -2,7 +2,9 @@
 
 
 if (isset($_REQUEST['check_id'])) {
-    $check_id = $_REQUEST['check_id'];
+    $encrypt = $_REQUEST['check_id'];
+
+    $check_id = encrypt_decrypt($encrypt, 'decrypt');
     try {
         $sql = "SELECT * FROM offer_price WHERE offerID = $check_id";
         $query = mysqli_query($conn, $sql);
@@ -17,11 +19,13 @@ if (isset($_REQUEST['check_id'])) {
 }
 
 if (isset($_REQUEST['auctionID'])) {
-    $auctionID = $_REQUEST['auctionID'];
+    $encrypt = $_REQUEST['auctionID'];
+    $auctionID = encrypt_decrypt($encrypt, 'decrypt');
 }
 
 if (isset($_REQUEST['detailID'])) {
-    $detailID = $_REQUEST['detailID'];
+    $encrypt = $_REQUEST['detailID'];
+    $detailID = encrypt_decrypt($encrypt, 'decrypt');
     try {
         $sql = "SELECT * FROM auction_detail WHERE detailID = $detailID";
         $query = mysqli_query($conn, $sql);
@@ -36,14 +40,16 @@ if (isset($_REQUEST['detailID'])) {
 }
 
 if (isset($_REQUEST['checkTrue'])) {
-    $check_id = $_REQUEST['check_id'];
+    $encrypt = $_REQUEST['check_id'];
+    $check_id = encrypt_decrypt($encrypt, 'decrypt');
     $sql = "UPDATE offer_price SET paymentStatus = 'check' WHERE offerID=$check_id";
     $query = mysqli_query($conn, $sql);
     if ($query) {
         $successMsg = "";
     }
 } elseif (isset($_REQUEST['checkFalse'])) {
-    $check_id = $_REQUEST['check_id'];
+    $encrypt = $_REQUEST['check_id'];
+    $check_id = encrypt_decrypt($encrypt, 'decrypt');
     $sql = "UPDATE offer_price SET paymentStatus = 'checkFail' WHERE offerID=$check_id";
     $query = mysqli_query($conn, $sql);
     if ($query) {
@@ -52,11 +58,6 @@ if (isset($_REQUEST['checkTrue'])) {
 }
 
 ?>
-
-
-
-
-
 
 
 
@@ -70,7 +71,7 @@ if (isset($_REQUEST['checkTrue'])) {
 
 
         ).then(function() {
-            window.location = "?act=search&detail_id=<?php echo $_REQUEST['auction_id'] ?>";
+            window.location = "?act=search&detail_id=<?php echo $_REQUEST['auctionID'] ?>";
         });
     </script>
 <?php exit();
@@ -91,6 +92,8 @@ try {
     ON d.auctionID = a.auctionID
 
     WHERE d.auctionID = $auctionID";
+
+
     $query = mysqli_query($conn, $sql);
     $result = mysqli_fetch_array($query);
     $num = mysqli_num_rows($query);
@@ -118,14 +121,21 @@ if (isset($error)) {
     </script>
 <?php exit();
 } ?>
+
 <div class="card mb-4 mt-5 ">
     <div class="card-header">
         <i class="far fa-check-square"></i>
         ตรวจสอบข้อมูลยื่นซอง
         <div class="btn-group" style="float: right;">
+            <?php
+            $encrypt_auctionID = $auctionID;
+            $encrypt_checkID = $check_id;
 
-            <a href="auction.php?act=checkOffer&auction_id=<?php echo $auctionID ?>&check_id=<?php echo $check_id ?>&checkTrue=1" class="btn btn-primary btn-sm "><i class="far fa-check-circle"></i> ข้อมูลถูกต้อง</a>
-            <a href="auction.php?act=checkOffer&auction_id=<?php echo $auctionID ?>&check_id=<?php echo $check_id ?>&checkFalse=1" class="btn btn-danger btn-sm "><i class="far fa-times-circle"></i> ข้อมูลไม่ถูกต้อง</a>
+            $auctionID = encrypt_decrypt($encrypt_auctionID, 'encrypt');
+            $check_id = encrypt_decrypt($encrypt_checkID, 'encrypt');
+            ?>
+            <a href="auction.php?act=checkOffer&auctionID=<?php echo $auctionID ?>&check_id=<?php echo $check_id ?>&checkTrue=1" class="btn btn-primary btn-sm "><i class="far fa-check-circle"></i> ข้อมูลถูกต้อง</a>
+            <a href="auction.php?act=checkOffer&auctionID=<?php echo $auctionID ?>&check_id=<?php echo $check_id ?>&checkFalse=1" class="btn btn-danger btn-sm "><i class="far fa-times-circle"></i> ข้อมูลไม่ถูกต้อง</a>
         </div>
     </div>
 

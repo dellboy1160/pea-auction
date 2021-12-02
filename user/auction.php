@@ -1,6 +1,7 @@
 <?php
 include('../server.php');
 include('../ThaiDateFunction.php');
+include('../encrypt_decrypt_function.php');
 if (!isset($_SESSION['username'])) {
     header('location: ../index.php');
 }
@@ -87,7 +88,11 @@ if (!isset($_SESSION['username'])) {
                                 <?php if ($num_auctionDetail  >= 1) { ?>
                                     <button disabled class="card-link btn btn-primary" style="width: 100%;">คุณลงชื่อแล้ว</button>
                                 <?php } else { ?>
-                                    <a href="auction_detail.php?auctionID=<?php echo $result['auctionID'] ?>" class="card-link btn btn-primary" style="width: 100%;">ลงชื่อ</a>
+                                    <?php
+                                    $auctionID = $result['auctionID'];
+                                    $encrypt = encrypt_decrypt($auctionID, 'encrypt');
+                                    ?>
+                                    <a href="auction_detail.php?auctionID=<?php echo $encrypt ?>" class="card-link btn btn-primary" style="width: 100%;">ลงชื่อ</a>
                                 <?php } ?>
                             <?php   } else { ?>
                                 <button disabled class="card-link btn btn-secondary" style="width: 100%;">หมดเวลาประมูล</button>

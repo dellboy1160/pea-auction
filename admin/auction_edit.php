@@ -1,7 +1,9 @@
 <?php
 if (isset($_REQUEST['update_id'])) {
     try {
-        $update_id = $_REQUEST['update_id'];
+        $encrypt = $_REQUEST['update_id'];
+        $update_id = encrypt_decrypt($encrypt, 'decrypt');
+
         $sql_auction = "SELECT * FROM auction WHERE auctionID = $update_id";
         $query_auction = mysqli_query($conn, $sql_auction);
         $result_auction = mysqli_fetch_array($query_auction);

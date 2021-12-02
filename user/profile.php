@@ -1,6 +1,7 @@
 <?php
 include('../server.php');
 include('../ThaiDateFunction.php');
+include('../encrypt_decrypt_function.php');
 error_reporting(E_ERROR | E_PARSE);
 if (!isset($_SESSION['username'])) {
     header('location: ../index.php');

@@ -1,7 +1,9 @@
 <?php
 if (isset($_REQUEST['update_id'])) {
     try {
-        $update_id = $_REQUEST['update_id'];
+        $encrypt = $_REQUEST['update_id'];
+        $update_id = encrypt_decrypt($encrypt, 'decrypt');
+
         $sql_doc = "SELECT * FROM document_announce WHERE documentID = $update_id";
 
         $query_doc = mysqli_query($conn, $sql_doc);
