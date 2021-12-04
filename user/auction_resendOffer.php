@@ -143,6 +143,7 @@ if (isset($_REQUEST['offerID'])) {
             offerPriceDocImage3 = '$new_name3',
             paymentImage='$new_name4',
             paymentStatus = 'unCheck'
+            WHERE offerID = $offerID
             
 
             

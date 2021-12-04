@@ -114,7 +114,7 @@ if (isset($_REQUEST['detailID'])) {
             houseRegistrationImage = '$new_name2',
             commercialRegistrationImage = '$new_name3',
             auctionDetailStatus = 'unCheck'
-
+            WHERE detailID = $detailID
             
             ";
             $query = mysqli_query($conn, $sql);

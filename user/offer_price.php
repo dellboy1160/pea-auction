@@ -310,6 +310,16 @@ if (isset($_REQUEST['detailID'])) {
                         </div>
                     </div>
 
+                    <div class="col-12 mt-3">
+                        <hr class="mt-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                            <label class="form-check-label" for="invalidCheck">
+                                ข้อมูลถูกต้องครบถ้วน
+                            </label>
+
+                        </div>
+                    </div>
 
 
 

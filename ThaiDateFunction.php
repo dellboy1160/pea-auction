@@ -46,3 +46,17 @@ function signDate($signDate)
     // $strDate = "2008-08-14 13:42:44";
     // echo "ThaiCreate.Com Time now : ".DateThai($strDate);
 }
+
+function justDate($date)
+{
+    $strYear = date("Y", strtotime($date)) + 543;
+    $strMonth = date("n", strtotime($date));
+    $strDay = date("j", strtotime($date));
+
+    $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
+    $strMonthThai = $strMonthCut[$strMonth];
+    return "$strDay $strMonthThai $strYear";
+
+    // $strDate = "2008-08-14 13:42:44";
+    // echo "ThaiCreate.Com Time now : ".DateThai($strDate);
+}

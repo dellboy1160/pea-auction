@@ -108,10 +108,9 @@ $query_list = mysqli_query($conn, $sql_list)
     <thead>
         <tr>
             <th>รหัสประมูล</th>
-            <th width="15%">หัวข้อ</th>
+            <th width="40%">รายละเอียดเพิ่มเติม</th>
 
-            <th width="15%">ลงชื่อวันที่</th>
-            <th></th>
+
             <th style="width: 35%;">สถานะ</th>
         </tr>
     </thead>
@@ -119,20 +118,15 @@ $query_list = mysqli_query($conn, $sql_list)
         <tbody>
             <tr>
                 <td data-label="รหัสประมูล"><?php echo $result_list['auctionID'] ?></td>
-                <td data-label="หัวข้อ"><?php echo $result_list['auctionTitle'] ?></td>
-                <td data-label="วัน/เวลา ที่ลงชื่อ">
+                <td data-label="รายละเอียด">
 
-                    <?php
-
-                    $signDate = $result_list['signDate'];
-                    echo signDate($signDate);
-
-                    ?>
-
+                    หัวข้อ : <?php echo $result_list['auctionTitle'] ?><br>
+                    ลงชื่อวันที่ :<br> <?php $signDate = $result_list['signDate'];
+                                        echo signDate($signDate);
+                                        ?><br>
+                    <a href="" class="btn btn-primary btn-sm">รายละเอียดเพิ่มเติม</a>
                 </td>
-                <td style="text-align: center;">
-                    <a href="?detailID" class="btn btn-primary btn-sm" style="width: 100%;">รายละเอียด</a>
-                </td>
+
                 <td data-label="สถานะ">
                     <?php
                     if ($result_list['auctionDetailStatus'] == 'unCheck') { ?>
@@ -165,12 +159,25 @@ $query_list = mysqli_query($conn, $sql_list)
                             <?php if ($result['auctionStatus'] == '' || $result['auctionStatus'] == null || empty($result['auctionStatus'])) { ?>
                                 ตรวจสอบใบเสนอราคาแล้ว
                             <?php } elseif ($result['auctionStatus'] == 'won') { ?>
-                                ชนะการประมูล
+                                ชนะการประมูล<br>
+                                กำหนดรับสินค้าภายในวันที่ :
+                                <?php
+                                $date = $result['announceWonDate'];
+                                echo justDate($date . ' + 10 days');
+                                ?>
                             <?php } elseif ($result['auctionStatus'] == 'lose') { ?>
-                                แพ้การประมูล
+                                แพ้การประมูล<br>
+                                <?php
+                                if (empty($result['refundPaymentImage'])) {
+                                    echo 'รอ Admin โอนเงินคืน';
+                                } else { ?>
+                                    Admin โอนเงินคืนแล้ว<br>
+                                    <a target="_blank" href="../refund_image/<?php echo $result['refundPaymentImage'] ?>">หลักฐานการโอน</a>
+                                <?php  }
+                                ?>
                             <?php } ?>
                         <?php } else { ?>
-                            <p class="text-success"> <strong>ตรวจสอบแล้ว</strong> </p>
+                            <label class="text-success"> <strong>ตรวจสอบแล้ว</strong> </label><br>
 
                             <?php
                             $sql_doc = "SELECT * FROM document_offerprice";
@@ -182,8 +189,8 @@ $query_list = mysqli_query($conn, $sql_list)
                                 $endDate = $result_doc['endDate'];
                                 $today = date("Y-m-d H:i:s");
                             ?>
-
-                                กำหนดเสนอราคาวันที่ <br> <?php echo signDate($startDate)  ?> -
+                                <h6 class="mb-3"> <a target="_blank" href="../admin/document/<?php echo $result_doc['documentFile'] ?>"><i class="far fa-file-pdf" style="color: red;"></i> ดาวโหลดใบเสนอราคา</a> <br></h6>
+                                เสนอราคา และประกาศผู้ชนะการประมูล วันที่:<br> <?php echo signDate($startDate)  ?> -
                                 <?php echo signDate($endDate) ?>
 
                                 <br>

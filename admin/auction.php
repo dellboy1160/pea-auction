@@ -2,6 +2,8 @@
 include('../server.php');
 include('../ThaiDateFunction.php');
 include('../encrypt_decrypt_function.php');
+error_reporting(E_ERROR | E_PARSE);
+
 if (!isset($_SESSION['adminUsername'])) {
     header('location: ../index.php');
 }
@@ -11,7 +13,7 @@ if (!isset($_SESSION['adminUsername'])) {
 if (isset($_REQUEST['delete_id'])) {
     $encrypt = $_REQUEST['delete_id'];
     $delete_id = encrypt_decrypt($encrypt, 'decrypt');
-    
+
     $sql = "DELETE  FROM auction WHERE auctionID  = $delete_id ";
     $query = mysqli_query($conn, $sql);
 
@@ -102,6 +104,8 @@ if (isset($_REQUEST['delete_id'])) {
                             include('auction_OfferPrice.php');
                         } elseif ($_REQUEST['act'] == 'checkOffer') {
                             include('auction_checkOfferPrice.php');
+                        } elseif($_REQUEST['act']=='auctionWon'){
+                            include('auction_won.php');
                         }
                     } else {
                         include('auction_show.php');

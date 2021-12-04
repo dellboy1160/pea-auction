@@ -152,22 +152,7 @@ if (isset($error)) {
                 </div>
 
 
-                <!-- <div class="col-md-4">
-                    <h4>รูปเอกสารใบเสนอราคา</h4>
-                    <h1><img src="../offer_price_img/<?php echo $result['offerPriceDocImage'] ?>" width="100%" height="auto" alt=""></h1>
-                </div>
-                <div class="col-md-4">
-                    <h4>รูปเอกสารใบเสนอราคา</h4>
-                    <h1><img src="../offer_price_img/<?php echo $result['offerPriceDocImage2'] ?>" width="100%" height="auto" alt=""></h1>
-                </div>
-                <div class="col-md-4">
-                    <h4>รูปเอกสารใบเสนอราคา</h4>
-                    <h1><img src="../offer_price_img/<?php echo $result['offerPriceDocImage3'] ?>" width="100%" height="auto" alt=""></h1>
-                </div>
-                <div class="col-md-4">
-                    <h4>รูปใบเสร็จชำระเงิน</h4>
-                    <h1><img src="../offer_price_img/<?php echo $result['paymentImage'] ?>" width="100%" height="auto" alt=""></h1>
-                </div> -->
+
                 <h5 style="text-align: center;"> <a onClick="PrintDiv();" class="btn btn-primary" style="width: 100%;"> <i class="far fa-file-pdf" style="color: white;"></i> ดาวโหลดเอกสาร</a></h5>
                 <br>
                 <a href="?act=search&detail_id=<?php echo $_REQUEST['auctionID'] ?>" style="text-align: center;"><i class="fas fa-arrow-left mt-5"></i> ย้อนกลับ</a>

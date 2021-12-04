@@ -84,7 +84,7 @@ if (isset($_REQUEST['unActive'])) {
                         $encrypt = encrypt_decrypt($data, 'encrypt');
                         ?>
                         <td style="text-align: left;">
-                            <a style="width: 100%;" href="?act=search&detail_id=<?php echo  $encrypt ?>" class="btn btn-primary btn-sm mt-2"><i class="fas fa-pen-alt"></i> รายชื่อคนลงประมูล</a>
+                            <a style="width: 100%;" href="?act=search&detail_id=<?php echo  $encrypt ?>" class="btn btn-primary "><i class="fas fa-pen-alt"></i> รายชื่อคนลงประมูล</a>
                         </td>
                         <td style="text-align: center;">
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">

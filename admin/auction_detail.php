@@ -72,7 +72,7 @@ if (isset($error)) {
                     <th width="10%">เบอร์โทรศัพท์</th>
                     <th width="10%">Line ID</th>
                     <th>วัน/เวลา ลงชื่อ </th>
-                    <th width="20%">สถานะ</th>
+                    <th width="20%"></th>
 
                 </tr>
             </thead>
@@ -138,12 +138,34 @@ if (isset($error)) {
                                 ยื่นซองแล้ว <a href="?act=checkOffer&auctionID=<?php echo $encrypt_auctionID ?>&check_id=<?php echo $encrypt_checkID ?>&detailID=<?php echo $encypt_detailID ?>" class="">ตรวจสอบ</a>
                             <?php } elseif ($result_offer['paymentStatus'] == 'check' && empty($result_offer['auctionStatus'])) { ?>
                                 <!-- ตรวจสอบการยื่นซองแล้ว -->
-                                <a href="auction_won.php?auctionStatus=won&userID=<?php echo $result_auction['user_id'] ?>&auctionID=<?php echo $auctionID ?>&offerID=<?php echo $result_offer['offerID'] ?>&detailID=<?php echo $result_auction['detailID'] ?>">ชนะ</a>
+
+                                <?php
+                                $auctionID1 = $auctionID;
+                                $detailID1 = $result_auction['detailID'];
+
+                                $encrypt_auctionID1 = encrypt_decrypt($auctionID1, 'encrypt');
+                                $encrypt_detailID1 = encrypt_decrypt($detailID1, 'encrypt');
+                                ?>
+                                <a href="?act=auctionWon&auctionStatus=won&auctionID=<?php echo  $encrypt_auctionID1 ?>&detailID=<?php echo $encrypt_detailID1 ?>" onclick="return confirm('ยืนยัน');">ผู้ชนะ</a>
                             <?php } elseif ($result_offer['paymentStatus'] == 'check' && $result_offer['auctionStatus'] == 'won') { ?>
                                 ผู้ชนะ<br>
-                                กำหนดรับสินค้า ภายในวันที่ :
-                            <?php } elseif ($result_offer['paymentStatus'] == 'check' && $result_offer['auctionStatus'] == 'lose') { ?>
-                                ผู้แพ้
+                                กำหนดรับสินค้า ภายในวันที่ :<br>
+                                <?php echo justDate($result_offer['announceWonDate'] . ' + 10 days') ?>
+                            <?php } elseif ($result_offer['paymentStatus'] == 'check' && $result_offer['auctionStatus'] == 'lose' && empty($result_offer['refundPaymentImage'])) { ?>
+                                <?php
+                                $auctionID1 = $auctionID;
+                                $offerID1 = $result_offer['offerID'];
+                                $detailID1 = $result_auction['detailID'];
+
+                                $encrypt_auctionID1 = encrypt_decrypt($auctionID1, 'encrypt');
+                                $encrypt_offerID1 = encrypt_decrypt($offerID1, 'encrypt');
+                                $encrypt_detailID1 = encrypt_decrypt($detailID1, 'encrypt');
+
+                                ?>
+                                ผู้แพ้ <a href="refund.php?auctionID=<?php echo $encrypt_auctionID1  ?>&offerID=<?php echo $encrypt_offerID1 ?>&detailID=<?php echo $encrypt_detailID1 ?>">โอนเงินคืน</a>
+
+                            <?php } elseif (!empty($result_offer['refundPaymentImage'])) { ?>
+                                โอนเงินคืนเสร็จสิ้น
                             <?php } ?>
                         </td>
                     </tr>
