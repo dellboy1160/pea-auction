@@ -34,24 +34,29 @@ if (!isset($_SESSION['username'])) {
             $num_doc = mysqli_num_rows($query_doc);
 
             ?>
-            <?php while ($result_doc = mysqli_fetch_array($query_doc)) { ?>
-                <h5 class="mt-5"> <strong> เรื่อง </strong><?php echo $result_doc['documentTitle'] ?></h5>
-                <div class="row">
+            <div class="row">
+                <?php while ($result_doc = mysqli_fetch_array($query_doc)) { ?>
+                    <h5 class="mt-5"> <strong> เรื่อง </strong><?php echo $result_doc['documentTitle'] ?></h5>
+
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
                         <a target="_blank" style="width: 100%;" class="btn btn-primary mt-3" href="../admin/document/<?php echo $result_doc['documentFile'] ?>"><i class="far fa-file-pdf" style="color: white;"></i> ดาวโหลดไฟล์</a>
                     </div>
                     <div class="col-md-3"></div>
-                </div>
-            <?php } ?>
 
-            <?php
-            if ($num_doc == 0) { ?>
-                <div class="alert alert-info" style="font-size:18px" role="alert">
-                    <strong>ยังไม่มีการประกาศ</strong>
+                <?php } ?>
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <?php
+                    if ($num_doc == 0) { ?>
+                        <div class="alert alert-info" style="font-size:18px" role="alert">
+                            <strong>ยังไม่มีการประกาศ</strong>
+                        </div>
+                    <?php   }  ?>
                 </div>
-            <?php   }  ?>
+                <div class="col-md-3"></div>
 
+            </div>
 
         </div>
     </div>

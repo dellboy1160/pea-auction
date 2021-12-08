@@ -4,6 +4,19 @@ if (isset($_REQUEST['detail_id'])) {
     $encrypt = $_REQUEST['detail_id'];
     $auctionID = encrypt_decrypt($encrypt, 'decrypt');
 }
+
+if (isset($_REQUEST['auctionClose'])) {
+    $encryptAuc = $_REQUEST['auctionID'];
+    $decryptAuc = encrypt_decrypt($encryptAuc, 'decrypt');
+    $today = date("Y-m-d H:i:s");
+    $sql = "UPDATE auction SET status='unActive',dateUnactive='$today' WHERE auctionID = $decryptAuc";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $successMsg = "";
+    }
+}
+
+
 ?>
 
 
@@ -41,6 +54,20 @@ if (isset($error)) {
 <?php exit();
 } ?>
 
+
+<?php if (isset($successMsg)) { ?>
+    <script>
+        Swal.fire(
+            'บันทึกข้อมูลเรียบร้อย',
+            '',
+            'success',
+
+
+        ).then(function() {
+            window.location = "auction.php";
+        });
+    </script>
+<?php } ?>
 <div class="card mb-4 mt-5">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
@@ -72,7 +99,7 @@ if (isset($error)) {
                     <th width="10%">เบอร์โทรศัพท์</th>
                     <th width="10%">Line ID</th>
                     <th>วัน/เวลา ลงชื่อ </th>
-                    <th width="20%"></th>
+                    <th width="25%"></th>
 
                 </tr>
             </thead>
@@ -87,11 +114,15 @@ if (isset($error)) {
                     $query_offer = mysqli_query($conn, $sql_offer);
                     $result_offer = mysqli_fetch_array($query_offer);
 
-
-
-
-
+                    $sql_a = "SELECT * FROM offer_price WHERE auctionID = $auctionID";
+                    $query_a = mysqli_query($conn, $sql_a);
+                    $result_a = mysqli_fetch_array($query_a);
                     ?>
+                    <?php if ($result_a['auctionStatus'] == null) { ?>
+                        <button disabled class="btn btn-secondary btn-sm mb-3"><i class="fas fa-window-close"></i> ปิดการประมูล</button>
+                    <?php } else { ?>
+                        <a href="?act=search&detail_id=<?php echo $encrypt ?>&auctionClose=1&auctionID=<?php echo $encrypt  ?>" onclick="return confirm('ยืนยันปิดการประมูล');" class="btn btn-danger btn-sm mb-3"><i class="fas fa-window-close"></i> ปิดการประมูล</a>
+                    <?php } ?>
                     <tr>
                         <td>
                             <?php echo $result_auction['Fname'] ?> - <?php echo $result_auction['Lname'] ?>
@@ -150,7 +181,7 @@ if (isset($error)) {
                             <?php } elseif ($result_offer['paymentStatus'] == 'check' && $result_offer['auctionStatus'] == 'won') { ?>
                                 ผู้ชนะ<br>
                                 กำหนดรับสินค้า ภายในวันที่ :<br>
-                                <?php echo justDate($result_offer['announceWonDate'] . ' + 10 days') ?>
+                                <?php echo justDate($result_offer['announceWonDate']) ?> - <?php echo justDate($result_offer['announceWonDate'] . ' + 10 days') ?>, 8:30 - 16-30
                             <?php } elseif ($result_offer['paymentStatus'] == 'check' && $result_offer['auctionStatus'] == 'lose' && empty($result_offer['refundPaymentImage'])) { ?>
                                 <?php
                                 $auctionID1 = $auctionID;

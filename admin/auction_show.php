@@ -8,12 +8,21 @@ if (isset($_REQUEST['unActive'])) {
     $query = mysqli_query($conn, $sql);
 }
 ?>
-
+<?php
+$sql_auction = "SELECT * FROM auction WHERE status = 'active'";
+$query_auction = mysqli_query($conn, $sql_auction);
+$num_auction = mysqli_num_rows($query_auction);
+?>
 <div class="card mb-4 mt-5">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         ตารางรายการประมูล
-        <a href="?act=insert" style="float: right;" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> เพิ่มรายการ</a>
+        <?php if ($num_auction >= 1) { ?>
+            <button style="float: right;" class="btn btn-secondary btn-sm" disabled><i class="fas fa-plus"></i> เพิ่มรายการ</button>
+        <?php } else { ?>
+            <a href="?act=insert" style="float: right;" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> เพิ่มรายการ</a>
+        <?php } ?>
+
 
 
     </div>
@@ -28,19 +37,15 @@ if (isset($_REQUEST['unActive'])) {
             }
         </style>
         <table id="example" class="table table-bordered table_legenda">
-            <?php
-            $sql_auction = "SELECT * FROM auction WHERE status = 'active'";
-            $query_auction = mysqli_query($conn, $sql_auction);
 
-            ?>
             <thead>
                 <tr>
-                    <th>รหัสประมูล</th>
-                    <th width="30%">หัวข้อ</th>
+                    <th width="10%">รหัสประมูล</th>
+                    <th width="20%">หัวข้อ</th>
                     <th>รายละเอียด</th>
                     <!-- <th></th> -->
                     <th></th>
-                    <th width="10%"></th>
+                    <th width="15%"></th>
                 </tr>
             </thead>
 
@@ -88,8 +93,9 @@ if (isset($_REQUEST['unActive'])) {
                         </td>
                         <td style="text-align: center;">
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-
+                                <a href="?act=image&auctionID=<?php echo  $encrypt ?>" type="button" class="btn btn-primary">จัดการรูป</a>
                                 <a href="?act=edit&update_id=<?php echo  $encrypt ?>" type="button" class="btn btn-warning">แก้ไข</a>
+
                                 <a href="?delete_id=<?php echo  $encrypt ?>" onclick="return confirm('ยืนยันการลบ');" type="button" class="btn btn-danger">ลบ</a>
                             </div>
                         </td>

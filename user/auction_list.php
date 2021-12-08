@@ -15,128 +15,56 @@ ON d.user_id = u.user_id
 INNER JOIN auction AS a
 ON d.auctionID = a.auctionID
 
-WHERE d.user_id = $user_id
+WHERE d.user_id = $user_id AND a.status='active'
 ";
 
-$query_list = mysqli_query($conn, $sql_list)
+$query_list = mysqli_query($conn, $sql_list);
+$num_list = mysqli_num_rows($query_list);
 ?>
-<style>
-    table {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        table-layout: fixed;
-    }
 
-    table caption {
-        font-size: 1.5em;
-        margin: 0.5em 0 0.75em;
-    }
+<?php if ($num_list == 0) { ?>
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
 
-    table tr {
-        background-color: #ffffff;
-        border: 1px solid #ddd;
-        padding: 0.35em;
-    }
+        <div>
+            ยังไม่มีรายการประมูล
+        </div>
+    </div>
+<?php } ?>
 
-    table th,
-    table td {
-        padding: 0.625em;
-        /* text-align: center; */
-    }
+<?php while ($result_list = mysqli_fetch_array($query_list)) { ?>
+    <div class="card shadow-sm p-3 mb-5 bg-body rounded">
+        <div class="card-body">
+            <div class="row">
 
-    table th {
-        font-size: 0.85em;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-    }
+                <div class="col-md-6">
+                    <h5>รหัสประมูล : <?php echo $result_list['auctionID'] ?></h5>
 
-    @media screen and (max-width: 600px) {
-        table {
-            border: 0;
-        }
+                </div>
+                <div class="col-md-6">
+                    <a href="" class="btn btn-primary btn-sm mb-3">รายละเอียดเพิ่มเติม</a>
+                </div>
+                <hr>
+                <div class="col-md-6">
+                    <strong>หัวข้อ : </strong> <?php echo $result_list['auctionTitle'] ?><br>
+                    <strong> ลงชื่อวันที่ :</strong> <?php $signDate = $result_list['signDate'];
+                                                        echo signDate($signDate);
+                                                        ?><br>
+                </div>
+                <div class="col-md-6">
 
-        table caption {
-            font-size: 1.3em;
-        }
-
-        table thead {
-            border: none;
-            clip: rect(0 0 0 0);
-            height: 1px;
-            margin: -1px;
-            overflow: hidden;
-            padding: 0;
-            position: absolute;
-            width: 1px;
-        }
-
-        table tr {
-            border-bottom: 3px solid #ddd;
-
-            display: block;
-            margin-bottom: 0.625em;
-        }
-
-        table td {
-            border-bottom: 1px solid #ddd;
-
-            display: block;
-            font-size: 0.8em;
-            text-align: right;
-        }
-
-        table td::before {
-            /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
-            content: attr(data-label);
-            float: left;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        table td:last-child {
-            border-bottom: 0;
-        }
-    }
-</style>
-<table id="example" class="table table-bordered">
-    <thead>
-        <tr>
-            <th>รหัสประมูล</th>
-            <th width="40%">รายละเอียดเพิ่มเติม</th>
-
-
-            <th style="width: 35%;">สถานะ</th>
-        </tr>
-    </thead>
-    <?php while ($result_list = mysqli_fetch_array($query_list)) { ?>
-        <tbody>
-            <tr>
-                <td data-label="รหัสประมูล"><?php echo $result_list['auctionID'] ?></td>
-                <td data-label="รายละเอียด">
-
-                    หัวข้อ : <?php echo $result_list['auctionTitle'] ?><br>
-                    ลงชื่อวันที่ :<br> <?php $signDate = $result_list['signDate'];
-                                        echo signDate($signDate);
-                                        ?><br>
-                    <a href="" class="btn btn-primary btn-sm">รายละเอียดเพิ่มเติม</a>
-                </td>
-
-                <td data-label="สถานะ">
+                    <!-- สถานะ -->
                     <?php
                     if ($result_list['auctionDetailStatus'] == 'unCheck') { ?>
-                        <p class="text-danger"> <strong>รอตรวจสอบ</strong> </p>
+                        <strong>สถานะ : </strong> <label class="text-danger"> <strong>กำลังตรวจสอบข้อมูล</strong> </label>
+
+
+
                     <?php } elseif ($result_list['auctionDetailStatus'] == 'checkFail') { ?>
                         <?php
                         $detailID = $result_list['detailID'];
                         $encrypt = encrypt_decrypt($detailID, 'encrypt');
                         ?>
-                        ข้อมูลไม่ถูกต้อง <br><a href="auction_resend.php?detailID=<?php echo $encrypt  ?>">ยื่นเอกสารอีกครั้ง</a>
+                        <strong>สถานะ : </strong> <label class="text-danger"> <strong>ข้อมูลไม่ถูกต้อง</strong> </label> <a href="auction_resend.php?detailID=<?php echo $encrypt  ?>">ยื่นเอกสารอีกครั้ง</a>
                     <?php } else { ?>
 
                         <?php
@@ -147,37 +75,53 @@ $query_list = mysqli_query($conn, $sql_list)
 
                         ?>
                         <?php if ($result['paymentStatus'] == 'unCheck') { ?>
-                            รอตรวจสอบใบเสนอราคา
-                        <?php } elseif ($result['paymentStatus'] == 'checkFail') { ?>
+
+                            <strong>สถานะ : </strong> <label class="text-danger"> <strong>รอตรวจสอบใบเสนอราคา</strong> </label>
+                        <?php } elseif ($result['paymentStatus'] == 'checkFail') {   ?>
                             <?php
                             $offerID = $result['offerID'];
                             $encrypt_offerID = encrypt_decrypt($offerID, 'encrypt');
 
                             ?>
-                            ข้อมูลเสนอราคาไม่ถูกต้อง <br><a href="auction_resendOffer.php?offerID=<?php echo  $encrypt_offerID ?>">ยื่นเอกสารอีกครั้ง</a>
+                            <strong>สถานะ : </strong> <label class="text-danger"> <strong>ข้อมูลเสนอราคาไม่ถูกต้อง</strong> </label> <a href="auction_resendOffer.php?offerID=<?php echo  $encrypt_offerID ?>">ยื่นเอกสารอีกครั้ง</a>
                         <?php } elseif ($result['paymentStatus'] == 'check') { ?>
                             <?php if ($result['auctionStatus'] == '' || $result['auctionStatus'] == null || empty($result['auctionStatus'])) { ?>
-                                ตรวจสอบใบเสนอราคาแล้ว
+                                <?php
+                                $sql_doc = "SELECT * FROM document_offerprice";
+                                $query_doc = mysqli_query($conn, $sql_doc);
+
+                                ?>
+                                <?php while ($result_doc = mysqli_fetch_array($query_doc)) {
+                                    $startDate = $result_doc['startDate'];
+                                    $endDate = $result_doc['endDate'];
+                                    $today = date("Y-m-d H:i:s");
+                                ?>
+                                <?php } ?>
+                                <strong>สถานะ : </strong> <label class="text-success"> <strong>ใบเสนอราคาผ่านการตรวจสอบแล้ว</strong> </label>
+                                <br>ประกาศผู้ชนะวันที่ :<br> <?php echo DateThaiStart($startDate) ?> - <?php echo DateThaiStart($endDate) ?>
                             <?php } elseif ($result['auctionStatus'] == 'won') { ?>
-                                ชนะการประมูล<br>
-                                กำหนดรับสินค้าภายในวันที่ :
+                                <strong>สถานะ : </strong> <label class="text-success"> <strong>ชนะการประมูล</strong> </label> <br>
+
+                                กำหนดรับสินค้าภายในวันที่ : <br>
                                 <?php
                                 $date = $result['announceWonDate'];
-                                echo justDate($date . ' + 10 days');
+
                                 ?>
+
+                                <?php echo justDate($date); ?> - <?php echo justDate($date . ' + 10 days'); ?>, 08:30 - 16:30
                             <?php } elseif ($result['auctionStatus'] == 'lose') { ?>
-                                แพ้การประมูล<br>
+                                <strong>สถานะ : </strong> <label class="text-danger"> <strong>แพ้การประมูล</strong> </label> <br>
                                 <?php
                                 if (empty($result['refundPaymentImage'])) {
-                                    echo 'รอ Admin โอนเงินคืน';
+                                    echo 'กำลังดำเนินการคืนเงิน';
                                 } else { ?>
-                                    Admin โอนเงินคืนแล้ว<br>
+                                    คืนเงินเสร็จสิ้น
                                     <a target="_blank" href="../refund_image/<?php echo $result['refundPaymentImage'] ?>">หลักฐานการโอน</a>
                                 <?php  }
                                 ?>
                             <?php } ?>
                         <?php } else { ?>
-                            <label class="text-success"> <strong>ตรวจสอบแล้ว</strong> </label><br>
+                            <strong>สถานะ : </strong> <label class="text-success"> <strong>ข้อมูลผ่านการตรวจสอบแล้ว</strong> </label><br>
 
                             <?php
                             $sql_doc = "SELECT * FROM document_offerprice";
@@ -211,9 +155,11 @@ $query_list = mysqli_query($conn, $sql_list)
 
                         <?php } ?>
                     <?php } ?>
-                </td>
-            </tr>
 
-        </tbody>
-    <?php } ?>
-</table>
+                    <!-- end of สถานะ -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+<?php } ?>

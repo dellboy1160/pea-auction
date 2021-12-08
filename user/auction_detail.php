@@ -128,15 +128,8 @@ if (isset($_REQUEST['btn_submit'])) {
     <link href="css/styles.css" rel="stylesheet" />
     <link href="../css/font.css" rel="stylesheet" />
 
-    <style>
-        .table_legenda {
-            table-layout: fixed;
-        }
-
-        .table_legenda td {
-            overflow-wrap: break-word;
-        }
-    </style>
+    <title>Webslesson Tutorial | Bootstrap Modal with Dynamic MySQL Data using Ajax & PHP</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
 </head>
 
@@ -211,6 +204,27 @@ if (isset($_REQUEST['btn_submit'])) {
 
 
 
+
+
+            <?php
+            $auctionID = $result['auctionID'];
+            $sql_image = "SELECT * FROM auction_image WHERE auctionID = $auctionID";
+            $query_image = mysqli_query($conn, $sql_image);
+            ?>
+
+
+            <div class="col-md-6" style="text-align: center;">
+
+                <?php while ($row = mysqli_fetch_array($query_image)) {  ?>
+                    <a class="view_data" type="button" name="view" id="<?php echo $row["imageID"]; ?>"><img src="../admin/auction_image/<?php echo $row['imageFile'] ?>" width="200px" height="200px" halt=""></a>
+
+                <?php }  ?>
+
+                <!-- <?php while ($row = mysqli_fetch_array($query_image)) { ?>
+
+                <?php } ?> -->
+            </div>
+
             <div class="col-md-6">
                 <div class="card shadow-sm p-3 mb-5 bg-body rounded" style="width: auto;">
                     <div class="card-body">
@@ -232,9 +246,6 @@ if (isset($_REQUEST['btn_submit'])) {
                         <hr>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-6">
                 <?php
                 $username = $_SESSION['username'];
                 $sql_user = "SELECT * FROM user WHERE username = '$username'";
@@ -245,15 +256,6 @@ if (isset($_REQUEST['btn_submit'])) {
                     <input type="text" hidden name="txt_auctionID" value="<?php echo $auctionID; ?>">
                     <input type="text" hidden name="txt_user_id" value="<?php echo $result_user['user_id'] ?>">
 
-                    <!-- <div class="col-md-12">
-                        <label for="validationCustomUsername" class="form-label">ราคาที่ต้องการประมูล</label>
-                        <div class="input-group has-validation">
-                            <input type="text" class="form-control" name="txt_bid" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                            <div class="invalid-feedback">
-                                กรุณากรอกราคาที่ต้องการประมูล
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="col-md-12">
                         <label for="validationCustomUsername" class="form-label">รูปสำเนาบัตรประชาชน
 
@@ -288,7 +290,6 @@ if (isset($_REQUEST['btn_submit'])) {
                     </div>
 
 
-                    <hr>
                     <div class="col-12">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
@@ -304,7 +305,48 @@ if (isset($_REQUEST['btn_submit'])) {
         </div>
     </div>
 
+
+
+
+
+
     <section style="height: 30vh;"></section>
+
+    <div id="dataModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title">รูปภาพ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="employee_detail">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('.view_data').click(function() {
+                var imageID = $(this).attr("id");
+                $.ajax({
+                    url: "select.php",
+                    method: "post",
+                    data: {
+                        imageID: imageID
+                    },
+                    success: function(data) {
+                        $('#employee_detail').html(data);
+                        $('#dataModal').modal("show");
+                    }
+                });
+            });
+        });
+    </script>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

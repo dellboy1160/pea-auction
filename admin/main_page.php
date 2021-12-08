@@ -1,5 +1,7 @@
 <?php
 include('../server.php');
+include('../encrypt_decrypt_function.php');
+
 if (!isset($_SESSION['adminUsername'])) {
     header('location: ../index.php');
 }
@@ -78,24 +80,38 @@ if (!isset($_SESSION['adminUsername'])) {
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                           ตารางรายชื่อผู้ยื่นซอง
+                            ตารางรายการประมูลที่กำลังดำเนินการ
                         </div>
                         <div class="card-body">
+                            <?php
+                            $sql_auction = "SELECT * FROM auction WHERE status = 'active'";
+                            $query_auction = mysqli_query($conn, $sql_auction);
+                            $num_auction = mysqli_num_rows($query_auction);
+                            ?>
                             <table id="example" class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>รหัสประมูล</th>
+                                        <th>หัวข้อ</th>
+                                        <th></th>
+
                                     </tr>
                                 </thead>
 
                                 <tbody>
+                                    <?php while ($result_auction = mysqli_fetch_array($query_auction)) { ?>
+                                        <tr>
+                                            <td><?php echo $result_auction['auctionID'] ?></td>
+                                            <td><?php echo $result_auction['auctionTitle'] ?></td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="auction.php" class="btn btn-warning "><i class="fas fa-search"></i></a>
 
+                                                </div>
 
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>

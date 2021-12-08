@@ -1,16 +1,23 @@
+<?php
+$sql_document = "SELECT * FROM document_announce";
+$query_document = mysqli_query($conn, $sql_document);
+$num_document = mysqli_num_rows($query_document);
+?>
 <div class="card mb-4 mt-5">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         ตารางรายการเอกสาร
-        <a href="?act=insert" style="float: right;" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> เพิ่มรายการ</a>
+
+
+        <?php if ($num_document >= 1) { ?>
+            <button style="float: right;" class="btn btn-secondary btn-sm" disabled><i class="fas fa-plus"></i> เพิ่มรายการ</button>
+        <?php } else { ?>
+            <a href="?act=insert" style="float: right;" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> เพิ่มรายการ</a>
+        <?php } ?>
     </div>
     <div class="card-body ">
         <table id="example" class="table table-bordered">
-            <?php
-            $sql_document = "SELECT * FROM document_announce";
-            $query_document = mysqli_query($conn, $sql_document);
 
-            ?>
             <thead>
                 <tr>
                     <th>หัวข้อ</th>

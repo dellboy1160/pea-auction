@@ -83,7 +83,7 @@ if (!isset($_SESSION['username'])) {
 
 
                             <?php if ($today < $startDate) { ?>
-                                <button disabled class="card-link btn btn-secondary" style="width: 100%;">ลงชื่อ</button>
+                                <button disabled class="card-link btn btn-secondary" style="width: 100%;">ยังไม่ถึงเวลาประมูล</button>
                             <?php } elseif ($today > $startDate && $today < $endDate) { ?>
                                 <?php if ($num_auctionDetail  >= 1) { ?>
                                     <button disabled class="card-link btn btn-primary" style="width: 100%;">คุณลงชื่อแล้ว</button>
@@ -92,7 +92,7 @@ if (!isset($_SESSION['username'])) {
                                     $auctionID = $result['auctionID'];
                                     $encrypt = encrypt_decrypt($auctionID, 'encrypt');
                                     ?>
-                                    <a href="auction_detail.php?auctionID=<?php echo $encrypt ?>" class="card-link btn btn-primary" style="width: 100%;">ลงชื่อ</a>
+                                    <a href="auction_detail.php?auctionID=<?php echo $encrypt ?>" class="card-link btn btn-primary" style="width: 100%;">รายละเอียด</a>
                                 <?php } ?>
                             <?php   } else { ?>
                                 <button disabled class="card-link btn btn-secondary" style="width: 100%;">หมดเวลาประมูล</button>

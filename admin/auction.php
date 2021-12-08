@@ -106,6 +106,9 @@ if (isset($_REQUEST['delete_id'])) {
                             include('auction_checkOfferPrice.php');
                         } elseif($_REQUEST['act']=='auctionWon'){
                             include('auction_won.php');
+                        } elseif($_REQUEST['act']=='image'){
+                            include('image_manage.php');
+
                         }
                     } else {
                         include('auction_show.php');

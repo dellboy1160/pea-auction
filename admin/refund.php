@@ -264,6 +264,8 @@ WHERE detailID = $detailID";
             <a href="javascript:history.back()"" class=" text-center"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
         </div>
     </div>
+
+    <section style="height: 10vh;"></section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/validation.js"></script>
 </body>

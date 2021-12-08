@@ -1,5 +1,8 @@
 <?php
 include('../server.php');
+include('../ThaiDateFunction.php');
+include('../encrypt_decrypt_function.php');
+
 if (!isset($_SESSION['adminUsername'])) {
     header('location: ../index.php');
 }
@@ -46,37 +49,94 @@ if (isset($_REQUEST['delete_id'])) {
     <div id="layoutSidenav">
         <?php include('../web-structure/admin_sidebar.php') ?>
 
-
-        <?php if (isset($successMsg)) { ?>
-            <script>
-                Swal.fire(
-                    'ลบข้อมูลเรียบร้อย',
-                    '',
-                    'success',
-
-
-                ).then(function() {
-                    window.location = "auction.php";
-                });
-            </script>
-        <?php } ?>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">จัดการข้อมูลรายการประมูล</h1>
+                    <h1 class="mt-4">รายการประมูล</h1>
                     <?php
+                    $sql_auction = "SELECT * FROM auction WHERE status = 'unActive'";
+                    $query_auction = mysqli_query($conn, $sql_auction);
+                    $num_auction = mysqli_num_rows($query_auction);
+                    ?>
+                    <div class="card mb-4 mt-5">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            ตารางรายการประมูล
 
-                    if (isset($_REQUEST['act'])) {
-                        if ($_REQUEST['act'] == 'insert') {
 
-                            include('auction_insert.php');
-                        } elseif ($_REQUEST['act'] == 'edit') {
 
-                            include('auction_edit.php');
-                        }
-                    } else {
-                        include('auction_list_show.php');
-                    } ?>
+
+                        </div>
+                        <div class="card-body ">
+                            <style>
+                                .table_legenda {
+                                    table-layout: fixed;
+                                }
+
+                                .table_legenda th {
+                                    overflow-wrap: break-word;
+                                }
+                            </style>
+                            <table id="example" class="table table-bordered table_legenda">
+
+                                <thead>
+                                    <tr>
+                                        <th width="10%">รหัสประมูล</th>
+                                        <th width="40%">หัวข้อ</th>
+
+                                        <th>กำหนดลบอัตโนมัติ</th>
+                                        <th width="5%"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php while ($result_auction = mysqli_fetch_array($query_auction)) { ?>
+                                        <tr>
+                                            <td data-label="รหัสประมูล"><?php echo $result_auction['auctionID'] ?></td>
+                                            <td data-label="หัวข้อ">
+                                                หัวข้อ : <?php echo $result_auction['auctionTitle'] ?>
+
+                                            </td>
+                                            <td>
+                                                <?php echo justDate($result_auction['dateUnactive'] . ' + 30 days')   ?>
+
+                                                <?php
+                                                // echo '<br>', $today = date("Y-m-d H:i:s");
+
+                                                $today = date("Y-m-d H:i:s");
+                                                $deleteDate =  date('Y-m-d H:i:s',  strtotime($result_auction['dateUnactive'] . '+30 days'));
+                                                if ($today == $deleteDate) {
+                                                    $auctionID = $result_auction['auctionID'];
+
+                                                    $sql = "DELETE FROM auction WHERE auctionID = $auctionID";
+                                                    $query = mysqli_query($conn, $sql);
+                                                    if ($query) {
+                                                        $sqlD = "DELETE FROM auction_detail WHERE auctionID = $auctionID";
+                                                        $queryD = mysqli_query($conn, $sqlD);
+
+                                                        $sqlO = "DELETE FROM offer_price WHERE auctionID =$auctionID";
+                                                        $queryO = mysqli_query($conn, $sqlO);
+
+                                                        $sqlI = "DELETE FROM auction_image WHERE auctionID = $auctionID";
+                                                        $queryI = mysqli_query($conn, $sqlI);
+                                                    }
+                                                }
+
+                                                ?>
+                                            </td>
+                                            <td data-label="รายละเอียด" style="text-align: center;">
+                                                <a href="auctionListDetail.php?auctionID=<?php echo $result_auction['auctionID'] ?>" class="btn btn-warning"><i class="fas fa-search"></i></a>
+                                            </td>
+
+
+
+                                        </tr>
+                                    <?php } ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
 
 
