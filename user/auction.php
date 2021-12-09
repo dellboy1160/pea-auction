@@ -45,7 +45,7 @@ if (!isset($_SESSION['username'])) {
                     <div class="card" style="width:100%;">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $result['auctionTitle'] ?></h5>
-                            <h6 class="card-subtitle mb-2 text-muted">เริ่มต้น <?php echo number_format($result['auctionStartPrice'], 2) ?> บาท</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">เริ่มต้น <?php echo number_format($result['auctionStartPrice']) ?> บาท</h6>
                             <p class="card-text"><?php echo $result['auctionDetail'] ?> </p>
 
                             <?php
@@ -68,7 +68,9 @@ if (!isset($_SESSION['username'])) {
                             $result_user = mysqli_fetch_array($query_user);
 
                             $user_id = $result_user['user_id'];
-                            $sql_auctionDetail = "SELECT * FROM auction_detail WHERE user_id = $user_id ";
+
+                            $aucID = $result['auctionID'];
+                            $sql_auctionDetail = "SELECT * FROM auction_detail WHERE user_id = $user_id AND auctionID = $aucID";
                             $query_auctionDetail = mysqli_query($conn, $sql_auctionDetail);
                             $num_auctionDetail = mysqli_num_rows($query_auctionDetail);
                             ?>
@@ -78,7 +80,7 @@ if (!isset($_SESSION['username'])) {
                             $today = date("Y-m-d H:i:s");
                             $startDate = $result['auctionStartDate'];
                             $endDate = $result['auctionEndDate'];
-
+                            $num_auctionDetail;
                             ?>
 
 

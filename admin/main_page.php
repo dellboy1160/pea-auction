@@ -41,36 +41,56 @@ if (!isset($_SESSION['adminUsername'])) {
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">รายการประมูลทั้งหมด</div>
+                                <?php
+                                $sqlAuction = "SELECT * FROM auction";
+                                $queryAuction = mysqli_query($conn, $sqlAuction);
+                                $numAuction = mysqli_num_rows($queryAuction);
+                                ?>
+                                <div class="card-body">ประมูลทั้งหมด <?php echo $numAuction ?> รายการ</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <a class="small text-white stretched-link" href="auction.php">ดูรายละเอียด</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Warning Card</div>
+                                <?php
+                                $sqlAn = "SELECT * FROM document_announce";
+                                $queryAn = mysqli_query($conn, $sqlAn);
+                                $numAn = mysqli_num_rows($queryAn);
+                                ?>
+                                <div class="card-body">เอกสารประกาศขายทั้งหมด <?php echo $numAn ?> รายการ</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <a class="small text-white stretched-link" href="document_announce.php">ดูรายละเอียด</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Success Card</div>
+                                <?php
+                                $sqlOffer = "SELECT * FROM document_offerprice";
+                                $queryOffer = mysqli_query($conn, $sqlOffer);
+                                $numOffer = mysqli_num_rows($queryOffer);
+                                ?>
+                                <div class="card-body">เอกสารใบเสนอราคาทั้งหมด <?php echo $numOffer ?> รายการ</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <a class="small text-white stretched-link" href="document_offerPrice.php">ดูรายละเอียด</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-danger text-white mb-4">
-                                <div class="card-body">Danger Card</div>
+                                <?php
+                                $sqlUser = "SELECT * FROM user";
+                                $queryUser = mysqli_query($conn, $sqlUser);
+                                $numUser = mysqli_num_rows($queryUser);
+                                ?>
+                                <div class="card-body">สมาชิกทั้งหมด <?php echo $numUser ?> คน</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <a class="small text-white stretched-link" href="user.php">ดูรายละเอียด</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>

@@ -49,7 +49,7 @@ if (isset($_REQUEST['btn_submit'])) {
             <div class="col-md-6">
                 <label for="validationCustomUsername" class="form-label">ราคาเริ่มต้น</label>
                 <div class="input-group has-validation">
-                    <input type="text" class="form-control" name="txt_startPrice" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <input type="number" pattern="[0-9]{1,}" class="form-control" name="txt_startPrice" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
                         กรุณากรอกราคาเริ่มต้น
                     </div>

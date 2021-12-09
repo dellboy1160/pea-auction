@@ -13,7 +13,7 @@ try {
 } catch (Error  $e) {
     $error = "ไม่มีข้อมูลนี้อยู่";
 }
-$sql_image = "SELECT * FROM auction_image";
+$sql_image = "SELECT * FROM auction_image WHERE auctionID = $auctionID";
 $query_image = mysqli_query($conn, $sql_image);
 
 
@@ -119,6 +119,9 @@ if (isset($error)) {
                 <?php } ?>
 
             </tbody>
+
         </table>
+
     </div>
+    <a href="auction.php" style="text-align: center;"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
 </div>

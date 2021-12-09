@@ -41,7 +41,11 @@ $num_list = mysqli_num_rows($query_list);
 
                 </div>
                 <div class="col-md-6">
-                    <a href="" class="btn btn-primary btn-sm mb-3">รายละเอียดเพิ่มเติม</a>
+                    <?php
+                    $id = $result_list['auctionID'];
+                    $encryptID = encrypt_decrypt($id , 'encrypt');
+                    ?>
+                    <a href="auction_listDetail.php?auctionID=<?php echo $encryptID ?>" class="btn btn-primary btn-sm mb-3">รายละเอียดเพิ่มเติม</a>
                 </div>
                 <hr>
                 <div class="col-md-6">
@@ -116,7 +120,9 @@ $num_list = mysqli_num_rows($query_list);
                                     echo 'กำลังดำเนินการคืนเงิน';
                                 } else { ?>
                                     คืนเงินเสร็จสิ้น
-                                    <a target="_blank" href="../refund_image/<?php echo $result['refundPaymentImage'] ?>">หลักฐานการโอน</a>
+
+                                    <a class="view_data" type="button" name="view" id="<?php echo $result["offerID"]; ?>">หลักฐานการโอน</a>
+
                                 <?php  }
                                 ?>
                             <?php } ?>

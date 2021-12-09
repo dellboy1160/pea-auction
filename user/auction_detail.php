@@ -10,6 +10,23 @@ if (isset($_REQUEST['auctionID'])) {
     $encrypt = $_REQUEST['auctionID'];
     $auctionID = encrypt_decrypt($encrypt, 'decrypt');
     $today = date("Y-m-d H:i:s");
+
+    $username = $_SESSION['username'];
+    $sql_users = "SELECT * FROM user WHERE username = '$username'";
+    $query_users = mysqli_query($conn, $sql_users);
+    $result_users = mysqli_fetch_array($query_users);
+
+    $user_id = $result_users['user_id'];
+    $sql_auctionDetail = "SELECT * FROM auction_detail WHERE user_id = $user_id AND auctionID = $auctionID";
+    $query_auctionDetail = mysqli_query($conn, $sql_auctionDetail);
+    $num_auctionDetail = mysqli_num_rows($query_auctionDetail);
+
+    if ($num_auctionDetail >= 1) {
+        echo "<script>
+alert('คุณลงชื่อไปแล้ว');
+window.location.href='auction.php';
+</script>";
+    }
 }
 
 if (isset($_REQUEST['btn_submit'])) {
@@ -128,7 +145,7 @@ if (isset($_REQUEST['btn_submit'])) {
     <link href="css/styles.css" rel="stylesheet" />
     <link href="../css/font.css" rel="stylesheet" />
 
-    <title>Webslesson Tutorial | Bootstrap Modal with Dynamic MySQL Data using Ajax & PHP</title>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
 </head>
@@ -216,7 +233,7 @@ if (isset($_REQUEST['btn_submit'])) {
             <div class="col-md-6" style="text-align: center;">
 
                 <?php while ($row = mysqli_fetch_array($query_image)) {  ?>
-                    <a class="view_data" type="button" name="view" id="<?php echo $row["imageID"]; ?>"><img src="../admin/auction_image/<?php echo $row['imageFile'] ?>" width="200px" height="200px" halt=""></a>
+                    <a class="view_data" type="button" name="view" id="<?php echo $row["imageID"]; ?>"><img class="shadow p-3 mb-5 bg-body rounded" src="../admin/auction_image/<?php echo $row['imageFile'] ?>" width="200px" height="200px" halt=""></a>
 
                 <?php }  ?>
 
@@ -258,7 +275,10 @@ if (isset($_REQUEST['btn_submit'])) {
 
                     <div class="col-md-12">
                         <label for="validationCustomUsername" class="form-label">รูปสำเนาบัตรประชาชน
-
+                            <!-- Button trigger modal -->
+                            <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                ตัวอย่าง
+                            </a>
                         </label>
                         <div class="input-group has-validation">
                             <input type="file" class="form-control" name="txt_file" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
@@ -270,7 +290,9 @@ if (isset($_REQUEST['btn_submit'])) {
 
                     <div class="col-md-12">
                         <label for="validationCustomUsername" class="form-label">รูปสำเนาทะเบียนบ้าน
-
+                            <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                ตัวอย่าง
+                            </a>
                         </label>
                         <div class="input-group has-validation">
                             <input type="file" class="form-control" name="txt_file2" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
@@ -329,6 +351,73 @@ if (isset($_REQUEST['btn_submit'])) {
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาทะเบียนบ้าน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../web-structure/home.jpg" width="100%" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาใบทะเบียนพาณิชย์</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <script>
         $(document).ready(function() {
             $('.view_data').click(function() {

@@ -1,6 +1,8 @@
 <?php
 include('../server.php');
 include('../encrypt_decrypt_function.php');
+
+error_reporting(E_ERROR | E_PARSE);
 if (!isset($_SESSION['username'])) {
     header('location: ../index.php');
 }
@@ -195,7 +197,13 @@ if (isset($_REQUEST['detailID'])) {
         <form class="row g-3 needs-validation" method="POST" enctype="multipart/form-data" novalidate>
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <label for="validationCustomUsername" class="form-label">รูปสำเนาบัตรประชาชน</label>
+                <label for="validationCustomUsername" class="form-label">รูปสำเนาบัตรประชาชน
+
+                    <!-- Button trigger modal -->
+                    <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                        ตัวอย่าง
+                    </a>
+                </label>
                 <div class="input-group has-validation">
                     <input type="file" name="txt_file" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
@@ -207,7 +215,12 @@ if (isset($_REQUEST['detailID'])) {
 
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <label for="validationCustomUsername" class="form-label">รูปสำเนาทะเบียนบ้าน</label>
+                <label for="validationCustomUsername" class="form-label">รูปสำเนาทะเบียนบ้าน
+                    <!-- Button trigger modal -->
+                    <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                        ตัวอย่าง
+                    </a>
+                </label>
                 <div class="input-group has-validation">
                     <input type="file" name="txt_file2" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
@@ -238,6 +251,43 @@ if (isset($_REQUEST['detailID'])) {
     </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาทะเบียนบ้าน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../web-structure/home.jpg" width="100%" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

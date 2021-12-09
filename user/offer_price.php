@@ -269,8 +269,11 @@ if (isset($_REQUEST['detailID'])) {
                     <input type="text" hidden name="txt_auctionID" value="<?php echo $_REQUEST['auctionID'] ?>">
                     <div class="col-md-12">
                         <label for="validationCustom03" class="form-label">รูปใบเสนอราคา ส่วนที่ 1
-                            <!-- <a href="">ตัวอย่าง</a> -->
 
+                            <!-- Button trigger modal -->
+                            <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                ตัวอย่าง
+                            </a>
                         </label>
                         <input type="file" name="txt_file" class="form-control" id="validationCustom03" required>
                         <div class="invalid-feedback">
@@ -279,7 +282,10 @@ if (isset($_REQUEST['detailID'])) {
                     </div>
                     <div class="col-md-12 mt-3">
                         <label for="validationCustom03" class="form-label">รูปใบเสนอราคา ส่วนที่ 2
-                            <!-- <a href="">ตัวอย่าง</a> -->
+                            <!-- Button trigger modal -->
+                            <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                ตัวอย่าง
+                            </a>
 
                         </label>
                         <input type="file" name="txt_file2" class="form-control" id="validationCustom03" required>
@@ -289,7 +295,10 @@ if (isset($_REQUEST['detailID'])) {
                     </div>
                     <div class="col-md-12 mt-3">
                         <label for="validationCustom03" class="form-label">รูปใบเสนอราคา ส่วนที่ 3
-                            <!-- <a href="">ตัวอย่าง</a> -->
+                            <!-- Button trigger modal -->
+                            <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                                ตัวอย่าง
+                            </a>
 
                         </label>
                         <input type="file" name="txt_file3" class="form-control" id="validationCustom03" required>
@@ -301,7 +310,10 @@ if (isset($_REQUEST['detailID'])) {
 
                     <div class="col-md-12 mt-3">
                         <label for="validationCustom03" class="form-label">รูปหลักฐานการชำระเงิน
-                            <!-- <a href="">ตัวอย่าง</a> -->
+                            <!-- Button trigger modal -->
+                            <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal4">
+                                ตัวอย่าง
+                            </a>
 
                         </label>
                         <input type="file" name="txt_file4" class="form-control" id="validationCustom03" required>
@@ -345,6 +357,80 @@ if (isset($_REQUEST['detailID'])) {
 
     </div>
     <section style="height: 30vh;"></section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

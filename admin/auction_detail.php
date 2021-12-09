@@ -72,7 +72,7 @@ if (isset($error)) {
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         ตารางรายรายชื่อคนลงประมูล รหัส <?php echo $auctionID ?>
-
+        <a href="?act=search&detail_id=<?php echo $encrypt ?>&auctionClose=1&auctionID=<?php echo $encrypt  ?>" onclick="return confirm('ยืนยันปิดการประมูล');" class="btn btn-danger btn-sm "><i class="fas fa-window-close"></i> ปิดการประมูล</a>
         <div class="btn-group" style="float: right;">
 
             <a onClick="PrintDiv();" class="btn btn-outline-primary"><i class="fas fa-print"></i> รายชื่อผู้ลงประมูล</a>
@@ -118,11 +118,7 @@ if (isset($error)) {
                     $query_a = mysqli_query($conn, $sql_a);
                     $result_a = mysqli_fetch_array($query_a);
                     ?>
-                    <?php if ($result_a['auctionStatus'] == null) { ?>
-                        <button disabled class="btn btn-secondary btn-sm mb-3"><i class="fas fa-window-close"></i> ปิดการประมูล</button>
-                    <?php } else { ?>
-                        <a href="?act=search&detail_id=<?php echo $encrypt ?>&auctionClose=1&auctionID=<?php echo $encrypt  ?>" onclick="return confirm('ยืนยันปิดการประมูล');" class="btn btn-danger btn-sm mb-3"><i class="fas fa-window-close"></i> ปิดการประมูล</a>
-                    <?php } ?>
+
                     <tr>
                         <td>
                             <?php echo $result_auction['Fname'] ?> - <?php echo $result_auction['Lname'] ?>

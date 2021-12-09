@@ -1,5 +1,8 @@
 <?php
 include('server.php');
+if (isset($_SESSION['username'])) {
+    header('refresh:0;user/main_page.php');
+}
 
 // if (isset($_REQUEST['btn_submit'])) {
 //     $username = $_REQUEST['txt_username'];
@@ -192,8 +195,8 @@ include('server.php');
 
                                 <div class="input-group has-validation">
 
-                                    <input type="text" class="form-control" name="txt_line" id="validationCustomUsername" value="<?php if (isset($email)) {
-                                                                                                                                        echo $email;
+                                    <input type="text" class="form-control" name="txt_line" id="validationCustomUsername" value="<?php if (isset($line)) {
+                                                                                                                                        echo $line;
                                                                                                                                     } ?>" aria-describedby="inputGroupPrepend">
                                     <div class="invalid-feedback">
                                         กรุณากรอกอีเมล

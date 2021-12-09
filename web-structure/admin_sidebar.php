@@ -1,8 +1,9 @@
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
+            <hr>
             <div class="nav">
-                <div class="sb-sidenav-menu-heading" style="color:white;font-size:14px">แผงควบคุม</div>
+                <!-- <div class="sb-sidenav-menu-heading" style="color:white;font-size:14px">แผงควบคุม</div> -->
                 <a class="nav-link" href="main_page.php">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard

@@ -226,7 +226,10 @@ if (isset($_REQUEST['offerID'])) {
         <form class="row g-3 needs-validation" method="POST" enctype="multipart/form-data" novalidate>
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <label for="validationCustomUsername" class="form-label">รูปใบเสนอราคา ส่วนที่ 1</label>
+                <label for="validationCustomUsername" class="form-label">รูปใบเสนอราคา ส่วนที่ 1
+
+                
+                </label>
                 <div class="input-group has-validation">
                     <input type="file" name="txt_file" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">

@@ -13,6 +13,7 @@ WHERE u.username = '$username' AND status='unActive'
 
 $query = mysqli_query($conn, $sql);
 ?>
+<link rel="stylesheet" href="../css/table_responsive.css">
 <table class="table table-bordered" id="example">
     <thead>
         <tr>
@@ -24,9 +25,14 @@ $query = mysqli_query($conn, $sql);
     <tbody>
         <?php while ($result = mysqli_fetch_array($query)) { ?>
             <tr>
-                <td><?php echo $result['auctionID'] ?></td>
-                <td><?php echo $result['auctionTitle'] ?></td>
-                <td><a href="auction_recordDetail.php?auctionID=<?php echo $result['auctionID'] ?>" class="btn btn-warning"><i class="fas fa-search"></i></a></td>
+                <td  data-label="รหัสประมูล"><?php echo $result['auctionID'] ?></td>
+                <td  data-label="หัวข้อประมูล"><?php echo $result['auctionTitle'] ?></td>
+
+                <?php
+                $id = $result['auctionID'];
+                $encryptID = encrypt_decrypt($id, 'encrypt');
+                ?>
+                <td style="text-align: center;"><a href="auction_recordDetail.php?auctionID=<?php echo $encryptID ?>" class="btn btn-warning"><i class="fas fa-search"></i></a></td>
             </tr>
         <?php } ?>
     </tbody>

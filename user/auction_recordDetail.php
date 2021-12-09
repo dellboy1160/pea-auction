@@ -5,11 +5,20 @@ include('../encrypt_decrypt_function.php');
 
 
 if (isset($_REQUEST['auctionID'])) {
-    $auctionID = $_REQUEST['auctionID'];
-
-    $sql_auction = "SELECT * FROM auction WHEre auctionID = $auctionID";
-    $query_auction = mysqli_query($conn, $sql_auction);
-    $result_auction = mysqli_fetch_array($query_auction);
+    try {
+  
+        $encrypt = $_REQUEST['auctionID'];
+        $auctionID =  encrypt_decrypt($encrypt, 'decrypt');
+        $sql_auction = "SELECT * FROM auction WHEre auctionID = $auctionID";
+        $query_auction = mysqli_query($conn, $sql_auction);
+        $num_auction = mysqli_num_rows($query_auction);
+        $result_auction = mysqli_fetch_array($query_auction);
+        if ($num_auction == 0) {
+            $error = "ไม่มีข้อมูลนี้อยู่";
+        }
+    } catch (Error  $e) {
+        $error = "ไม่มีข้อมูลนี้อยู่";
+    }
 }
 
 
@@ -31,14 +40,28 @@ if (isset($_REQUEST['auctionID'])) {
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <link href="css/styles.css" rel="stylesheet" />
 
     <link href="../css/font.css" rel="stylesheet" />
 </head>
 
 <body>
-
+    <?php
+    if (isset($error)) {
+    ?>
+        <script type="text/javascript">
+            var error = '<?php echo $error; ?>';
+            Swal.fire(
+                error,
+                '',
+                'error'
+            ).then(function() {
+                window.location = "main_page.php";
+            });
+        </script>
+    <?php exit();
+    } ?>
     <!-- Page content-->
     <div class="container">
         <div class=" mt-5">
@@ -55,8 +78,8 @@ if (isset($_REQUEST['auctionID'])) {
 
                         <h6><strong> หัวข้อ :</strong> <?php echo $result_auction['auctionTitle'] ?></h6>
                         <h6><strong>ราคาเริ่มต้น :</strong> <?php echo number_format($result_auction['auctionStartPrice']) ?> บาท</h6>
-                        <h6><strong>วันเริ่มประมูล :</strong> <?php echo $result_auction['auctionStartDate'] ?></h6>
-                        <h6><strong>วันปิดประมูล :</strong> <?php echo $result_auction['auctionStartDate'] ?></h6>
+                        <h6><strong>วันเริ่มประมูล :</strong> <?php echo DateThaiStart($result_auction['auctionStartDate']) ?></h6>
+                        <h6><strong>วันปิดประมูล :</strong> <?php echo DateThaiStart($result_auction['auctionStartDate']) ?></h6>
                         <h6><strong>รายละเอียด :</strong> <?php echo $result_auction['auctionDetail'] ?></h6>
 
                     </div>
@@ -77,11 +100,25 @@ if (isset($_REQUEST['auctionID'])) {
 
                         ?>
 
-                        <h6>ผลการประมูล : <?php if ($result_offer['auctionStatus'] == 'won') {
-                                                echo 'ชนะการประมูล';
-                                            } else {
-                                                echo 'แพ้การประมูล';
-                                            }  ?></h6>
+                        <h6> <strong> ผลการประมูล : </strong><?php if ($result_offer['auctionStatus'] == 'won') {
+                                                                    echo 'ชนะการประมูล';
+                                                                } else {
+                                                                    echo 'แพ้การประมูล';
+                                                                }  ?></h6>
+                    </div>
+
+
+
+                    <hr>
+
+                    <div class="col-md-12" style="text-align: center;">
+                        <?php
+                        $sql_img = "SELECT * FROM auction_image WHERE auctionID = $auctionID";
+                        $query_img = mysqli_query($conn, $sql_img);
+                        ?>
+                        <?php while ($result_img = mysqli_fetch_array($query_img)) { ?>
+                            <a class="view_data" type="button" name="view" id="<?php echo $result_img["imageID"]; ?>"><img class="shadow p-3 mb-5 bg-body rounded" src="../admin/auction_image/<?php echo $result_img['imageFile'] ?>" width="200px" height="200px" halt=""></a>
+                        <?php } ?>
                     </div>
 
                     <hr>
@@ -91,6 +128,44 @@ if (isset($_REQUEST['auctionID'])) {
             </div>
         </div>
     </div>
+
+    <div id="dataModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title">รูปภาพ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="employee_detail">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('.view_data').click(function() {
+                var imageID = $(this).attr("id");
+                $.ajax({
+                    url: "select.php",
+                    method: "post",
+                    data: {
+                        imageID: imageID
+                    },
+                    success: function(data) {
+                        $('#employee_detail').html(data);
+                        $('#dataModal').modal("show");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <section style="height:30vh;"></section>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 

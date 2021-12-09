@@ -1,13 +1,15 @@
 <?php
 include('../server.php');
+include('../encrypt_decrypt_function.php');
+include('../ThaiDateFunction.php');
 if (!isset($_SESSION['adminUsername'])) {
     header('location: ../index.php');
 }
 
 
 if (isset($_REQUEST['delete_id'])) {
-    $delete_id = $_REQUEST['delete_id'];
-
+    $encrypt = $_REQUEST['delete_id'];
+    $delete_id =   encrypt_decrypt($encrypt, 'decrypt');
     $sql = "DELETE  FROM user WHERE user_id = $delete_id";
     $query = mysqli_query($conn, $sql);
 
@@ -72,6 +74,9 @@ if (isset($_REQUEST['delete_id'])) {
                         } elseif ($_REQUEST['act'] == 'edit') {
 
                             include('user_edit.php');
+                        } elseif ($_REQUEST['act'] == 'changePassword') {
+
+                            include('user_changePassoword.php');
                         }
                     } else {
                         include('user_show.php');

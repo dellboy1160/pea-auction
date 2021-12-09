@@ -1,5 +1,9 @@
 <?php
 include('server.php');
+if (isset($_SESSION['username'])) {
+    header('refresh:0;user/main_page.php');
+}
+
 if (isset($_REQUEST['btn_submit'])) {
     $username = $_REQUEST['txt_username'];
     $password = $_REQUEST['txt_password'];

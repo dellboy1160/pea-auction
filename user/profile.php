@@ -35,6 +35,9 @@ if (isset($_SESSION['username'])) {
     <link href="css/styles.css" rel="stylesheet" />
 
     <link href="../css/font.css" rel="stylesheet" />
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -91,6 +94,44 @@ if (isset($_SESSION['username'])) {
     <script src="js/scripts.js"></script>
     <script src="../js/validation.js"></script>
     <script src="../admin/js/dataTable.js"></script>
+
+
+    <div id="dataModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title">รูปภาพ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="employee_detail">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.view_data').click(function() {
+                var imageID = $(this).attr("id");
+                $.ajax({
+                    url: "paymentRefund.php",
+                    method: "post",
+                    data: {
+                        imageID: imageID
+                    },
+                    success: function(data) {
+                        $('#employee_detail').html(data);
+                        $('#dataModal').modal("show");
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 
