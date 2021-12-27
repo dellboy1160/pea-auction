@@ -148,7 +148,7 @@ if (isset($error)) {
                 <div class="col-md-6">
                     <h5>ชื่อ : <?php echo $result['Fname'] ?> - <?php echo $result['Lname'] ?></h5>
                     <h5>เบอร์โทรศัพท์ : <?php echo $result['phone'] ?></h5>
-                    <h5>LINE ID : <?php echo $result['line'] ?></h5>
+                    <h5>วันที่ลงชื่อ : <?php echo signDate( $result['offerDate'] )?></h5>
                 </div>
 
 

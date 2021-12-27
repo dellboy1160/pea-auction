@@ -37,11 +37,11 @@ if (isset($_REQUEST['update_id'])) {
 
                 if ($type == 'application/pdf') {
                     if (!file_exists($path)) {
-                        if ($size < 2000000) {
+                        if ($size < 5000000) {
                             unlink($directory . $result_doc['documentFile']);
                             move_uploaded_file($temp, 'document/' . $new_name);
                         } else {
-                            $errorMsg = 'ไฟล์รูปภาพใหญ่เกิน 2MB';
+                            $errorMsg = 'ไฟล์รูปภาพใหญ่เกิน 5MB';
                         }
                     }
                 } else {

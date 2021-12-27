@@ -38,9 +38,9 @@ if (isset($_REQUEST['offerID'])) {
             $errorMsg = "กรุณาเลือกรูปภาพ";
         } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png") {
             if (!file_exists($path)) {
-                if ($size < 2000000) {
+                if ($size < 5000000) {
                 } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                 }
             }
         } else {
@@ -65,9 +65,9 @@ if (isset($_REQUEST['offerID'])) {
             $errorMsg = "กรุณาเลือกรูปภาพ";
         } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
             if (!file_exists($path2)) {
-                if ($size2 < 2000000) {
+                if ($size2 < 5000000) {
                 } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                 }
             }
         } else {
@@ -91,9 +91,9 @@ if (isset($_REQUEST['offerID'])) {
             $errorMsg = "กรุณาเลือกรูปภาพ";
         } else if ($type4 == "image/jpg" || $type4 == 'image/jpeg' || $type4 == "image/png") {
             if (!file_exists($path4)) {
-                if ($size4 < 2000000) {
+                if ($size4 < 5000000) {
                 } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                 }
             }
         } else {
@@ -118,9 +118,9 @@ if (isset($_REQUEST['offerID'])) {
             $errorMsg = "กรุณาเลือกรูปภาพ";
         } else if ($type3 == "image/jpg" || $type3 == 'image/jpeg' || $type3 == "image/png") {
             if (!file_exists($path3)) {
-                if ($size3 < 2000000) {
+                if ($size3 < 5000000) {
                 } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                 }
             }
         } else {

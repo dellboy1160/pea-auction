@@ -54,17 +54,17 @@ $num_auction = mysqli_num_rows($query_auction);
                     <tr>
                         <td data-label="รหัสประมูล"><?php echo $result_auction['auctionID'] ?></td>
                         <td data-label="หัวข้อ">
-                            หัวข้อ : <?php echo $result_auction['auctionTitle'] ?>
+                            <strong> หัวข้อ : </strong> <?php echo $result_auction['auctionTitle'] ?>
                             <br>
-                            ราคาเริ่มต้น : <?php echo $result_auction['auctionStartPrice'] ?> บาท<br>
+                            <strong> ราคาเริ่มต้น : </strong> <?php echo $result_auction['auctionStartPrice'] ?> บาท<br>
 
                             <?php
                             $startDate = $result_auction['auctionStartDate'];
                             $endDate = $result_auction['auctionEndDate'];
 
                             ?>
-                            เริ่มประมูล : <?php echo signDate($startDate) ?><br>
-                            ปิดประมูล : <?php echo signDate($endDate) ?>
+                            <strong> เริ่มประมูล :</strong> <?php echo signDate($startDate) ?><br>
+                            <strong> ปิดประมูล :</strong> <?php echo signDate($endDate) ?>
                         </td>
                         <td data-label="รายละเอียด">
                             <?php echo $result_auction['auctionDetail'] ?>

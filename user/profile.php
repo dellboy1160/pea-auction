@@ -10,6 +10,7 @@ if (!isset($_SESSION['username'])) {
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $sql_user = "SELECT * FROM user WHERE username = '$username'";
+   
     $query_user = mysqli_query($conn, $sql_user);
     $result_user = mysqli_fetch_array($query_user);
 }

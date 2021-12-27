@@ -1,9 +1,8 @@
 <?php
 include('server.php');
 include('ThaiDateFunction.php');
-if (isset($_SESSION['username'])) {
-    header('refresh:0;user/main_page.php');
-}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,55 +28,57 @@ if (isset($_SESSION['username'])) {
             <hr>
         </div>
         <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <?php
+                $sql = "SELECT * FROM auction WHERE status ='active'";
+                $query = mysqli_query($conn, $sql);
+                $num = mysqli_num_rows($query);
 
-            <?php
-            $sql = "SELECT * FROM auction WHERE status ='active'";
-            $query = mysqli_query($conn, $sql);
-            $num = mysqli_num_rows($query);
+                ?>
+                <?php while ($result = mysqli_fetch_array($query)) { ?>
+                    <div class="col-md-12">
+                        <div class="card" style="width:100%;">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $result['auctionTitle'] ?></h5>
+                                <h6 class="card-subtitle mb-2 text-muted">เริ่มต้น <?php echo number_format($result['auctionStartPrice']) ?> บาท</h6>
+                                <p class="card-text"><?php echo $result['auctionDetail'] ?> </p>
 
-            ?>
-            <?php while ($result = mysqli_fetch_array($query)) { ?>
-                <div class="col-md-6">
-                    <div class="card" style="width:100%;">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $result['auctionTitle'] ?></h5>
-                            <h6 class="card-subtitle mb-2 text-muted">เริ่มต้น <?php echo number_format($result['auctionStartPrice']) ?> บาท</h6>
-                            <p class="card-text"><?php echo $result['auctionDetail'] ?> </p>
+                                <?php
 
-                            <?php
+                                $startDate = $result['auctionStartDate'];
+                                $endDate = $result['auctionEndDate'];
 
-                            $startDate = $result['auctionStartDate'];
-                            $endDate = $result['auctionEndDate'];
-
-                            $start = DateThaiStart($startDate);
-                            $end =  DateThaiEnd($endDate);
-                            ?>
-                            <hr>
-                            <p class="card-text">วันเริ่มประมูล : <?php echo $start  ?> </p>
-                            <p class="card-text">วันปิดประมูล : <?php echo $end  ?> </p>
-                            <hr>
-                            <!-- <a href="#" class="card-link">Another link</a> -->
-
-
-
-                            <!-- Button trigger modal -->
-                            <button type="button" style="width: 100%;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                รายละเอียด
-                            </button>
+                                $start = DateThaiStart($startDate);
+                                $end =  DateThaiEnd($endDate);
+                                ?>
+                                <hr>
+                                <p class="card-text">วันเริ่มประมูล : <?php echo $start  ?> </p>
+                                <p class="card-text">วันปิดประมูล : <?php echo $end  ?> </p>
+                                <hr>
+                                <!-- <a href="#" class="card-link">Another link</a> -->
 
 
 
+                                <!-- Button trigger modal -->
+                                <button type="button" style="width: 100%;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    รายละเอียด
+                                </button>
+
+
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
-            <?php
-            if ($num == 0) { ?>
-                <div class="alert alert-info text-center" style="font-size:18px" role="alert">
-                    <strong>ยังไม่มีรายการประมูล</strong>
-                </div>
-            <?php   }  ?>
-
+                <?php } ?>
+                <?php
+                if ($num == 0) { ?>
+                    <div class="alert alert-info text-center" style="font-size:18px" role="alert">
+                        <strong>ยังไม่มีรายการประมูล</strong>
+                    </div>
+                <?php   }  ?>
+            </div>
+            <div class="col-md-3"></div>
         </div>
     </div>
 
@@ -102,6 +103,8 @@ if (isset($_SESSION['username'])) {
             </div>
         </div>
     </div>
+
+    <?php include('web-structure/footer.php') ?>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

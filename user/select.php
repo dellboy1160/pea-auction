@@ -1,9 +1,12 @@
+
 <?php
-if (isset($_POST["imageID"])) {
+
+require_once('../server.php');
+if (isset($_REQUEST["imageID"])) {
      $output = '';
-     $connect = mysqli_connect("localhost", "root", "", "pea-auction");
-     $query = "SELECT * FROM auction_image WHERE imageID = '" . $_POST["imageID"] . "'";
-     $result = mysqli_query($connect, $query);
+
+     $query = "SELECT * FROM auction_image WHERE imageID = '" . $_REQUEST["imageID"] . "'";
+     $result = mysqli_query($conn, $query);
      $output .= '  
       <div class="table-responsive">  
            <table class="table table-bordered">';

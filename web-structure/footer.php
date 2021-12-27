@@ -94,29 +94,14 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 col-md-3 item">
-                    <h3>เมนู</h3>
-                    <ul>
-                        <li><a href="index.php">หน้าหลัก</a></li>
-                        <li><a href="auction.php">รายการประมูล</a></li>
-                        <li><a href="login.php">เข้าสู่ระบบ</a></li>
-                        <li><a href="register.php">สมัครสมาชิก</a></li>
-                    </ul>
+                <div class="col-md-12 ">
+                    <h5>การไฟฟ้าส่วนภูมิภาคอำเภอหัวหิน</h5>
+                    <h6>ที่อยู่ : 2/7 ถนนเพชรเกษม ต.หนองแก อ.หัวหิน จ.ประจวบคีรีขันธ์ 77110</h6>
+                    <h6>โทร : 032 512 215</h6>
                 </div>
-                <div class="col-sm-6 col-md-3 item">
-                    <h3>ติดต่อเรา</h3>
-                    <ul>
-                        <li><a href="#">โทร :</a></li>
-                        <li><a href="#">line ID :</a></li>
-
-                    </ul>
-                </div>
-                <div class="col-md-6 item text">
-                    <h3>การไฟฟ้าส่วนภูมิภาคหัวหิน</h3>
-
-                </div>
-
             </div>
+            <hr>
+            <h6 class="text-center"> ©  Copyright <?php echo date("Y"); ?> by <?php include('web-structure/title_name.php') ?></h6>
             <!-- <p class="copyright">Company Name © 2018</p> -->
         </div>
     </footer>

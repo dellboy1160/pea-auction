@@ -46,7 +46,7 @@ if (!isset($_SESSION['adminUsername'])) {
                                 $queryAuction = mysqli_query($conn, $sqlAuction);
                                 $numAuction = mysqli_num_rows($queryAuction);
                                 ?>
-                                <div class="card-body">ประมูลทั้งหมด <?php echo $numAuction ?> รายการ</div>
+                                <div class="card-body">รายการประมูลทั้งหมด <?php echo $numAuction ?> รายการ</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <a class="small text-white stretched-link" href="auction.php">ดูรายละเอียด</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>

@@ -118,15 +118,27 @@ if (isset($_REQUEST['delete_id'])) {
                                                         $sqlO = "DELETE FROM offer_price WHERE auctionID =$auctionID";
                                                         $queryO = mysqli_query($conn, $sqlO);
 
-                                                        $sqlI = "DELETE FROM auction_image WHERE auctionID = $auctionID";
-                                                        $queryI = mysqli_query($conn, $sqlI);
+
+                                                        $sqlImg = "SELECT * FROM auction_image WHERE auctionID = $auctionID";
+                                                        $queryImg = mysqli_query($conn, $sqlImg);
+                                                        while ($resultImg = mysqli_fetch_array($queryImg)) {
+                                                            unlink("auction_image/" . $resultImg['imageFile']);
+                                                        }
+                                                        if ($queryImg) {
+                                                            $sqlI = "DELETE FROM auction_image WHERE auctionID = $auctionID";
+                                                            $queryI = mysqli_query($conn, $sqlI);
+                                                        }
                                                     }
                                                 }
 
                                                 ?>
                                             </td>
                                             <td data-label="รายละเอียด" style="text-align: center;">
-                                                <a href="auctionListDetail.php?auctionID=<?php echo $result_auction['auctionID'] ?>" class="btn btn-warning"><i class="fas fa-search"></i></a>
+                                                <?php
+                                                $id = $result_auction['auctionID'];
+                                                $encrypt = encrypt_decrypt($id, 'encrypt');
+                                                ?>
+                                                <a href="auctionListDetail.php?auctionID=<?php echo $encrypt ?>" class="btn btn-warning"><i class="fas fa-search"></i></a>
                                             </td>
 
 
@@ -146,9 +158,6 @@ if (isset($_REQUEST['delete_id'])) {
 
         </div>
     </div>
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>

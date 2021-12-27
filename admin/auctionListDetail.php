@@ -9,7 +9,8 @@ if (!isset($_SESSION['adminUsername'])) {
 }
 
 if (isset($_REQUEST['auctionID'])) {
-    $auctionID = $_REQUEST['auctionID'];
+    $encrypt = $_REQUEST['auctionID'];
+    $auctionID =   encrypt_decrypt($encrypt, 'decrypt');
 }
 
 ?>
@@ -41,6 +42,7 @@ if (isset($_REQUEST['auctionID'])) {
 
 </head>
 
+
 <body class="sb-nav-fixed">
 
 
@@ -53,9 +55,20 @@ if (isset($_REQUEST['auctionID'])) {
             <hr>
             <div class="col-md-6 mb-3">
                 <?php
-                $sql_auction = "SELECT * FROM auction WHERE auctionID = $auctionID";
-                $query_auction = mysqli_query($conn, $sql_auction);
-                $result_auction = mysqli_fetch_array($query_auction)
+                try {
+                    $sql_auction = "SELECT * FROM auction WHERE auctionID = $auctionID";
+                    $query_auction = mysqli_query($conn, $sql_auction);
+                    $num_auction = mysqli_num_rows($query_auction);
+                    $result_auction = mysqli_fetch_array($query_auction);
+
+
+                    if ($num_auction == 0) {
+                        $error = "ไม่มีข้อมูลนี้อยู่";
+                    }
+                } catch (Error  $e) {
+                    $error = "ไม่มีข้อมูลนี้อยู่";
+                }
+
                 ?>
 
                 <h6><strong> หัวข้อ :</strong> <?php echo $result_auction['auctionTitle'] ?></h6>
@@ -65,21 +78,33 @@ if (isset($_REQUEST['auctionID'])) {
                 <h6><strong>รายละเอียด :</strong> <?php echo $result_auction['auctionDetail'] ?></h6>
 
                 <?php
-                $sql = "SELECT * FROM offer_price WHERE auctionID = $auctionID AND auctionStatus ='won'";
-                $query = mysqli_query($conn, $sql);
-                $result = mysqli_fetch_array($query);
+                try {
+                    $sql = "SELECT * FROM offer_price WHERE auctionID = $auctionID AND auctionStatus ='won'";
+                    $query = mysqli_query($conn, $sql);
+                    $result = mysqli_fetch_array($query);
 
-                $detailID = $result['detailID'];
+                    $detailID = $result['detailID'];
 
-                $sql_detail = "SELECT * FROM auction_detail AS d
+                    $sql_detail = "SELECT * FROM auction_detail AS d
                 INNER JOIN user AS u
                 ON d.user_id = u.user_id
                 
                 WHERE d.detailID = $detailID";
-                $query_detial = mysqli_query($conn, $sql_detail);
-                $result_detail = mysqli_fetch_array($query_detial);
+                    $query_detial = mysqli_query($conn, $sql_detail);
+                    $num_detail = mysqli_num_rows($query__detail);
+                    $result_detail = mysqli_fetch_array($query_detial);
+
+                    if ($num_detail == 0) {
+                        $error = "ไม่มีข้อมูลนี้อยู่";
+                    }
+                } catch (Error  $e) {
+                    $error = "ไม่มีข้อมูลนี้อยู่";
+                }
                 ?>
-                <br>
+
+
+            </div>
+            <div class="col-md-6">
                 <strong> ผู้ชนะการประมูล </strong>
                 <br>ชื่อผู้ใช้ : <?php echo $result_detail['username'] ?>
                 <br>ชื่อ-นามสกุล : <?php echo $result_detail['Fname'] ?> - <?php echo $result_detail['Lname'] ?>
@@ -87,13 +112,7 @@ if (isset($_REQUEST['auctionID'])) {
                 <br>LINE ID : <?php echo $result_detail['line'] ?>
 
             </div>
-            <div class="col-md-3">
-                <a onClick="PrintDiv();" class="btn btn-outline-primary mb-3" style="width: 100%;">รายชื่อคนลงประมูล</a>
 
-            </div>
-            <div class="col-md-3">
-                <a onClick="PrintDiv2();" class="btn btn-outline-primary mb-3" style="width: 100%;">รายชื่อผู้ยื่นซอง</a>
-            </div>
             <hr>
             <a href="javascript:history.back()" style="text-align: center;"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
         </div>
@@ -197,6 +216,10 @@ if (isset($_REQUEST['auctionID'])) {
             </div>
         </div>
     </div>
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>

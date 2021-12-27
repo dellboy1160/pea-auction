@@ -12,6 +12,15 @@ if (isset($_REQUEST['auctionClose'])) {
     $sql = "UPDATE auction SET status='unActive',dateUnactive='$today' WHERE auctionID = $decryptAuc";
     $query = mysqli_query($conn, $sql);
     if ($query) {
+
+        $sql1 = "DELETE FROM document_announce";
+        $query1 = mysqli_query($conn, $sql1);
+
+
+        $sql2 = "DELETE FROM document_offerprice";
+        $query2 = mysqli_query($conn, $sql2);
+
+
         $successMsg = "";
     }
 }
@@ -206,7 +215,15 @@ if (isset($error)) {
 
     <a href="auction.php" style="text-align: center;"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
 </div>
+<?php
+$sql = "SELECT * FROM auction WHERE auctionID = $auctionID";
+$query = mysqli_query($conn, $sql);
+$result = mysqli_fetch_array($query);
 
+$sqlD = "SELECT * FROM document_offerprice";
+$queryD = mysqli_query($conn, $sqlD);
+$resultD = mysqli_fetch_array($queryD);
+?>
 <div class="container" id="container" hidden>
     <div class="row">
         <div class="col-md-12">
@@ -221,29 +238,36 @@ if (isset($error)) {
 
             $i = 1;
             ?>
-            <h2 style="text-align: center;margin-top:50px;">รายชื่อคนลงประมูล</h2>
+
+            <h6 style="text-align: center;margin-top:80px; font-size:16px;"><strong>ใบแจกแบบฟอร์มใบเสนอราคา</strong> </h6>
+            <h6 style="text-align: center;font-size:16px;"> <strong>ตามประกาศของการไฟฟ้าส่วนภูมิภาคอำเภอหัวหิน</strong> </h6>
+            <h6 style="text-align: center;font-size:16px;"><strong>เรื่อง</strong> <?php echo $result['auctionTitle'] ?> ลงวันที่ <?php echo fullMonth($result['auctionStartDate']) ?>
+
+                <br> เปิดซองวันที่ <?php echo fullMonth($resultD['endDate'])  ?>
+            </h6>
+
             <table border="1" class="table table-bordered" style="border-color: black;">
                 <thead>
                     <tr>
-                        <th>ลำดับที่</th>
-                        <th>ชื่อ-นามสกุล</th>
-                        <th>วันที่ลงชื่อ</th>
-                        <th>เบอร์โทรศัพท์</th>
-                        <th>LINE ID</th>
+                        <td style="text-align: center;font-size:16px;">ลำดับที่</td>
+                        <td style="text-align: center;font-size:16px;">ชื่อผู้รับ</td>
+                        <td style="text-align: center;font-size:16px;">วันที่รับ</td>
+                        <td style="text-align: center;font-size:16px;">เบอร์โทรศัพท์</td>
+
                     </tr>
                 </thead>
                 <tbody>
                     <?php while ($resilt_detail = mysqli_fetch_array($query__detail)) { ?>
                         <tr>
-                            <td><?php echo $i ?></td>
-                            <td><?php echo $resilt_detail['Fname'] ?> - <?php echo $resilt_detail['Lname'] ?></td>
-                            <td><?php
-                                $signDate = $resilt_detail['signDate'];
-                                echo signDate($signDate);
+                            <td style="text-align: center;font-size:16px;"><?php echo $i ?></td>
+                            <td style="font-size:16px;"><?php echo $resilt_detail['Fname'] ?> - <?php echo $resilt_detail['Lname'] ?></td>
+                            <td style="font-size:16px;"><?php
+                                                        $signDate = $resilt_detail['signDate'];
+                                                        echo signDate($signDate);
 
-                                ?></td>
-                            <td><?php echo $resilt_detail['phone'] ?></td>
-                            <td><?php echo $resilt_detail['line'] ?></td>
+                                                        ?></td>
+                            <td style="font-size:16px;"><?php echo $resilt_detail['phone'] ?></td>
+
                         </tr>
                     <?php $i++;
                     } ?>
@@ -271,29 +295,32 @@ if (isset($error)) {
             $query_of = mysqli_query($conn, $sql_of);
             $j = 1;
             ?>
-            <h2 style="text-align: center;margin-top:50px;">รายชื่อผู้ยื่นซอง</h2>
+            <h6 style="text-align: center;margin-top:80px; font-size:16px;"><strong>บัญชีแสดงการรับซอง</strong> </h6>
+            <h6 style="text-align: center;font-size:16px;"> ตามประกาศของการไฟฟ้าส่วนภูมิภาคอำเภอหัวหิน ลงวันที่ <?php echo fullMonth($result['auctionStartDate']) ?></h6>
+            <h6 style="text-align: center;font-size:16px;">เรื่อง <?php echo $result['auctionTitle'] ?> <br> เปิดซองวันที่ <?php echo fullMonth($resultD['endDate'])  ?>
+            </h6>
             <table border="1" class="table table-bordered" style="border-color: black;">
                 <thead>
                     <tr>
-                        <th>ลำดับที่</th>
-                        <th>ชื่อ-นามสกุล</th>
-                        <th>วันที่ลงชื่อ</th>
-                        <th>เบอร์โทรศัพท์</th>
-                        <th>LINE ID</th>
+                        <td style="font-size:16px;">ลำดับที่</td>
+                        <td style="font-size:16px;">ชื่อ-นามสกุล</td>
+                        <td style="font-size:16px;">วันที่ลงชื่อ</td>
+                        <td style="font-size:16px;">เบอร์โทรศัพท์</td>
+
                     </tr>
                 </thead>
                 <tbody>
                     <?php while ($resilt_of = mysqli_fetch_array($query_of)) { ?>
                         <tr>
-                            <td><?php echo $j ?></td>
-                            <td><?php echo $resilt_of['Fname'] ?> - <?php echo $resilt_of['Lname'] ?></td>
-                            <td><?php
-                                $signDate = $resilt_of['offerDate'];
-                                echo signDate($signDate);
+                            <td style="font-size:16px;"><?php echo $j ?></td>
+                            <td style="font-size:16px;"><?php echo $resilt_of['Fname'] ?> - <?php echo $resilt_of['Lname'] ?></td>
+                            <td style="font-size:16px;"><?php
+                                                        $signDate = $resilt_of['offerDate'];
+                                                        echo signDate($signDate);
 
-                                ?></td>
-                            <td><?php echo $resilt_of['phone'] ?></td>
-                            <td><?php echo $resilt_of['line'] ?></td>
+                                                        ?></td>
+                            <td style="font-size:16px;"><?php echo $resilt_of['phone'] ?></td>
+
                         </tr>
                     <?php $j++;
                     } ?>

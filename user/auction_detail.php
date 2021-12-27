@@ -51,9 +51,9 @@ if (isset($_REQUEST['btn_submit'])) {
         $errorMsg = "กรุณาเลือกรูปภาพ";
     } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png") {
         if (!file_exists($path)) {
-            if ($size < 2000000) {
+            if ($size < 5000000) {
             } else {
-                $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
             }
         }
     } else {
@@ -62,28 +62,28 @@ if (isset($_REQUEST['btn_submit'])) {
     // End of สำเนาบัตรประชาชน
 
     // สำเนาทะเบียนบ้าน
-    $image_file2 = $_FILES['txt_file2']['name'];
-    $type2 = $_FILES['txt_file2']['type'];
-    $size2 = $_FILES['txt_file2']['size'];
-    $temp2 = $_FILES['txt_file2']['tmp_name'];
+    // $image_file2 = $_FILES['txt_file2']['name'];
+    // $type2 = $_FILES['txt_file2']['type'];
+    // $size2 = $_FILES['txt_file2']['size'];
+    // $temp2 = $_FILES['txt_file2']['tmp_name'];
 
-    $path2 = "../copy/" . $image_file2;
-    $explode2 = explode('.', $_FILES['txt_file2']['name']);
-    $new_name2 = round(microtime(true)) . '2.' . end($explode2);
+    // $path2 = "../copy/" . $image_file2;
+    // $explode2 = explode('.', $_FILES['txt_file2']['name']);
+    // $new_name2 = round(microtime(true)) . '2.' . end($explode2);
 
 
-    if (empty($new_name2)) {
-        $errorMsg = "กรุณาเลือกรูปภาพ";
-    } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
-        if (!file_exists($path2)) {
-            if ($size2 < 2000000) {
-            } else {
-                $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
-            }
-        }
-    } else {
-        $errorMsg = "กรุณาใช้นามสกุลไฟล์เป็น JPG, JPEG, PNG เท่านั้น";
-    }
+    // if (empty($new_name2)) {
+    //     $errorMsg = "กรุณาเลือกรูปภาพ";
+    // } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
+    //     if (!file_exists($path2)) {
+    //         if ($size2 < 5000000) {
+    //         } else {
+    //             $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
+    //         }
+    //     }
+    // } else {
+    //     $errorMsg = "กรุณาใช้นามสกุลไฟล์เป็น JPG, JPEG, PNG เท่านั้น";
+    // }
     // End of สำเนาบัตรประชาชน
 
     // สำเนาใบทะเบียนพาณิชย์
@@ -102,9 +102,9 @@ if (isset($_REQUEST['btn_submit'])) {
     } else {
         if ($type3 == "image/jpg" || $type3 == 'image/jpeg' || $type3 == "image/png") {
             if (!file_exists($path3)) {
-                if ($size3 < 2000000) {
+                if ($size3 < 5000000) {
                 } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                 }
             }
         } else {
@@ -115,11 +115,11 @@ if (isset($_REQUEST['btn_submit'])) {
 
     if (!isset($errorMsg)) {
         move_uploaded_file($temp, '../copy/' . $new_name);
-        move_uploaded_file($temp2, '../copy/' . $new_name2);
+        // move_uploaded_file($temp2, '../copy/' . $new_name2);
         move_uploaded_file($temp3, '../copy/' . $new_name3);
         $today = date("Y-m-d H:i:s");
-        $sql = "INSERT INTO auction_detail (auctionID,user_id,signDate,idCardImage,houseRegistrationImage,commercialRegistrationImage,auctionDetailStatus)
-        VALUES ('$auctionID','$userID','$today','$new_name','$new_name2','$new_name3','unCheck')";
+        $sql = "INSERT INTO auction_detail (auctionID,user_id,signDate,idCardImage,commercialRegistrationImage,auctionDetailStatus)
+        VALUES ('$auctionID','$userID','$today','$new_name','$new_name3','unCheck')";
         $query = mysqli_query($conn, $sql);
         if ($query) {
             $successMsg = "";
@@ -139,7 +139,6 @@ if (isset($_REQUEST['btn_submit'])) {
     <title><?php include('../web-structure/title_name.php') ?></title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <!-- Core theme CSS (includes Bootstrap)-->
-
     <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4@4/bootstrap-4.css" rel="stylesheet">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <link href="css/styles.css" rel="stylesheet" />
@@ -147,6 +146,24 @@ if (isset($_REQUEST['btn_submit'])) {
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.view_data').click(function() {
+                var imageID = $(this).attr("id");
+                $.ajax({
+                    url: "select.php",
+                    method: "post",
+                    data: {
+                        imageID: imageID
+                    },
+                    success: function(data) {
+                        $('#employee_detail').html(data);
+                        $('#dataModal').modal("show");
+                    }
+                });
+            });
+        });
+    </script>
 
 </head>
 
@@ -274,7 +291,7 @@ if (isset($_REQUEST['btn_submit'])) {
                     <input type="text" hidden name="txt_user_id" value="<?php echo $result_user['user_id'] ?>">
 
                     <div class="col-md-12">
-                        <label for="validationCustomUsername" class="form-label">รูปสำเนาบัตรประชาชน
+                        <label for="validationCustomUsername" class="form-label">รูปสำเนาบัตร
                             <!-- Button trigger modal -->
                             <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal1">
                                 ตัวอย่าง
@@ -283,12 +300,12 @@ if (isset($_REQUEST['btn_submit'])) {
                         <div class="input-group has-validation">
                             <input type="file" class="form-control" name="txt_file" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                             <div class="invalid-feedback">
-                                กรุณากรอกรูปสำเนาบัตรประชาชน
+                                กรุณากรอกรูปสำเนาบัตร
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <!-- <div class="col-md-12">
                         <label for="validationCustomUsername" class="form-label">รูปสำเนาทะเบียนบ้าน
                             <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                                 ตัวอย่าง
@@ -300,7 +317,7 @@ if (isset($_REQUEST['btn_submit'])) {
                                 กรุณากรอกรูปสำเนาทะเบียนบ้าน
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-md-12">
                         <label for="validationCustomUsername" class="form-label">รูปสำเนาใบทะเบียนพาณิชย์ (ถ้ามี)
@@ -418,24 +435,7 @@ if (isset($_REQUEST['btn_submit'])) {
 
 
 
-    <script>
-        $(document).ready(function() {
-            $('.view_data').click(function() {
-                var imageID = $(this).attr("id");
-                $.ajax({
-                    url: "select.php",
-                    method: "post",
-                    data: {
-                        imageID: imageID
-                    },
-                    success: function(data) {
-                        $('#employee_detail').html(data);
-                        $('#dataModal').modal("show");
-                    }
-                });
-            });
-        });
-    </script>
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

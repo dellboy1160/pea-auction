@@ -1,10 +1,6 @@
 <?php
 include('server.php');
 
-if (isset($_SESSION['username'])) {
-    header('refresh:0;user/main_page.php');
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +36,7 @@ if (isset($_SESSION['username'])) {
 
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
-                        <a target="_blank" style="width: 100%;" class="btn btn-primary mt-3" href="../admin/document/<?php echo $result_doc['documentFile'] ?>"><i class="far fa-file-pdf" style="color: white;"></i> ดาวโหลดไฟล์</a>
+                        <a target="_blank" style="width: 100%;" class="btn btn-primary mt-3" href="admin/document/<?php echo $result_doc['documentFile'] ?>"><i class="far fa-file-pdf" style="color: white;"></i> ดาวโหลดไฟล์</a>
                     </div>
                     <div class="col-md-3"></div>
 
@@ -60,7 +56,7 @@ if (isset($_SESSION['username'])) {
 
         </div>
     </div>
-
+    <?php include('web-structure/footer.php') ?>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

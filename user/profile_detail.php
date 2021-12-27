@@ -22,8 +22,8 @@
                     <th>LINE ID</th>
                     <th width="10px">:</th>
                     <td>
-                        <?php if ($result_user['line'] == null) {
-                            echo '*';
+                    <?php if ($result_user['line'] == null) {
+                            echo '-';
                         } else {
                             echo $result_user['line'];
                         }
@@ -51,7 +51,7 @@
                     <td>
                         <?php
                         if (empty($result_user['bankName'])) {
-                            echo "*";
+                            echo "-";
                         } else {
                             echo $result_user['bankName'];
                         }
@@ -64,7 +64,7 @@
                     <td>
                         <?php
                         if (empty($result_user['bankHolder'])) {
-                            echo "*";
+                            echo "-";
                         } else {
                             echo $result_user['bankHolder'];
                         }
@@ -78,7 +78,7 @@
                     <td>
                         <?php
                         if (empty($result_user['bankNumber'])) {
-                            echo "*";
+                            echo "-";
                         } else {
                             echo $result_user['bankNumber'];
                         }

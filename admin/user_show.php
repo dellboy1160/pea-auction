@@ -28,7 +28,16 @@
                         <td data-label="ชื่อผู้ใช้"><?php echo $result_user['username'] ?></td>
                         <td data-label="ชื่อ-นามสกุล"><?php echo $result_user['Fname'] ?> - <?php echo $result_user['Lname'] ?></td>
                         <td data-label="เบอร์โทรศัพท์"><?php echo $result_user['phone'] ?> <br></td>
-                        <td data-label="LINE ID"><?php echo $result_user['line'] ?></td>
+                        <td data-label="LINE ID">
+                            <?php echo $result_user['line'] ?>
+
+                            <?php if (empty($result_user['line'])) {
+                                echo '-';
+                            } else {
+                                echo $result_user['line'];
+                            }
+                            ?>
+                        </td>
                         <td style="text-align: center;">
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                 <?php

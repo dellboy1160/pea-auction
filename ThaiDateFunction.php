@@ -60,3 +60,17 @@ function justDate($date)
     // $strDate = "2008-08-14 13:42:44";
     // echo "ThaiCreate.Com Time now : ".DateThai($strDate);
 }
+
+function fullMonth($date)
+{
+    $strYear = date("Y", strtotime($date)) + 543;
+    $strMonth = date("n", strtotime($date));
+    $strDay = date("j", strtotime($date));
+
+    $strMonthCut = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+    $strMonthThai = $strMonthCut[$strMonth];
+    return "$strDay $strMonthThai $strYear";
+
+    // $strDate = "2008-08-14 13:42:44";
+    // echo "ThaiCreate.Com Time now : ".DateThai($strDate);
+}

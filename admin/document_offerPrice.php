@@ -8,7 +8,9 @@ if (!isset($_SESSION['adminUsername'])) {
 
 
 if (isset($_REQUEST['delete_id'])) {
-    $delete_id = $_REQUEST['delete_id'];
+    $encrypt = $_REQUEST['delete_id'];
+
+    $delete_id =  encrypt_decrypt($encrypt, 'decrypt');
     $sql_doc = "SELECT * FROM document_offerprice WHERE documentID = $delete_id";
     $query_doc = mysqli_query($conn, $sql_doc);
     $result_doc = mysqli_fetch_array($query_doc);

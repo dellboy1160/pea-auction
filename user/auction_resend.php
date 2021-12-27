@@ -39,9 +39,9 @@ if (isset($_REQUEST['detailID'])) {
             $errorMsg = "กรุณาเลือกรูปภาพ";
         } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png") {
             if (!file_exists($path)) {
-                if ($size < 2000000) {
+                if ($size < 5000000) {
                 } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                 }
             }
         } else {
@@ -51,29 +51,29 @@ if (isset($_REQUEST['detailID'])) {
 
 
         // สำเนาทะเบียนบ้าน
-        $image_file2 = $_FILES['txt_file2']['name'];
-        $type2 = $_FILES['txt_file2']['type'];
-        $size2 = $_FILES['txt_file2']['size'];
-        $temp2 = $_FILES['txt_file2']['tmp_name'];
+        // $image_file2 = $_FILES['txt_file2']['name'];
+        // $type2 = $_FILES['txt_file2']['type'];
+        // $size2 = $_FILES['txt_file2']['size'];
+        // $temp2 = $_FILES['txt_file2']['tmp_name'];
 
-        $path2 = "../copy/" . $image_file2;
-        // $directory = "../copy/";
-        $explode2 = explode('.', $_FILES['txt_file2']['name']);
-        $new_name2 = round(microtime(true)) . '2.' . end($explode2);
+        // $path2 = "../copy/" . $image_file2;
+      
+        // $explode2 = explode('.', $_FILES['txt_file2']['name']);
+        // $new_name2 = round(microtime(true)) . '2.' . end($explode2);
 
 
-        if (empty($new_name2)) {
-            $errorMsg = "กรุณาเลือกรูปภาพ";
-        } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
-            if (!file_exists($path2)) {
-                if ($size2 < 2000000) {
-                } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
-                }
-            }
-        } else {
-            $errorMsg = "กรุณาใช้นามสกุลไฟล์เป็น JPG, JPEG, PNG เท่านั้น";
-        }
+        // if (empty($new_name2)) {
+        //     $errorMsg = "กรุณาเลือกรูปภาพ";
+        // } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
+        //     if (!file_exists($path2)) {
+        //         if ($size2 < 5000000) {
+        //         } else {
+        //             $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
+        //         }
+        //     }
+        // } else {
+        //     $errorMsg = "กรุณาใช้นามสกุลไฟล์เป็น JPG, JPEG, PNG เท่านั้น";
+        // }
         // End of สำเนาทะเบียนบ้าน
 
         // สำเนาใบทะเบียนพาณิชย์
@@ -93,9 +93,9 @@ if (isset($_REQUEST['detailID'])) {
         } else {
             if ($type3 == "image/jpg" || $type3 == 'image/jpeg' || $type3 == "image/png") {
                 if (!file_exists($path3)) {
-                    if ($size3 < 2000000) {
+                    if ($size3 < 5000000) {
                     } else {
-                        $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                        $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                     }
                 }
             } else {
@@ -107,13 +107,12 @@ if (isset($_REQUEST['detailID'])) {
         if (!isset($errorMsg)) {
             unlink('../copy/' . $result['idCardImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
             move_uploaded_file($temp, '../copy/' . $new_name);
-            unlink('../copy/' . $result['houseRegistrationImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
-            move_uploaded_file($temp2, '../copy/' . $new_name2);
+            // unlink('../copy/' . $result['houseRegistrationImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
+            // move_uploaded_file($temp2, '../copy/' . $new_name2);
             unlink('../copy/' . $result['commercialRegistrationImage']); //ลบไฟล์ก่อนหน้า แล้วค่อยอัพเดท 
             move_uploaded_file($temp3, '../copy/' . $new_name3);
 
             $sql = "UPDATE auction_detail SET idCardImage = '$new_name',
-            houseRegistrationImage = '$new_name2',
             commercialRegistrationImage = '$new_name3',
             auctionDetailStatus = 'unCheck'
             WHERE detailID = $detailID
@@ -197,7 +196,7 @@ if (isset($_REQUEST['detailID'])) {
         <form class="row g-3 needs-validation" method="POST" enctype="multipart/form-data" novalidate>
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <label for="validationCustomUsername" class="form-label">รูปสำเนาบัตรประชาชน
+                <label for="validationCustomUsername" class="form-label">รูปสำเนาบัตร
 
                     <!-- Button trigger modal -->
                     <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal1">
@@ -207,16 +206,16 @@ if (isset($_REQUEST['detailID'])) {
                 <div class="input-group has-validation">
                     <input type="file" name="txt_file" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
-                        กรุณากรอกรูปสำเนาบัตรประชาชน
+                        กรุณากรอกรูปสำเนาบัตร
                     </div>
                 </div>
             </div>
             <div class="col-md-3"></div>
 
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
+           
+            <!-- <div class="col-md-6">
                 <label for="validationCustomUsername" class="form-label">รูปสำเนาทะเบียนบ้าน
-                    <!-- Button trigger modal -->
+                
                     <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                         ตัวอย่าง
                     </a>
@@ -227,9 +226,8 @@ if (isset($_REQUEST['detailID'])) {
                         กรุณากรอกรูปสำเนาทะเบียนบ้าน
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3"></div>
-
+            </div> -->
+         
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <label for="validationCustomUsername" class="form-label">รูปสำเนาใบทะเบียนพาณิชย์ (ถ้ามี)</label>

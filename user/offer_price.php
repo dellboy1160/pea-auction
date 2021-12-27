@@ -59,9 +59,9 @@ if (isset($_REQUEST['detailID'])) {
             $errorMsg = "กรุณาเลือกรูปภาพ";
         } else if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png") {
             if (!file_exists($path)) {
-                if ($size < 2000000) {
+                if ($size < 5000000) {
                 } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                 }
             }
         } else {
@@ -84,9 +84,9 @@ if (isset($_REQUEST['detailID'])) {
             $errorMsg = "กรุณาเลือกรูปภาพ";
         } else if ($type2 == "image/jpg" || $type2 == 'image/jpeg' || $type2 == "image/png") {
             if (!file_exists($path2)) {
-                if ($size2 < 2000000) {
+                if ($size2 < 5000000) {
                 } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                 }
             }
         } else {
@@ -109,9 +109,9 @@ if (isset($_REQUEST['detailID'])) {
             $errorMsg = "กรุณาเลือกรูปภาพ";
         } else if ($type3 == "image/jpg" || $type3 == 'image/jpeg' || $type3 == "image/png") {
             if (!file_exists($path3)) {
-                if ($size3 < 2000000) {
+                if ($size3 < 5000000) {
                 } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                 }
             }
         } else {
@@ -134,9 +134,9 @@ if (isset($_REQUEST['detailID'])) {
             $errorMsg = "กรุณาเลือกรูปภาพ";
         } else if ($type4 == "image/jpg" || $type4 == 'image/jpeg' || $type4 == "image/png") {
             if (!file_exists($path4)) {
-                if ($size4 < 2000000) {
+                if ($size4 < 5000000) {
                 } else {
-                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+                    $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 5MB";
                 }
             }
         } else {
@@ -363,11 +363,11 @@ if (isset($_REQUEST['detailID'])) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างใบเสนอราคา</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                    <img src="../web-structure/D1.png" width="100%" alt="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -381,11 +381,11 @@ if (isset($_REQUEST['detailID'])) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างใบเสนอราคา</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                    <img src="../web-structure/D2.png" width="100%" alt="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -399,11 +399,11 @@ if (isset($_REQUEST['detailID'])) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างใบเสนอราคา</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                    <img src="../web-structure/D3.png" width="100%" alt="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -417,11 +417,11 @@ if (isset($_REQUEST['detailID'])) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างการชำระเงิน</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                    <img src="../web-structure/D4.jpg" width="100%" alt="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

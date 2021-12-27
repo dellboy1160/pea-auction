@@ -1,45 +1,7 @@
 <?php
 include('server.php');
-if (isset($_SESSION['username'])) {
-    header('refresh:0;user/main_page.php');
-}
-
-// if (isset($_REQUEST['btn_submit'])) {
-//     $username = $_REQUEST['txt_username'];
-//     $password = $_REQUEST['txt_password'];
-//     $confirm_password = $_REQUEST['txt_confirm_password'];
-//     $Fname = $_REQUEST['txt_Fname'];
-//     $Lname = $_REQUEST['txt_Lname'];
-//     $email = $_REQUEST['txt_email'];
-//     $phone = $_REQUEST['txt_phone'];
 
 
-
-//     $sql_user = "SELECT * FROM user WHERE username = '$username' OR email = '$email'";
-//     $query_user = mysqli_query($conn, $sql_user);
-//     $num_user = mysqli_num_rows($query_user);
-
-//     if ($num_user == 0) {
-//         if ($password == $confirm_password) {
-
-//             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-
-//             $sql = "INSERT INTO user (username,password,phone,email,Fname,Lname)
-//             VALUES ('$username','$hashed_password','$phone','$email','$Fname','$Lname')";
-//             $query = mysqli_query($conn, $sql);
-//             if ($query) {
-//                 $successMsg = "สมัครสมาชิกเสร็จสิ้น";
-//                 $_SESSION['username'] = $username;
-//                 header('refresh:2;user/main_page.php');
-//             }
-//         } else {
-//             $errorMsg = "กรุณากรอกรหัสผ่านให้ตรงกัน";
-//         }
-//     } else {
-//         $errorMsg = "ชื่อผู้ใช้ หรือ อีเมลถูกใช้ไปแล้ว";
-//     }
-// }
 ?>
 
 <!DOCTYPE html>
@@ -245,6 +207,7 @@ if (isset($_SESSION['username'])) {
             <div class="col-2"></div>
         </div>
     </div>
+    <?php include('web-structure/footer.php') ?>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

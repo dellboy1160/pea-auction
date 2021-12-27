@@ -137,7 +137,7 @@ if (isset($error)) {
                     <h4>สำเนาใบทะเบียนพาณิชย์</h4>
                     <h1><img src="../copy/<?php echo $result['commercialRegistrationImage'] ?>" width="100%" height="auto" alt=""></h1>
                 </div> -->
-                <h5 style="text-align: center;"> <a onClick="PrintDiv();" class="btn btn-primary"> <i class="far fa-file-pdf" style="color: white;"></i> ดาวโหลดเอกสาร</a></h5>
+                <h5 style="text-align: center; "> <a onClick="PrintDiv();" style="width:100%;" class="btn btn-primary"> <i class="far fa-file-pdf" style="color: white;"></i> ดาวโหลดเอกสาร</a></h5>
                 <br>
                 <a href="?act=search&detail_id=<?php echo $_REQUEST['detail_id'] ?>" style="text-align: center;"><i class="fas fa-arrow-left mt-5"></i> ย้อนกลับ</a>
             </div>
@@ -147,7 +147,6 @@ if (isset($error)) {
         <div class="row">
             <div class="col-md-12">
                 <img src="../copy/<?php echo $result['idCardImage'] ?>" width="100%" height="auto" alt="">
-                <img src="../copy/<?php echo $result['houseRegistrationImage'] ?>" width="100%" height="auto" alt="">
 
                 <?php if ($result['commercialRegistrationImage'] == "" || $result['commercialRegistrationImage'] == null || empty($result['commercialRegistrationImage'])) { ?>
 
