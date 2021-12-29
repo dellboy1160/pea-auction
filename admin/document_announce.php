@@ -41,7 +41,8 @@ if (isset($_REQUEST['delete_id'])) {
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     <link href="../css/table_responsive.css" rel="stylesheet" />
-    <link href="../css/font.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/font.css">
+
 
 
 

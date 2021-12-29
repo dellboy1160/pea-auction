@@ -35,15 +35,19 @@ if (isset($_REQUEST['delete_id'])) {
 
     <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4@4/bootstrap-4.css" rel="stylesheet">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 
     <link href="../css/table_responsive.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/print.css">
-    <link href="../css/font.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/font.css">
+
 
 
 
@@ -133,7 +137,7 @@ if (isset($_REQUEST['delete_id'])) {
     <script src="js/datatables-simple-demo.js"></script>
     <script src="js/dataTable.js"></script>
     <script src="../js/validation.js"></script>
-    <script src="../js/print.js"></script>
+    <!-- <script src="../js/print.js"></script> -->
 </body>
 
 </html>
