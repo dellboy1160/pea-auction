@@ -10,7 +10,7 @@ if (!isset($_SESSION['username'])) {
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $sql_user = "SELECT * FROM user WHERE username = '$username'";
-   
+
     $query_user = mysqli_query($conn, $sql_user);
     $result_user = mysqli_fetch_array($query_user);
 }
@@ -32,7 +32,7 @@ if (isset($_SESSION['username'])) {
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
-
+    <!-- <link rel="stylesheet" href="css/progress.css"> -->
     <link href="css/styles.css" rel="stylesheet" />
 
     <link href="../css/font.css" rel="stylesheet" />

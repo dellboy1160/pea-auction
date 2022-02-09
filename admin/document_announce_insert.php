@@ -1,5 +1,7 @@
 <?php
 if (isset($_REQUEST['btn_submit'])) {
+
+
     $title = $_REQUEST['txt_title'];
 
     $file_name = $_FILES['txt_file']['name'];
@@ -11,12 +13,9 @@ if (isset($_REQUEST['btn_submit'])) {
     $explode = explode('.', $_FILES['txt_file']['name']);
     $new_name = round(microtime(true)) . '.' . end($explode);
 
-    // echo $new_name, '<br>';
-    // echo $type;
-
     if ($type == 'application/pdf') {
         if (!file_exists($path)) {
-            if ($size < 5000000) {
+            if ($size < 500000000) {
                 move_uploaded_file($temp, 'document/' . $new_name);
             } else {
                 $errorMsg = 'ไฟล์รูปภาพใหญ่เกิน 5MB';
@@ -25,6 +24,11 @@ if (isset($_REQUEST['btn_submit'])) {
     } else {
         $errorMsg =  'กรุณาใช้นามสกุลไฟล์เป็น PDF';
     }
+
+
+    // echo '<br> type : ', $type;
+    // echo '<br> newname : ', $new_name;
+    // exit();
     if (!isset($errorMsg)) {
         $sql = "INSERT INTO document_announce (documentTitle,documentFile)
     VALUES ('$title','$new_name')";
@@ -71,6 +75,8 @@ if (isset($errorMsg)) {
     <div class="card-body ">
         <form action="" method="POST" class="row g-3 needs-validation" enctype="multipart/form-data" novalidate>
             <div class="col-md-6">
+
+
                 <label for="validationCustomUsername" class="form-label">หัวข้อไฟล์</label>
                 <div class="input-group has-validation">
                     <input type="text" class="form-control" name="txt_title" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
@@ -82,7 +88,7 @@ if (isset($errorMsg)) {
             <div class="col-md-6">
                 <label for="validationCustomUsername" class="form-label">ไฟล์</label>
                 <div class="input-group has-validation">
-                    <input type="file" class="form-control" name="txt_file" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <input type="file" class="form-control" name="txt_file" accept=".pdf" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
                         กรุณากรอกไฟล์
                     </div>

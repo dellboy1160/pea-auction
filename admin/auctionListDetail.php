@@ -86,12 +86,12 @@ if (isset($_REQUEST['auctionID'])) {
                     $detailID = $result['detailID'];
 
                     $sql_detail = "SELECT * FROM auction_detail AS d
-                INNER JOIN user AS u
-                ON d.user_id = u.user_id
+                     INNER JOIN user AS u
+                    ON d.user_id = u.user_id
                 
-                WHERE d.detailID = $detailID";
+                    WHERE d.detailID = $detailID";
                     $query_detial = mysqli_query($conn, $sql_detail);
-                    $num_detail = mysqli_num_rows($query__detail);
+                    $num_detail = mysqli_num_rows($query_detial);
                     $result_detail = mysqli_fetch_array($query_detial);
 
                     if ($num_detail == 0) {

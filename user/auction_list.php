@@ -43,7 +43,7 @@ $num_list = mysqli_num_rows($query_list);
                 <div class="col-md-6">
                     <?php
                     $id = $result_list['auctionID'];
-                    $encryptID = encrypt_decrypt($id , 'encrypt');
+                    $encryptID = encrypt_decrypt($id, 'encrypt');
                     ?>
                     <a href="auction_listDetail.php?auctionID=<?php echo $encryptID ?>" class="btn btn-primary btn-sm mb-3">รายละเอียดเพิ่มเติม</a>
                 </div>
@@ -60,7 +60,6 @@ $num_list = mysqli_num_rows($query_list);
                     <?php
                     if ($result_list['auctionDetailStatus'] == 'unCheck') { ?>
                         <strong>สถานะ : </strong> <label class="text-danger"> <strong>กำลังตรวจสอบข้อมูล</strong> </label>
-
 
 
                     <?php } elseif ($result_list['auctionDetailStatus'] == 'checkFail') { ?>
@@ -102,7 +101,7 @@ $num_list = mysqli_num_rows($query_list);
                                 ?>
                                 <?php } ?>
                                 <strong>สถานะ : </strong> <label class="text-success"> <strong>ใบเสนอราคาผ่านการตรวจสอบแล้ว</strong> </label>
-                                <br>ประกาศผู้ชนะวันที่ :<br> <?php echo DateThaiStart($startDate) ?> - <?php echo DateThaiStart($endDate) ?>
+                                <br>ประกาศผู้ชนะวันที่ : <?php echo justDate($startDate) ?>
                             <?php } elseif ($result['auctionStatus'] == 'won') { ?>
                                 <strong>สถานะ : </strong> <label class="text-success"> <strong>ชนะการประมูล</strong> </label> <br>
 
@@ -115,16 +114,23 @@ $num_list = mysqli_num_rows($query_list);
                                 <?php echo justDate($date); ?> - <?php echo justDate($date . ' + 10 days'); ?>, 08:30 - 16:30
                             <?php } elseif ($result['auctionStatus'] == 'lose') { ?>
                                 <strong>สถานะ : </strong> <label class="text-danger"> <strong>แพ้การประมูล</strong> </label> <br>
-                                <?php
-                                if (empty($result['refundPaymentImage'])) {
-                                    echo 'กำลังดำเนินการคืนเงิน';
-                                } else { ?>
-                                    คืนเงินเสร็จสิ้น
 
-                                    <a class="view_data" type="button" name="view" id="<?php echo $result["offerID"]; ?>">หลักฐานการโอน</a>
+                                <?php if (empty($result_user['bankName']) || empty($result_user['bankHolder']) || empty($result_user['bankNumber'])) { ?>
+                             
+                                    <h6>คุณยังไม่ระบุข้อมูลบัญชีธนาคาร<a href="profile.php?act=edit_profile"> จัดการที่นี่</a> </h6>
+                                <?php  } else {  ?>
+                                    <?php
+                                    if (empty($result['refundPaymentImage'])) {
+                                        echo 'กำลังดำเนินการคืนเงิน';
+                                    } else { ?>
+                                        คืนเงินเสร็จสิ้น
+
+                                        <a class="view_data" type="button" name="view" id="<?php echo $result["offerID"]; ?>">หลักฐานการโอน</a>
 
                                 <?php  }
+                                }
                                 ?>
+
                             <?php } ?>
                         <?php } else { ?>
                             <strong>สถานะ : </strong> <label class="text-success"> <strong>ข้อมูลผ่านการตรวจสอบแล้ว</strong> </label><br>
@@ -140,7 +146,7 @@ $num_list = mysqli_num_rows($query_list);
                                 $today = date("Y-m-d H:i:s");
                             ?>
                                 <h6 class="mb-3"> <a target="_blank" href="../admin/document/<?php echo $result_doc['documentFile'] ?>"><i class="far fa-file-pdf" style="color: red;"></i> ดาวโหลดใบเสนอราคา</a> <br></h6>
-                                เสนอราคา และประกาศผู้ชนะการประมูล วันที่:<br> <?php echo signDate($startDate)  ?> -
+                                เสนอราคา วันที่:<br> <?php echo signDate($startDate)  ?> -
                                 <?php echo signDate($endDate) ?>
 
                                 <br>
@@ -163,6 +169,47 @@ $num_list = mysqli_num_rows($query_list);
                     <?php } ?>
 
                     <!-- end of สถานะ -->
+                    <!-- Vertical Steps -->
+                    <!-- <div class="step step-active">
+                        <div>
+                           
+                            <div class="circle">1</div>
+                        </div>
+                        <div>
+                            <div class="title">กำลังตรวจสอบข้อมูลลงชื่อประมูล</div>
+                            <div class="caption">กำลังดำเนินการ</div>
+                        </div>
+                    </div>
+                    <div class="step ">
+                        <div>
+                            <div class="circle">2</div>
+                        </div>
+                        <div>
+                            <div class="title">เสนอราคา</div>
+                            <div class="caption">กำลังดำเนินการ</div>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div>
+                            <div class="circle">3</div>
+                        </div>
+                        <div>
+                            <div class="title">กำลังตรวจสอบข้อมูลเสนอราคา</div>
+                            <div class="caption">กำลังดำเนินการ</div>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div>
+                            <div class="circle">4</div>
+                        </div>
+                        <div>
+                            <div class="title">ผลการประมูล</div>
+                            <div class="caption">กำลังดำเนินการ</div>
+                        </div>
+                    </div> -->
+                    <!--End Of Vertical Steps -->
+
+
                 </div>
             </div>
         </div>

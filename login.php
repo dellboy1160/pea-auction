@@ -125,7 +125,7 @@ if (isset($_REQUEST['btn_submit'])) {
             <div class="col-4"></div>
         </div>
     </div>
-    <?php include('web-structure/footer.php') ?>
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

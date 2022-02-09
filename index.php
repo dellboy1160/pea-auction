@@ -11,14 +11,16 @@ include('server.php');
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title><?php include('web-structure/title_name.php') ?></title>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
     <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet" href="fontawesome/css/all.css">
     <link href="user/css/styles.css" rel="stylesheet" />
     <link href="css/font.css" rel="stylesheet" />
 </head>
 
 <body>
     <?php include('web-structure/navbar.php') ?>
+
     <!-- Page content-->
     <div class="container">
         <div class="text-center mt-5">
@@ -56,7 +58,7 @@ include('server.php');
 
         </div>
     </div>
-    <?php include('web-structure/footer.php') ?>
+  
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

@@ -39,6 +39,7 @@ if (isset($_REQUEST['btn_submit'])) {
 }
 ?>
 <?php if (isset($successMsg)) { ?>
+
     <script type="text/javascript">
         var successMsg = '<?php echo $successMsg; ?>';
         Swal.fire(
@@ -52,6 +53,7 @@ if (isset($_REQUEST['btn_submit'])) {
             window.location = "document_offerPrice.php";
         });
     </script>
+
 <?php } ?>
 <?php
 if (isset($errorMsg)) {
@@ -65,6 +67,8 @@ if (isset($errorMsg)) {
         )
     </script>
 <?php } ?>
+
+
 <div class="card mb-4 mt-5">
     <div class="card-header">
         <i class="far fa-plus-square"></i>

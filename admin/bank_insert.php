@@ -4,12 +4,37 @@ if (isset($_REQUEST['btn_submit'])) {
     $bankHolder = $_REQUEST['txt_bankHolder'];
     $bankNumber = $_REQUEST['txt_bankNumber'];
 
-    $sql = "INSERT INTO bank (bankName,bankHolder,bankNumber)
-    VALUES ('$bankName','$bankHolder','$bankNumber')";
-    $query = mysqli_query($conn, $sql);
+    $image_file = $_FILES['txt_file']['name'];
+    $type = $_FILES['txt_file']['type'];
+    $size = $_FILES['txt_file']['size'];
+    $temp = $_FILES['txt_file']['tmp_name'];
 
-    if ($query) {
-        $successMsg = "";
+    $path = "../QRCode_image/" . $image_file;
+    $explode = explode('.', $_FILES['txt_file']['name']);
+    $new_name = round(microtime(true)) . '.' . end($explode);
+
+
+    if ($type == "image/jpg" || $type == 'image/jpeg' || $type == "image/png" || $type == "image/gif") {
+        if (!file_exists($path)) {
+            if ($size < 2000000) {
+                move_uploaded_file($temp, '../QRCode_image/' . $new_name);
+            } else {
+                $errorMsg = "ไฟล์รูปภาพใหญ่เกิน 2MB";
+            }
+        }
+    } else {
+        $errorMsg = "กรุณาใช้นามสกุลไฟล์เป็น JPG, JPEG, PNG & GIF เท่านั้น";
+    }
+
+
+    if (!isset($errorMsg)) {
+        $sql = "INSERT INTO bank (bankName,bankHolder,bankNumber,QRCode_image)
+        VALUES ('$bankName','$bankHolder','$bankNumber','$new_name')";
+        $query = mysqli_query($conn, $sql);
+
+        if ($query) {
+            $successMsg = "";
+        }
     }
 }
 ?>
@@ -72,7 +97,15 @@ if (isset($errorMsg)) {
                     </div>
                 </div>
             </div>
-
+            <div class="col-md-12">
+                <label for="validationCustomUsername" class="form-label">รูป QR Code</label>
+                <div class="input-group has-validation">
+                    <input type="file" class="form-control" name="txt_file" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <div class="invalid-feedback">
+                        กรุณากรอกหมายเลขบัญชี
+                    </div>
+                </div>
+            </div>
             <button type="submit" name="btn_submit" class="btn btn-primary">บันทึก</button>
             <a href="javascript:history.back()" style="text-align: center;"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
 

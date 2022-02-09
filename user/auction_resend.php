@@ -199,9 +199,9 @@ if (isset($_REQUEST['detailID'])) {
                 <label for="validationCustomUsername" class="form-label">รูปสำเนาบัตร
 
                     <!-- Button trigger modal -->
-                    <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                    <!-- <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal1">
                         ตัวอย่าง
-                    </a>
+                    </a> -->
                 </label>
                 <div class="input-group has-validation">
                     <input type="file" name="txt_file" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>

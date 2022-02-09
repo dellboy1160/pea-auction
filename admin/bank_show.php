@@ -13,6 +13,7 @@
             ?>
             <thead>
                 <tr>
+                    <th>QR Code</th>
                     <th>ชื่อธนาคาร</th>
                     <th>ชื่อผู้ถือบัตร</th>
                     <th>หมายเลขบัญชี</th>
@@ -25,6 +26,7 @@
             <tbody>
                 <?php while ($result_bank = mysqli_fetch_array($query_bank)) { ?>
                     <tr>
+                        <td><img src="../QRCode_image/<?php echo $result_bank['QRCode_image'] ?>" width="100px" height="100px" alt=""></td>
                         <td data-label="ชื่อธนาคาร"><?php echo $result_bank['bankName'] ?></td>
                         <td data-label="ชื่อผู้ถือบัตร"><?php echo $result_bank['bankHolder'] ?></td>
                         <td data-label="หมายเลขบัญชี"><?php echo $result_bank['bankNumber'] ?></td>

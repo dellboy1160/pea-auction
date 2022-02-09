@@ -148,7 +148,7 @@ if (isset($error)) {
                 <div class="col-md-6">
                     <h5>ชื่อ : <?php echo $result['Fname'] ?> - <?php echo $result['Lname'] ?></h5>
                     <h5>เบอร์โทรศัพท์ : <?php echo $result['phone'] ?></h5>
-                    <h5>วันที่ลงชื่อ : <?php echo signDate( $result['offerDate'] )?></h5>
+                    <h5>วันที่ลงชื่อ : <?php echo signDate($result['offerDate']) ?></h5>
                 </div>
 
 
@@ -172,3 +172,25 @@ if (isset($error)) {
         </div>
     </div>
 </div>
+
+<script>
+    function PrintDiv() {
+        var divToPrint = document.getElementById("container"); // เลือก div id ที่เราต้องการพิมพ์
+        var html =
+            "<html>" + //
+            "<head>" +
+            '<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet" />' +
+            '<link href="print.css" rel="stylesheet" type="text/css">' +
+            '<link href="../css/printfont.css" rel="stylesheet" type="text/css">' +
+            "</head>" +
+            '<body onload="window.print(); window.close();">' +
+            divToPrint.innerHTML +
+            "</body>" +
+            "</html>";
+
+        var popupWin = window.open();
+        popupWin.document.open();
+        popupWin.document.write(html); //โหลด print.css ให้ทำงานก่อนสั่งพิมพ์
+        popupWin.document.close();
+    }
+</script>

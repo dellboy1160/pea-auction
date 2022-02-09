@@ -234,7 +234,7 @@ if (isset($_REQUEST['detailID'])) {
                 ?>
                 <br>
                 <?php while ($result = mysqli_fetch_array($query)) { ?>
-                    <a target="_blank" href="../admin/document/<?php echo $result['documentFile'] ?>"><i class="far fa-file-pdf" style="color: red;"></i> ดาวโหลด<?php echo $result['documentTitle'] ?></a>
+                    <!-- <a target="_blank" href="../admin/document/<?php echo $result['documentFile'] ?>"><i class="far fa-file-pdf" style="color: red;"></i> ดาวโหลด<?php echo $result['documentTitle'] ?></a> -->
                 <?php } ?>
                 <br>
 
@@ -253,11 +253,13 @@ if (isset($_REQUEST['detailID'])) {
                     <div class="card-body">
                         <h3 class="card-title text-center">ช่องทางการชำระ</h3>
                         <?php while ($result_bank = mysqli_fetch_array($query_bank)) { ?>
-                            <h6 class="card-text mb-2 ">
+                            <h6 class="card-text text-center mb-2 ">
                                 ธนาคาร : <?php echo $result_bank['bankName'] ?>,
                                 <?php echo $result_bank['bankHolder'] ?>,
                                 เลขบ/ช : <?php echo $result_bank['bankNumber'] ?></h6>
-
+                            <h6 class="text-center mt-5">QR Code Payment</h6>
+                            <img style="display: block; margin-left: auto; margin-right: auto; width:200px" src="../QRCode_image/<?php echo $result_bank['QRCode_image'] ?>" style="width: 200px;" alt="">
+                            <hr>
                         <?php } ?>
 
                     </div>

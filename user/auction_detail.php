@@ -381,11 +381,11 @@ if (isset($_REQUEST['btn_submit'])) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตรประชาชน</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">ตัวอย่างสำเนาบัตร</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="../web-structure/idCard1.png" width="100%" alt="">
+                    <img src="../web-structure/A1.png" width="100%" alt="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

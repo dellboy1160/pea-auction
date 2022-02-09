@@ -41,7 +41,7 @@ if (!isset($_SESSION['adminUsername'])) {
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
                                 <?php
-                                $sqlAuction = "SELECT * FROM auction";
+                                $sqlAuction = "SELECT * FROM auction WHERE status = 'active'";
                                 $queryAuction = mysqli_query($conn, $sqlAuction);
                                 $numAuction = mysqli_num_rows($queryAuction);
                                 ?>

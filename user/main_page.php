@@ -54,8 +54,12 @@ if (!isset($_SESSION['username'])) {
                         </div>
                     <?php   }  ?>
                 </div>
-                <div class="col-md-3"></div>
+                <div class="col-md-3">
 
+                </div>
+                <div class="col-md-12 mt-5">
+                    <h5><a href="profile.php?act=auction_list"><i class="fas fa-clipboard-list"></i> รายการประมูลของฉัน</a></h5>
+                </div>
             </div>
 
         </div>

@@ -10,9 +10,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">ช่วยเหลือ</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="">ติดต่อเรา</a></li>
+                            <li><a class="dropdown-item" href="contact.php">ติดต่อเรา</a></li>
 
-                            <li><a class="dropdown-item" href="">ขั้นตอนการประมูล</a></li>
+                            <li><a class="dropdown-item" href="step.php">ขั้นตอนการประมูล</a></li>
 
                         </ul>
                     </li>

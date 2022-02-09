@@ -22,9 +22,9 @@
                     <th>LINE ID</th>
                     <th width="10px">:</th>
                     <td>
-                    <?php if ($result_user['line'] == null) {
-                            echo '-';
-                        } else {
+                        <?php if ($result_user['line'] == null) { ?>
+                            <h4 class="text-danger">*</h4>
+                        <?php    } else {
                             echo $result_user['line'];
                         }
                         ?>
@@ -50,9 +50,9 @@
                     <th width="10px">:</th>
                     <td>
                         <?php
-                        if (empty($result_user['bankName'])) {
-                            echo "-";
-                        } else {
+                        if (empty($result_user['bankName'])) { ?>
+                            <h4 class="text-danger">*</h4>
+                        <?php     } else {
                             echo $result_user['bankName'];
                         }
                         ?>
@@ -63,9 +63,9 @@
                     <th width="10px">:</th>
                     <td>
                         <?php
-                        if (empty($result_user['bankHolder'])) {
-                            echo "-";
-                        } else {
+                        if (empty($result_user['bankHolder'])) { ?>
+                            <h4 class="text-danger">*</h4>
+                        <?php   } else {
                             echo $result_user['bankHolder'];
                         }
                         ?>
@@ -77,9 +77,9 @@
                     <th width="10px">:</th>
                     <td>
                         <?php
-                        if (empty($result_user['bankNumber'])) {
-                            echo "-";
-                        } else {
+                        if (empty($result_user['bankNumber'])) { ?>
+                            <h4 class="text-danger">*</h4>
+                        <?php  } else {
                             echo $result_user['bankNumber'];
                         }
                         ?>
