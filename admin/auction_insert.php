@@ -55,10 +55,16 @@ if (isset($_REQUEST['btn_submit'])) {
                     </div>
                 </div>
             </div>
+            <?php
+            $today_date = date('Y-m-d h:i:s');
+            $dateMin = date("Y-m-d\TH:i", strtotime($today_date));
+
+
+            ?>
             <div class="col-md-6">
                 <label for="validationCustomUsername" class="form-label">วันและเวลาเริ่มประมูล</label>
                 <div class="input-group has-validation">
-                    <input type="datetime-local" class="form-control" name="txt_startDate" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <input type="datetime-local" min="<?php echo $dateMin ?>" class="form-control" name="txt_startDate" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
                         กรุณากรอกวันและเวลาสิ้นสุดการประมูล
                     </div>
@@ -67,7 +73,7 @@ if (isset($_REQUEST['btn_submit'])) {
             <div class="col-md-6">
                 <label for="validationCustomUsername" class="form-label">วันและเวลาปิดประมูล</label>
                 <div class="input-group has-validation">
-                    <input type="datetime-local" class="form-control" name="txt_endDate" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <input type="datetime-local" min="<?php echo $dateMin ?>" class="form-control" name="txt_endDate" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
                         กรุณากรอกวันและเวลาสิ้นสุดการประมูล
                     </div>

@@ -146,11 +146,14 @@ if (isset($error)) {
 
             <?php
             $startDate = date("Y-m-d\TH:i:s", strtotime($result_doc['startDate']));
+
+            $today_date = date('Y-m-d h:i:s');
+            $dateMin = date("Y-m-d\TH:i", strtotime($today_date));
             ?>
             <div class="col-md-6">
                 <label for="validationCustomUsername" class="form-label">วันและเวลาเริ่มเสนอราคา</label>
                 <div class="input-group has-validation">
-                    <input type="datetime-local" class="form-control" value="<?php echo $startDate; ?>" name="txt_startDate" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <input type="datetime-local" min="<?php echo $dateMin ?>" class="form-control" value="<?php echo $startDate; ?>" name="txt_startDate" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
                         กรุณากรอกวันเริ่ม
                     </div>
@@ -162,7 +165,7 @@ if (isset($error)) {
             <div class="col-md-6">
                 <label for="validationCustomUsername" class="form-label">วันและเวลาสิ้นสุดเสนอราคา</label>
                 <div class="input-group has-validation">
-                    <input type="datetime-local" class="form-control" value="<?php echo $endDate; ?>" name="txt_endDate" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <input type="datetime-local" min="<?php echo $dateMin ?>" class="form-control" value="<?php echo $endDate; ?>" name="txt_endDate" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
                         กรุณากรอกวันสิ้นสุด
                     </div>

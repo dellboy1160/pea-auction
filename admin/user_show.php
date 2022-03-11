@@ -18,7 +18,7 @@
                     <th>เบอร์โทรศัพท์</th>
                     <th>LINE ID</th>
 
-                    <th width="/0%"></th>
+                    <th width="20%"></th>
                 </tr>
             </thead>
 

@@ -259,9 +259,9 @@ if (isset($successMsg)) { ?>
 
                                 <div class="input-group has-validation">
 
-                                    <input type="text" class="form-control" name="txt_phone" id="validationCustomUsername" value="<?php if (isset($phone)) {
-                                                                                                                                        echo $phone;
-                                                                                                                                    } ?>" aria-describedby="inputGroupPrepend" required>
+                                    <input type="text" class="form-control" name="txt_phone" pattern="[0-9]{10}" id="validationCustomUsername" value="<?php if (isset($phone)) {
+                                                                                                                                                            echo $phone;
+                                                                                                                                                        } ?>" aria-describedby="inputGroupPrepend" required>
                                     <div class="invalid-feedback">
                                         กรุณากรอกเบอร์โทรศัพท์
                                     </div>
